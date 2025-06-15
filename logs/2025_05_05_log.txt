@@ -1,0 +1,6 @@
+IP:- ::1
+TIME:- May 5 19:03:17 2025
+REFERRER:- http://localhost/tracker/user
+SEARCHSTRING:- /user
+USERAGENT:- Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+

@@ -1,0 +1,28 @@
+[21-Jun-2014 08:29:07 Europe/Berlin] PHP Fatal error:  Call to a member function view() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/login_admin.php on line 22
+[21-Jun-2014 08:30:48 Europe/Berlin] PHP Fatal error:  Call to a member function view() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/login_admin.php on line 22
+[21-Jun-2014 08:30:51 Europe/Berlin] PHP Fatal error:  Call to a member function view() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/login_admin.php on line 22
+[21-Jun-2014 08:33:00 Europe/Berlin] PHP Fatal error:  Call to a member function view() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/login_admin.php on line 22
+[21-Jun-2014 09:12:18 Europe/Berlin] PHP Fatal error:  Call to a member function selectDetailsDisplayByASC() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/master_controller.php on line 59
+[21-Jun-2014 09:13:23 Europe/Berlin] PHP Fatal error:  Call to a member function select() on a non-object in /home/moonveda/public_html/excel_file/application/models/master_model.php on line 139
+[21-Jun-2014 09:16:19 Europe/Berlin] PHP Fatal error:  Call to a member function jsonReturn() on a non-object in /home/moonveda/public_html/excel_file/application/controllers/master_controller.php on line 95
+[02-Mar-2016 05:50:01 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:56:26 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:56:29 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:56:33 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:56:43 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:57:04 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:57:08 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 05:57:13 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 06:11:17 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 06:12:16 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 06:14:46 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 06:14:49 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[02-Mar-2016 06:14:50 America/Chicago] PHP Parse error:  syntax error, unexpected '}' in /home/moonveda/public_html/salary/application/views/basic_pt_tbl.php on line 177
+[14-May-2016 07:30:26 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[16-May-2016 06:55:18 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:31:55 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:33:06 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:39:24 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:45:03 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:45:05 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399
+[17-May-2016 06:45:05 America/Chicago] PHP Fatal error:  Call to undefined method DOMText::getAttribute() in /home/moonveda/public_html/salary/application/third_party/dompdf/include/cellmap.cls.php on line 399

@@ -1,0 +1,6 @@
+IP:- 127.0.0.1
+TIME:- Nov 28 5:33:15 2017
+REFERRER:- http://localhost/erp_solution/
+SEARCHSTRING:- /user
+USERAGENT:- Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+
