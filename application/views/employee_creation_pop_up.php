@@ -1,7 +1,7 @@
 	<form action="#" id="" class="horizontal-form">
 	<div class="form-body">									
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-3">
 				<div class="form-group">
 					<label class="control-label">
 						Employee id :
@@ -11,13 +11,23 @@
 					</label>
 				</div>
 			</div>	
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label">
 						Employee Name :
 					</label>
 					<label class="control-label" >
 						<?php echo (isset($singleEmployee->emp_name) && !empty($singleEmployee->emp_name))?$singleEmployee->emp_name:''?>
+					</label>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="control-label">
+						Company Name :
+					</label>
+					<label class="control-label" >
+						<?php echo (isset($compName->company_name) && !empty($compName->company_name))?$compName->company_name:''?>
 					</label>
 				</div>
 			</div>
@@ -63,7 +73,11 @@
 						$i=1; 
 						
 						foreach ($earning_data as $key) 
-						{?>
+						{
+							if(isset($key->earning_name) && !empty($key->earning_name) && $key->earning_name=="PF (Employer's Contribution)"){
+								$empPF=$key->earn_value;
+							}
+							?>
 							<div class="checkbox-list">																
 								<div class="form-group">																
 									<div class="row" id="earning_allowance<?php echo $i++;?>">
@@ -212,6 +226,7 @@
 					<div class="col-md-7">
 						<label class="control-label"><b>Gross Salary - </b></label>
 					</div>
+					
 					<div class="col-md-5">
 						<div class="input-group">
 							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo $singleEmployee->emp_basic+$gross-$bonus; ?>.00</b>
@@ -240,7 +255,7 @@
 					</div>
 					<div class="col-md-5">
 						<div class="input-group">
-							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo ($singleEmployee->emp_basic+$gross)-$total_deduct; ?>.00</b>
+							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo ($singleEmployee->emp_basic+$gross)-$total_deduct-(isset($empPF) && !empty($empPF)?$empPF:0); ?>.00</b>
 						</div>
 					</div>
 				</div>

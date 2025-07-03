@@ -420,6 +420,7 @@ class Master_settings extends CI_Controller {
       	$data['earning_data']=$this->slip_aks_model->fetchEarning($emp_id);
       	$data['deduction_data']=$this->slip_aks_model->fetchDeduction($emp_id);
 		$data['singleEmployee'] = $this->master_model->selectDetailsWhr($tblName,$where,$emp_id);		
+		$data['compName'] = $this->master_model->selectDetailsWhr('tbl_company_master','company_id',$data['singleEmployee']->company_id);		
 		$data['empDetails']=$this->slip_aks_model->fetchAllEmployeeByCompany($company_id);		
 		$update_view=$this->load->view('employee_creation_pop_up',$data,true);
 		$this->json->jsonReturn(array( 
@@ -2821,7 +2822,9 @@ class Master_settings extends CI_Controller {
 		$emp_id = $this->input->post('emp_id');
 		$year = $this->input->post('years');
 		$emp_salary_data = $this->Slip_vish_model->gen_emp_salary_report($emp_id,$year);
+		// echo $this->db->last_query();die;
 		$emp_data = $this->Slip_vish_model->fetch_emp_all_data($emp_id);
+		// echo $this->db->last_query();die;
 		$this->monthly_report->gen_emp_salary_report($emp_salary_data,$emp_data,$year);
 	}
 
