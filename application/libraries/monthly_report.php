@@ -2832,7 +2832,7 @@ class Monthly_report extends PHPExcel {
 
 				$net_pay_after_wfh = round($net_pay) - round($wfh_deduct_amt);
 				$per_day_amt = $net_pay_after_wfh / $total_present_day;
-				$net_pay_after_deduction = ($net_pay_after_wfh -( $key->memo_amt* $key->memo_cnt)) - (($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2);
+				$net_pay_after_deduction = ($net_pay_after_wfh -( $key->memo_amt)) - (($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2);
 
 				$CI->excel->getActiveSheet()->setCellValue('BV'.$j,round(($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2));
 
@@ -8487,6 +8487,7 @@ class Monthly_report extends PHPExcel {
 																	->setWrapText(true);
 		/* start dynamic code from here *********/
 		$lastRowNum=4;
+		// echo '<pre>';print_r($emp_salary_data);exit;
  		if (isset($emp_salary_data) && !empty($emp_salary_data))
  		{
 	 		$j=4;
@@ -8565,6 +8566,8 @@ class Monthly_report extends PHPExcel {
 	 			$emp_wise_add_deduction = 0;
 	 		 	
 				$emp_allData = $CI->Slip_vish_model->fetchAllowDataOfEmp_basic_allow($key->emp_id,$key->salary_month);
+				// echo '<pre>';print_r($emp_allData);
+				
 				$emp_Ded_allData = $CI->Slip_vish_model->fetchDeductAllowDataOfEmpExpend($key->emp_id);	
 				$earn_allowance = $CI->master_model->selectAllWhr('tbl_emp_earn_allowance','emp_id',$key->emp_id);
 				$emp_basic = $CI->master_model->selectDetailsWhr('tbl_employee_creation','emp_id',$key->emp_id);
@@ -8693,7 +8696,16 @@ class Monthly_report extends PHPExcel {
 					$bsNet = $key->net_pay + $key->pt_amt;
 					$netBasicTotK = $bsNet;
 				}
-				$emp_basic=0;				
+				$emp_basic=0;
+				$total_mobile=0;
+					$total_city=0;
+					$total_medi=0;
+					$total_edu=0;
+					$total_entertainment=0;
+					$total_other=0;
+					$total_bonus=0;
+					$total_da=0;
+					$emp_convey=0;				
 				if(isset($emp_allData) && !empty($emp_allData))
 				{
 					$basic = $key->basic_net/$num_days_of_month;
@@ -8711,15 +8723,7 @@ class Monthly_report extends PHPExcel {
 					$CI->excel->getActiveSheet()->setCellValue('AD'.$j,round($emp_convey));
 					$Conveyance_total = $Conveyance_total + $emp_convey;
 
-					$total_mobile=0;
-					$total_city=0;
-					$total_medi=0;
-					$total_edu=0;
-					$total_entertainment=0;
-					$total_other=0;
-					$total_bonus=0;
-					$total_da=0;
-
+					
 					foreach ($emp_allData as $row)
 					{
 						if($row->earning_id == 18 )
