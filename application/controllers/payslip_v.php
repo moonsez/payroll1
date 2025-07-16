@@ -15,16 +15,18 @@ class payslip_v extends CI_Controller {
 		$this->load->model('master_model'); 
  		$empId = $this->uri->segment(2);
  		$empDetails=$this->master_model->selectDetailsWhr('tbl_employee_creation','emp_id',$empId);
-		$company_id = $empDetails->company_id;
+		// $company_id = $empDetails->company_id;
 		$userId = $empDetails->user_id;
 		$pay_slip_month = $this->uri->segment(3);
+		$oldCompData=$this->master_model->slip_aks_model->fetchMothWiseComp($userId, $pay_slip_month);
+		$company_id=$oldCompData->company_id;
 		$month_year = explode( '-', $pay_slip_month);
 		$final_month_year = date("F", mktime(0, 0, 0, $month_year[0], 10)).' '.$month_year[1];
 		
 		$data['companyDetails']=$this->master_model->selectDetailsWhr('tbl_company_master','company_id',$company_id);
 		$data['employee_basic_info'] = $this->slip_aks_model->fetchDataForExcelGenerate($empId,$pay_slip_month);
 		$data['getNewCtc'] = $this->slip_aks_model->fetchNewCtc($company_id, $userId, $pay_slip_month);
-		//echo $this->db->last_query(); exit();
+		// echo $this->db->last_query(); exit();
 		//$data['static_earn_data'] = $this->Slip_vish_model->fetchAllowDataOfEmp_basic_allow($empId,$pay_slip_month);
 		$data['static_earn_data'] = $this->slip_aks_model->fetchDataForExcelEarnData($empId,$pay_slip_month);
 		//echo $this->db->last_query(); exit();

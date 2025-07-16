@@ -779,6 +779,18 @@ class slip_aks_model extends CI_Model {
 		}
 	}
 
+    public function fetchMothWiseComp($userId, $newdate)
+	{
+
+		$query = $this->db->query('SELECT * FROM `tbl_emp_salary_excel_genrated_data`  WHERE user_id=? and salary_month=? and display="Y"', array($userId, $newdate));
+		//	echo $this->db->last_query();
+		if ($query->num_rows() > 0) {
+			return $query->row();
+		} else {
+			return false;
+		}
+	}
+
 
     /*function update_location()
     {
