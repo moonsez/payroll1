@@ -578,7 +578,9 @@
 										</div>
 									<?php } ?>
 
-									<?php if (isset($deduction_allow) && !empty($deduction_allow)) { ?>
+									<?php 
+									 
+									if (isset($deduction_allow) && !empty($deduction_allow)) { ?>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">
@@ -592,7 +594,9 @@
 													// if(){
 													// 	echo "de";exit;
 													// }
+													// echo '<pre>';print_r($deduction_data);
 													if (isset($deduction_data) && !empty($deduction_data)) {
+														// echo "123";
 														foreach ($deduction_data as $row) {
 															if ($row->deduction_id == $key->deduction_id) {
 																if (!in_array($row->deduction_id, $deduct_output)) {
@@ -671,7 +675,10 @@
 																</div>
 															</div>
 														<?php }
-													} else { ?>
+													} else { 
+														// echo "12345";
+														?>
+													  
 														<div class="checkbox-list">
 															<div class="form-group">
 																<div class="row" id="deduction_allowance<?php echo $j++; ?>">
@@ -698,10 +705,13 @@
 																						%
 																					</span>
 																				<?php }
-																			} ?>
+																			}
+																			
+																			// echo $key->deduction_default_value;
+																			?>
 																			<input type="text"
 																				class="form-control deduction_allowance txtpaymentamnt"
-																				name="" id="" tabindex=""
+																				name="deduction_allowance_input" id="" tabindex=""
 																				value="<?php echo (isset($key->deduction_default_value) && !empty($key->deduction_default_value)) ? $key->deduction_default_value : '0'; ?>">
 																		</div>
 																	</div>
