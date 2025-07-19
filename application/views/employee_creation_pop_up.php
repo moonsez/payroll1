@@ -152,7 +152,10 @@
 				</div>
 			<?php }?>
 			
-			<?php if (isset($deduction_data) && !empty($deduction_data))
+			<?php
+			//  echo '<pre>';print_r($deduction_data);
+			 $total_deduct = 0;
+			if (isset($deduction_data) && !empty($deduction_data))
 			{?>
 				<div class="col-md-6">											
 					<div class="form-group">
