@@ -13,7 +13,7 @@ class Login_admin extends CI_Controller {
 		if($this->authenctication->logged_in()==FALSE)
 		{			
 			$msg = 'slip_generation_login';
-			$data['key_string'] = $this->encryption->encode($msg);
+			$data['key_string'] = $this->encryption->encrypt($msg);
 			$this->session->set_userdata("secret_key", $data['key_string']);
 			$this->load->view('login',$data);
 		}
