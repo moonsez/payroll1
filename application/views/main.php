@@ -130,24 +130,24 @@
 		$msg = "IP:- " . $ip . "\r\nTIME:- " . $time . "\r\nREFERRER:- " . $referrer . "\r\nSEARCHSTRING:- " . $query . "\r\nUSERAGENT:- " . $userAgent. "\r\n";
 		 
 		//CALL OUR LOG FUNCTION
-		writeToLogFile($msg);
+		//writeToLogFile($msg);
 		 
-		function writeToLogFile($msg) {
-		     $today = date("Y_m_d"); 
-		     $logfile = $today."_log.txt"; 
-		     $dir = 'logs';
-		     $saveLocation=$dir . '/' . $logfile;
-		     if  (!$handle = @fopen($saveLocation, "a")) {
-		          exit;
-		     }
-		     else {
-		          if (@fwrite($handle,"$msg\r\n") === FALSE) {
-		               exit;
-		          }
-		   
-		          @fclose($handle);
-		     }
-		}?>
+//		function writeToLogFile($msg) {
+//		     $today = date("Y_m_d");
+//		     $logfile = $today."_log.txt";
+//		     $dir = 'logs';
+//		     $saveLocation=$dir . '/' . $logfile;
+//		     if  (!$handle = @fopen($saveLocation, "a")) {
+//		          exit;
+//		     }
+//		     else {
+//		          if (@fwrite($handle,"$msg\r\n") === FALSE) {
+//		               exit;
+//		          }
+//
+//		          @fclose($handle);
+//		     }
+//		}?>
 		<?php $this->load->view('dashboard');?>
 	</div>	
 </div>

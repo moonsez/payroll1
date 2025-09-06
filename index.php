@@ -246,10 +246,6 @@ else
 }
 
 define('VIEWPATH', $view_folder);
-
-//require_once APPPATH . 'helpers/url_helper.php';
-//prep_url();
-
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
