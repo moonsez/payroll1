@@ -175,8 +175,9 @@
 									<input type="text" name="tds_deduct[]" class="form-control tds_deduct<?php echo isset($i)?($i-1):'';?>" rel="<?php echo (isset($key->tds_deduct) && !empty($key->tds_deduct))?$key->tds_deduct:'0';?>" value="<?php echo (isset($key->tds_deduct) && !empty($key->tds_deduct))?$key->tds_deduct:'0';?>">
 								</td>
 								<td>
-								<?php $month=(isset($month) && !empty($month))?$month:'0'; 
-								$month_year_array = explode('-', $month);
+								<?php $month=(isset($month) && !empty($month))?$month:'0';
+                                $year=(isset($year) && !empty($year))?$year:'0';
+                                $month_year_array = explode('-', $month);
 								$mnt= date('F', mktime(0, 0, 0, $month_year_array[0], 10)); 
 								$pt_val=(isset($key->deduct_value) && !empty($key->deduct_value))?$key->deduct_value:'';
 								if($mnt=='February' && $pt_val=='200') { ?>
@@ -292,7 +293,7 @@
 								$emp_paid_leave = $this->slip_vish_model->get_paid_leave($year,$key->user_id,$month);
 								$emp_sick_leave = $this->slip_vish_model->get_sick_leave($year,$key->user_id,$month);
 								//echo count($emp_paid_leave);
-								$leave=count($emp_paid_leave);
+								$leave=!empty($emp_paid_leave)?count($emp_paid_leave):0;
 								$paid_leave=0;
 								$sick_leave=0;
 								if(isset($emp_paid_leave) && !empty($emp_paid_leave))
