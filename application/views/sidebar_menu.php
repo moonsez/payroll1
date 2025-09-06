@@ -13,7 +13,8 @@
 			</li>
 			<?php 
 				//$this->load->model("master_model");
-				$user = $this->master_model->selectDetailsWhr("tbl_userinfo","user_id",$this->session->userdata("userid"));
+            $userid = get_cookie('userid', TRUE);
+				$user = $this->master_model->selectDetailsWhr("tbl_userinfo","user_id",$userid);
 			?>
 			<li class="start active ">
 				<a href="<?php echo base_url();?>dashboard">

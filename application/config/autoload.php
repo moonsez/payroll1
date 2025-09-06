@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','Email_sent','json','authenctication','session','encrypt','imageupload','convert_num_to_words','report_creation');
+$autoload['libraries'] = array('database','Email_sent','json','authenctication','session','encryption','imageupload','convert_num_to_words','report_creation');
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','Email_sent','json','authenctication',
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url','cookie');
 
 
 /*

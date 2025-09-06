@@ -5,9 +5,7 @@ class Authenctication
 
 	function _construct() 
 	{
-	    $CI =& get_instance();     
-		$CI->load->database('database');     
-		$CI->load->library("session");
+	    $CI =& get_instance();
 	} 
  
 	function get_userdata() 
@@ -26,8 +24,10 @@ class Authenctication
  
 	function logged_in() 
 	{     
-		$CI =& get_instance();     
-		return ($CI->session->userdata("role")) ? true : false; 
+		$CI =& get_instance();
+        $userid = get_cookie('userid', TRUE);
+		//return ($CI->session->userdata("role")) ? true : false;
+        return ($userid) ? true : false;
 	}
 
 	
@@ -36,9 +36,9 @@ class Authenctication
 	{  
 		$CI =& get_instance();  
 		$CI->db->select('*')->from('tbl_userinfo u')->join('tbl_employee_personal_details e','e.user_id=u.user_id');
-		$CI->db->where("md5(u.user_id)",$user_id)->where("u.account_status",'activate')->where("u.display",'Y');
-		$query = $CI->db->get(); 
-		if($query->num_rows() != 1) 
+		$CI->db->where("u.user_id",$user_id)->where("u.account_status",'activate')->where("u.display",'Y');
+		$query = $CI->db->get();
+		if($query->num_rows() != 1)
 		{
 			return false;
 		}
@@ -54,14 +54,14 @@ class Authenctication
 			$CI->session->set_userdata("gender", $query->row()->gender);
 			$CI->session->set_userdata("sign", $query->row()->signature_file);
 			$CI->session->set_userdata("comp_id",$query->row()->company_id);
-			
 			$CI->session->set_userdata("role",$query->row()->role_id); 
 			$CI->session->set_userdata("ISlogin", true);  
 			$CI->session->set_userdata("payslip_is_loged", TRUE); 
 			$CI->session->sess_expire_on_close = TRUE;
-			$value = base_url();
-			setcookie("pay_slip",$value, time()+3600*24,'/');$state=FALSE;
-			return true;  
+			$value = $query->row()->user_id;
+			//setcookie("role",$value, time()+3600*24,'/');
+            set_cookie('userid', $value, time()+3600*24);
+			return true;
 		} 
 	}
 
