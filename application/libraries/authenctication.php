@@ -25,9 +25,9 @@ class Authenctication
 	function logged_in() 
 	{     
 		$CI =& get_instance();
-        $userid = get_cookie('userid', TRUE);
-		//return ($CI->session->userdata("role")) ? true : false;
-        return ($userid) ? true : false;
+       // $userid = get_cookie('userid', TRUE);
+		return ($CI->session->userdata("role")) ? true : false;
+        //return ($userid) ? true : false;
 	}
 
 	
