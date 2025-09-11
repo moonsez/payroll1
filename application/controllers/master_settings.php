@@ -239,8 +239,12 @@ class Master_settings extends CI_Controller {
 
 		$earning_id = $this->input->post('earning_allowance');				
 		$earning_value = $this->input->post('earn_allowance_input');
+        $earning_value = is_array($earning_value) ? array_values(array_filter($earning_value)) : [];
+
 		$deduction_id = $this->input->post('deduction_allowance');		
 		$deduction_value = $this->input->post('deduction_allowance_input');
+        $deduction_value = is_array($deduction_value) ? array_values(array_filter($deduction_value)) : [];
+
 		
 		if(isset($emp_id) && !empty($emp_id) && ($emp_id>0))
 		{
@@ -258,7 +262,8 @@ class Master_settings extends CI_Controller {
 					$earning_insert_data = array();
 					$earn_ins=0;
 					//print_r($earning_insert_data);
-					if(sizeof($earning_id)>0)
+					if(is_array($earning_id) && sizeof($earning_id) > 0)
+
 					{						
 						foreach ($earning_id as $key) 
 						{							
@@ -298,7 +303,9 @@ class Master_settings extends CI_Controller {
 			{
 				$deduction_insert_data = array();
 				$deduct_ins=0;
-				if(sizeof($deduction_id)>0)
+				
+				if(is_array($deduction_id) && sizeof($deduction_id) > 0)
+
 				{
 					foreach ($deduction_id as $key) 
 					{
@@ -341,7 +348,9 @@ class Master_settings extends CI_Controller {
 				{	
 					$earning_insert_data = array();
 					$earn_ins=0;
-					if(sizeof($earning_id)>0)
+					if(is_array($earning_id) && sizeof($earning_id) > 0)
+
+						
 					{
 						foreach ($earning_id as $key) 
 						{
@@ -375,7 +384,8 @@ class Master_settings extends CI_Controller {
 				{
 					$deduction_insert_data = array();
 					$deduct_ins=0;
-					if(sizeof($deduction_id)>0)
+					if(is_array($deduction_id) && sizeof($deduction_id) > 0)
+
 					{
 						foreach ($deduction_id as $key) 
 						{

@@ -202,11 +202,16 @@ class basic_controller extends CI_Controller {
 		$no_min_8hr_work_cnt = $this->input->post('no_min_8hr_work_cnt');
 		$total_full_days = $this->input->post('total_full_days');
 
+        // print_r($earn_allow_emp_id);
+		$earn_count = (isset($earn_allow_emp_id) && !empty($earn_allow_emp_id)?count($earn_allow_emp_id):0);
+		$deduct_count = (isset($deduct_allow_emp_id) && !empty($deduct_allow_emp_id)?count($deduct_allow_emp_id):0);  
+		// count($deduct_allow_emp_id);
+		
 
-		$earn_count = count($earn_allow_emp_id);
-		$deduct_count = count($deduct_allow_emp_id);
 		$earnig_data = array();
 		$deduct_data = array();
+
+		error_reporting(0);
 		
 		if (isset($earn_allow_emp_id) && !empty($earn_allow_emp_id) && $earn_allow_emp_id!=0) 
 		{					
@@ -332,8 +337,8 @@ class basic_controller extends CI_Controller {
 
  
 				}
-				print_r($basic_pt_data);
-				exit();
+				// print_r($basic_pt_data);
+				// exit();
 
 				$basic_insert_data = $this->master_model->updateBatch('tbl_basic_pt', $basic_pt_data,$earnig_data,$deduct_data,$emp_ids,$slip_month);
 				//echo $basic_insert_data; 
