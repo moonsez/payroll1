@@ -664,7 +664,23 @@ class Master_model extends CI_Model {
             return false;
         }
 	}
-	
-	
+
+    function fetchEmployee()
+    {
+        $q = $this->db->query("SELECT tec.* FROM tbl_employee_creation as tec, tbl_userinfo as tu WHERE tu.user_id=tec.user_id AND tu.display='Y' AND tu.account_status='activate' AND tec.display='Y' ");
+
+        if($q->num_rows()>0)
+        {
+            foreach ($q->result() as $key)
+            {
+                $data[]=$key;
+            }
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+	}
 }
 

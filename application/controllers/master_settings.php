@@ -170,7 +170,7 @@ class Master_settings extends CI_Controller {
 	  	$data['employee_create']=$this->master_model->selectDetailsDisplayByASC('tbl_designation','desig_name',$whereId);
       	$data['earning_allow']=$this->master_model->selectDetailsDisplayByASC('tbl_earning_allowance','earning_name',$whereId1);
       	$data['deduction_allow']=$this->master_model->selectDetailsDisplayByASC('tbl_deduction_allowance','deduction_name',$whereId1);
-      	$data['empDetails']=$this->master_model->selectDetailsDisplayByASC('tbl_employee_creation','company_id',$whereId);
+      	$data['empDetails']=$this->master_model->fetchEmployee();
       	//echo $this->db->last_query(); exit();
       	//print_r($data['empDetails']); exit();
       	//$data['empDetails']=$this->slip_aks_model->fetchAllEmployeeByCompany($whereId1);
