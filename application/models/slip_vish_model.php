@@ -437,19 +437,16 @@ class Slip_vish_model extends CI_Model {
         (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=8) as ESIC_deduct, 
         (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=10) as tds_deduct,
         (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=11) as insurance_deduct,
-         tec.var_per, memo.memo_cnt, memo.memo_amt, lp.late_punchin, lp.late_punchin_halfdays, lp.early_punchout,lp.no_punchout_cnt, lp.no_min_4hr_work_cnt, lp.no_min_8hr_work_cnt, lp.wfh_cnt, lp.wfh_dates,lp.eary_out
+         tec.var_per, memo.memo_cnt, memo.memo_amt, lp.late_punchin, lp.late_punchin_halfdays, lp.early_punchout,lp.no_punchout_cnt, lp.no_min_4hr_work_cnt, lp.no_min_8hr_work_cnt, lp.wfh_cnt, lp.wfh_dates
 
             FROM tbl_employee_creation AS tec
-           LEFT JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
+            JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
             JOIN tbl_userinfo AS tu ON tu.user_id = tec.user_id AND tec.display='Y'
             LEFT JOIN  (SELECT count(*) memo_cnt, SUM(penality) memo_amt, user_id  FROM tbl_memo_details WHERE DATE_FORMAT(ifrac_date, '%m-%Y') =? AND display='Y' GROUP BY user_id) AS memo ON  memo.user_id=tu.user_id  
             LEFT JOIN ( SELECT 
                 p.user_id,
                 s.shift_start_time,
                 s.shift_end_time,
-                COUNT(CASE WHEN DAYOFWEEK(p.punch_date) NOT IN (7) AND TIME_TO_SEC(TIMEDIFF(p.punchout_time, p.punchin_time)) BETWEEN 28800 AND 32400 THEN 1 
-                       WHEN DAYOFWEEK(p.punch_date) = 7 AND TIME_TO_SEC(TIMEDIFF(p.punchout_time, p.punchin_time)) BETWEEN 25200 AND 28800 THEN 1 END
-            ) as eary_out,
                 COUNT(
                     CASE 
                         WHEN p.day_status!='LD' AND l.user_id IS NULL AND TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' AND p.punchin_time > '11:00:00' AND p.punchin_time < '14:00:00' THEN 1

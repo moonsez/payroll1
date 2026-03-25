@@ -5,17 +5,15 @@
 	Work :- login function.
 */
 
-class Login_admin extends CI_Controller {
+class login_admin extends CI_Controller {
 
 	
 	public function index()
-	{
-		// echo "1234";exit		
+	{		
 		if($this->authenctication->logged_in()==FALSE)
 		{			
 			$msg = 'slip_generation_login';
-			$key = 'slipGenerationProject';
-			$data['key_string'] = $this->encryption->encode($msg, $key);
+			$data['key_string'] = $this->encryption->encrypt($msg);
 			$this->session->set_userdata("secret_key", $data['key_string']);
 			$this->load->view('login',$data);
 		}
@@ -41,15 +39,11 @@ class Login_admin extends CI_Controller {
     function load() 
 	{		
 		$msg = 'slip_generation_login';
-		$key = 'slipGenerationProject';
-		$data['key_string'] = $this->encryption->encode($msg, $key);
+		$data['key_string'] = $this->encryption->encrypt($msg);
 		$this->session->set_userdata("secret_key", $data['key_string']);
-			
-		
-		$state=$this->authenctication->logged_in();		
+		$state=$this->authenctication->logged_in();
 		if($state==false)
-		{		 	
-			//$this->load->view('login',$data);
+		{
 			redirect(BASEURL2,'user');
 		}
 		else if($state==true)
@@ -127,19 +121,21 @@ class Login_admin extends CI_Controller {
 		}		
     }
 
-    function payslip($user_id)
-	{ 
+    function payslip($user_id=null)
+	{
+		// echo "12";exit;
 		$this->load->library('authenctication');
-		$error='';
+
 		if(isset($user_id) && !empty($user_id))
 		{
-			$valid['state']=$this->authenctication->chklogin($user_id);	
-			
-			if (!$valid['state'])
+			$valid['state']=$this->authenctication->chklogin($user_id);
+		
+            if (!$valid['state'])
 			{
 				redirect(BASEURL2,'user');
 			}else
 			{
+				
 				redirect('user');
 			} 
 		}

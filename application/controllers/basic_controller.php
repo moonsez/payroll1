@@ -28,43 +28,30 @@ class basic_controller extends CI_Controller {
 	}
 		
 	public function fetchBasicData()
-	{ 
+	{
+
 		$slipMonth=$this->input->post('basic_slip_months');		
 		$month_year_array = explode('-', $slipMonth);
 		$num_days_of_month = cal_days_in_month(CAL_GREGORIAN, $month_year_array[0], $month_year_array[1]);
-
-		//$company_id = $this->session->userdata('comp_id');
 		$company_id=$this->input->post('comp_id');
-		$data['earning_data'] = $this->slip_vish_model->fetchAllByComp('tbl_emp_earn_allowance','company_id',$company_id);
-		//print_r($data['earning_data']); exit();
-		$data['deduction_data'] = $this->slip_vish_model->fetchAllByComp('tbl_emp_deduct_allowance','company_id',$company_id);
-		
-		/*print_r($data['earning_data']);
-		print_r($data['deduction_data']); 
-		exit();*/
 
+		$data['earning_data'] = $this->slip_vish_model->fetchAllByComp('tbl_emp_earn_allowance','company_id',$company_id);
+		$data['deduction_data'] = $this->slip_vish_model->fetchAllByComp('tbl_emp_deduct_allowance','company_id',$company_id);
 		$salExist = $this->slip_vish_model->checkSalaryExist($slipMonth,$company_id);
-		// echo $this->db->last_query();exit();
-		//print_r($salExist);	exit();		 
-		if(isset($salExist) && !empty($salExist)){ 		
+
+        if(isset($salExist) && !empty($salExist)){
 			$data['basicWithPt']=$this->slip_vish_model->getExistData($slipMonth,$company_id);
 			$data['AdvanceData']=$this->slip_vish_model->editfetchAdvanceData($company_id,$slipMonth);
-			//echo $this->db->last_query();exit();
 		}else{ 
 			$data['basicWithPt']=$this->slip_vish_model->getBasicSalary($company_id,$slipMonth);
-			// echo $this->db->last_query();exit();
-			$data['AdvanceData']=$this->slip_vish_model->featchAdvanceData($company_id);	
+			$data['AdvanceData']=$this->slip_vish_model->featchAdvanceData($company_id);
+		}
 
-			//print_r($data['AdvanceData']);exit();		
-		} 
-		
-		
 		$data['mth'] = $month_year_array[0];
 		$data['year'] = $month_year_array[1];
 		$data['month']=$slipMonth; 
 		$data['company_id']=$company_id; 
 		$data['num_days_of_month']=$num_days_of_month;
-		
 		$this->load->view('basic_pt_tbl',$data); 
 	}
 
@@ -215,11 +202,16 @@ class basic_controller extends CI_Controller {
 		$no_min_8hr_work_cnt = $this->input->post('no_min_8hr_work_cnt');
 		$total_full_days = $this->input->post('total_full_days');
 
+        // print_r($earn_allow_emp_id);
+		$earn_count = (isset($earn_allow_emp_id) && !empty($earn_allow_emp_id)?count($earn_allow_emp_id):0);
+		$deduct_count = (isset($deduct_allow_emp_id) && !empty($deduct_allow_emp_id)?count($deduct_allow_emp_id):0);  
+		// count($deduct_allow_emp_id);
+		
 
-		$earn_count = count($earn_allow_emp_id);
-		$deduct_count = count($deduct_allow_emp_id);
 		$earnig_data = array();
 		$deduct_data = array();
+
+		error_reporting(0);
 		
 		if (isset($earn_allow_emp_id) && !empty($earn_allow_emp_id) && $earn_allow_emp_id!=0) 
 		{					
@@ -345,8 +337,8 @@ class basic_controller extends CI_Controller {
 
  
 				}
-				print_r($basic_pt_data);
-				exit();
+				// print_r($basic_pt_data);
+				// exit();
 
 				$basic_insert_data = $this->master_model->updateBatch('tbl_basic_pt', $basic_pt_data,$earnig_data,$deduct_data,$emp_ids,$slip_month);
 				//echo $basic_insert_data; 
