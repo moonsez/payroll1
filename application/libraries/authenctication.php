@@ -33,11 +33,13 @@ class Authenctication
 	
 
 	function chklogin($user_id) 
-	{  
+	{ 
+		// echo $user_id;exit;
 		$CI =& get_instance();  
 		$CI->db->select('*')->from('tbl_userinfo u')->join('tbl_employee_personal_details e','e.user_id=u.user_id');
-		$CI->db->where("u.user_id",$user_id)->where("u.account_status",'activate')->where("u.display",'Y');
+		$CI->db->where("md5(u.user_id)",$user_id)->where("u.account_status",'activate')->where("u.display",'Y');
 		$query = $CI->db->get();
+		// echo '<pre>';print_r($query);exit;
 		if($query->num_rows() != 1)
 		{
 			return false;
