@@ -32,6 +32,8 @@
 			$gross = 0;
 			$ctc = 0;
 			$minus = 0;	
+			$bonusNew=0;
+			$bonusNewAmt=0;
 			if (isset($earning_data) && !empty($earning_data))
 			{?>
 				<div class="col-md-6">											
@@ -64,8 +66,16 @@
 						$i=1; 
 						
 						$minus = 0;
+						
 						foreach ($earning_data as $key) 
-						{?>
+						{
+							// echo '<pre>';print_r($key);
+							
+							if($key->earning_name=='Bonus'){
+								$bonusNew=1;
+								$bonusNewAmt=$key->earn_value;
+							}
+							?>
 							<div class="checkbox-list">																
 								<div class="form-group">																
 									<div class="row" id="earning_allowance<?php echo $i++;?>">
@@ -214,7 +224,7 @@
 					</div>
 					<div class="col-md-5">
 						<div class="input-group">
-							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo ($singleEmployee->emp_basic+$gross)-$minus; ?>.00</b>
+							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo ($singleEmployee->emp_basic+$gross)-$minus-$bonusNewAmt; ?>.00</b>
 						</div>
 					</div>
 				</div>

@@ -2330,7 +2330,8 @@ class Monthly_report extends PHPExcel {
 				}*/
 				/*$earn_leave=$emp_leave_data->earn_leave;*/
 				$CI->excel->getActiveSheet()->setCellValue('G'.$j,(isset($emp_leave_data->earn_leave) && !empty($emp_leave_data->earn_leave))?$emp_leave_data->earn_leave:0); //$emp_leave_data->earn_leave
-				$CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
+				// $CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
+				$CI->excel->getActiveSheet()->setCellValue('H'.$j,"=SUM(F$j-G$j)");
 				/*$CI->excel->getActiveSheet()->setCellValue('H'.$j,$emp_leave_data->bal_leave);*/
 				/*$CI->excel->getActiveSheet()->setCellValue('I'.$j,$emp_paid_leave->paid_leave);*/
               	$CI->excel->getActiveSheet()->setCellValue('I'.$j,(isset($emp_leave_data->earn_leave1) && !empty($emp_leave_data->earn_leave1))?$emp_leave_data->earn_leave1:0); 
@@ -2381,6 +2382,7 @@ class Monthly_report extends PHPExcel {
 				$p_bonus = 0;
 				$bonus = 0;
 				$total_allowance=0;
+				$pf_dedct=0;
 
 				//EARNING ALLOWANCE				
 				if(isset($earn_allowance) && !empty($earn_allowance))
@@ -2637,8 +2639,18 @@ class Monthly_report extends PHPExcel {
 				}
 
 				$earn_gross = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($total_bonus)*1 + ($otherAllow_total)*1+($total_p_bonus)*1;
-				$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+				// echo '<pre>';print_r($earn_gross);
+				// echo '<pre>';print_r($pf_dedct);
+				// echo '<pre>';print_r($total_bonus);
+				
+				// echo "<br>";
+				// echo "<br>";
+				// echo "TOT:-".round((($earn_gross+$pf_dedct)-$total_bonus*1));
+				// echo "----";
+				
+				// echo $pf_dedct;
 				$CI->excel->getActiveSheet()->setCellValue('AU'.$j,round((($earn_gross+$pf_dedct)-$total_bonus*1)));
+				$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
 				$total_earn_gross = $total_earn_gross + ($earn_gross - $total_bonus); 
 				
 				$earn_gross1 = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($otherAllow_total)*1 +($total_p_bonus)*1;

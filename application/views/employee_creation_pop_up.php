@@ -232,7 +232,7 @@
 					
 					<div class="col-md-5">
 						<div class="input-group">
-							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo $singleEmployee->emp_basic+$gross-$bonus; ?>.00</b>
+							<i class="fa fa-inr"></i>&nbsp;&nbsp;<b><?php echo $singleEmployee->emp_basic+$gross-$bonus-(isset($empPF) && !empty($empPF)?$empPF:0); ?>.00</b>
 						</div>
 					</div>
 				</div>

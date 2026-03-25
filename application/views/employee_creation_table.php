@@ -40,10 +40,10 @@
 										<th>
 											Gender
 										</th>
-										<!-- <th>
-											Designation
+										 <th>
+											Company Name
 										</th>
-										<th>
+										<!--<th>
 											Location
 										</th> -->
 										<th>
@@ -74,10 +74,10 @@
 											<td>
 												<?php echo (isset($key->gender) && !empty($key->gender))?$key->gender:'';?>
 											</td>
-											<!-- <td>
-												<?php echo (isset($key->desig_id) && !empty($key->desig_id))?$key->desig_id:'';?>
+											 <td>
+												<?php echo (isset($key->company_name) && !empty($key->company_name))?$key->company_name:'';?>
 											</td>
-											<td style="text-align:center;">
+											<!--<td style="text-align:center;">
 												<?php echo (isset($key->emp_loc) && !empty($key->emp_loc))?$key->emp_loc:'';?>
 											</td> -->
 											<td style="text-align:center;">
@@ -123,10 +123,10 @@
 										<th>
 											Gender
 										</th>
-										<!-- <th>
-											Designation
+										 <th>
+											Company Name
 										</th>
-										<th>
+										<!--<th>
 											Location
 										</th> -->
 										<th>
@@ -154,10 +154,10 @@
 											<td>
 												<?php echo (isset($key->gender) && !empty($key->gender))?$key->gender:'';?>
 											</td>
-										<!-- 	<td>
-												<?php echo (isset($key->desig_id) && !empty($key->desig_id))?$key->desig_id:'';?>
+										 	<td>
+												<?php echo (isset($key->company_name) && !empty($key->company_name))?$key->company_name:'';?>
 											</td>
-											<td style="text-align:center;">
+										<!--	<td style="text-align:center;">
 												<?php echo (isset($key->emp_loc) && !empty($key->emp_loc))?$key->emp_loc:'';?>
 											</td> -->
 											<td style="text-align:center;">
@@ -200,10 +200,10 @@
 										<th>
 											Gender
 										</th>
-										<!-- <th>
-											Designation
+										 <th>
+											Company Name
 										</th>
-										<th>
+										<!--<th>
 											Location
 										</th> -->
 										<th>
@@ -234,10 +234,10 @@
 											<td>
 												<?php echo (isset($key->gender) && !empty($key->gender))?$key->gender:'';?>
 											</td>
-											<!-- <td>
-												<?php echo (isset($key->desig_id) && !empty($key->desig_id))?$key->desig_id:'';?>
+											 <td>
+												<?php echo (isset($key->company_name) && !empty($key->company_name))?$key->company_name:'';?>
 											</td>
-											<td style="text-align:center;">
+											<!--<td style="text-align:center;">
 												<?php echo (isset($key->emp_loc) && !empty($key->emp_loc))?$key->emp_loc:'';?>
 											</td> -->
 											<td style="text-align:center;">
