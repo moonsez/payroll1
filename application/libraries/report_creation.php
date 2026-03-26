@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 class Report_Creation
 {
 
@@ -101,44 +102,48 @@ class Report_Creation
 		$sheet_writer->save('php://output');
 	}
 
-	function Save_pdf($html,$pdfname)
-	{
-		/*
-		 * Required files 
-		 * 1. A folder name dompdf which contain classes should be placed in thirdparty folder.
-		 * 2. A library with name dompdf_gen.php in library folder.
-		 * 
-		 * 
-		 * 
-		 * Input Data 
-		 * 1.  	html file with data.
-		 * 2.  	filename
-		 * 
-		 * Way to call this function 
-		 * 
-		 * 	$filename = 'file name';
-			$html = $this->load->view('view path','$data_to_view',TRUE);
-		 * 
-		 * */
-		 
-		// $pdfname = $pdfname.'_'.date('dMy').'.pdf';
-		/*require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
-		$dompdf = new DOMPDF();
-		$dompdf->load_html($html);
-		$dompdf->set_paper('A4', 'portrait' );
-		$dompdf->render();
-		$output = $dompdf->output();
-   		$res = file_put_contents('./pdf-mail-sent/'.$pdfname, $output);
-		return $res;*/
-		$pdfname = $pdfname.'.pdf';
-		require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
-		$dompdf = new DOMPDF();
-		$dompdf->load_html($html);
-		$dompdf->set_paper('A4', 'portrait' );
-		$dompdf->render();
-		$dompdf->stream($pdfname);
-	}
+public function Save_pdf($html, $filename = 'document.pdf', $stream = TRUE)
+{
+	error_reporting(0);
+ini_set('display_errors', 0);
+    require_once APPPATH . 'third_party/dompdf/autoload.inc.php';
+
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+	$options->set('isHtml5ParserEnabled', true);
+    $options->set('defaultFont', 'DejaVu Sans');
+
+    $dompdf = new Dompdf($options);
 	
+    $dompdf->loadHtml($html);
+
+    $dompdf->setPaper('A4', 'portrait');
+	 ob_end_clean();
+
+ try {
+    $dompdf->render();
+} catch (Throwable $e) {
+     echo "<pre>";
+
+    echo "Error: " . $e->getMessage() . "\n\n";
+
+    echo "File: " . $e->getFile() . "\n";
+    echo "Line: " . $e->getLine() . "\n\n";
+
+    echo "Full Trace:\n";
+    print_r($e->getTrace());
+
+    exit;
+}
+
+
+    if ($stream) {
+        // DOWNLOAD
+        $dompdf->stream($filename, ["Attachment" => 1]);
+    } else {
+        return $dompdf->output();
+    }
+}
 
 	function create_plain_excel($filename)
 	{

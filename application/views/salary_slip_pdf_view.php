@@ -31,7 +31,7 @@
 
 	<div class="portlet-body">
 		<?php $deductTotal = 0; ?>
-		<table class="table table-striped table-bordered table-hover masterTable" border="1">
+		<table border="1" width="100%" cellspacing="0" cellpadding="5">
 			<thead>
 				<tr>
 					<th colspan="4" style="font-size:18px; height:40; color:black;">

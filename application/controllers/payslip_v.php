@@ -7,6 +7,8 @@
 
 class payslip_v extends CI_Controller {
 
+
+
 	public function generate_pay_slip_PDF()
 
 	{	
@@ -40,7 +42,39 @@ class payslip_v extends CI_Controller {
 		$dateTim = date('d-m-y');
  		$pdfname = $data['employee_basic_info']->emp_name.' Pay Slip for the Month of '.$final_month_year;
  		$mail_id = $data['employee_basic_info']->email_id;
- 		$html=$this->load->view('salary_slip_pdf_view',$data,TRUE);
+
+
+		function fix_numbers($data){
+        if(is_array($data)){
+            foreach($data as $k => $v){
+                $data[$k] = fix_numbers($v);
+            }
+        } elseif(is_object($data)){
+            foreach($data as $k => $v){
+                $data->$k = fix_numbers($v);
+            }
+        } else {
+            if(is_numeric($data)){
+                return (float)$data;
+            }
+        }
+        return $data;
+    }
+
+    // 👇 अब use कर
+//   $this->load->helper('common');
+$data = fix_numbers($data);
+		// echo '<pre>';print_r($data);
+ 		// ob_start();
+		
+
+$html = $this->load->view('salary_slip_pdf_view',$data,TRUE);
+
+// $html = ob_get_clean();
+// echo "<pre>";
+// echo htmlspecialchars($html);
+// exit;
+		// exit;
 		$this->report_creation->Save_pdf($html,$pdfname);
 	}	
 

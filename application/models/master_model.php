@@ -665,22 +665,18 @@ class Master_model extends CI_Model {
         }
 	}
 
-    function fetchEmployee()
-    {
-        $q = $this->db->query("SELECT tec.* FROM tbl_employee_creation as tec, tbl_userinfo as tu WHERE tu.user_id=tec.user_id AND tu.display='Y' AND tu.account_status='activate' AND tec.display='Y' ");
-
-        if($q->num_rows()>0)
-        {
-            foreach ($q->result() as $key)
-            {
-                $data[]=$key;
-            }
-            return $data;
-        }
-        else
-        {
-            return false;
-        }
+	public function fetchCompWiseEmp(){
+       $sql=$this->db->query("SELECT tsh.*,tcm.company_name FROM `tbl_employee_creation` as tsh left join tbl_company_master as tcm on tcm.company_id=tsh.company_id where tsh.display='Y'");
+	   if($sql->num_rows()>0){
+          foreach ($sql->result() as $key ) {
+			$data[]=$key;
+		  }
+		  return $data;
+	   }else{
+		return false;
+	   }
 	}
+	
+	
 }
 
