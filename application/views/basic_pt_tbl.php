@@ -70,11 +70,11 @@
 								<th>WFH Reduction %</th> 
 								<th>No of Memo</th>
 								<th>Memo Amount</th>
-								<th>Late Punch In(After 11 am) Count - Half days</th>
+								<th>Late Punch In(30 min after shift start) Count - Half days</th>
 								<th>Early Punch Out Count</th>
 								<th>Half Days due to Early Punch Out (1 for 3)</th>
-								<th>Full Days due to no minimum 4 hours</th>
-								<th>Half Days due to no minimum 8 hours (7 hours on Saturday)</th>
+								<th>Full Days due to no minimum 4hrs</th>
+								<th>Half Days due to no minimum 8hrs (7:30hrs on Saturday)</th>
 								<th>No Punchout Count(Full day)</th>
 								<th>Total full days</th>
 							

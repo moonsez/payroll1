@@ -454,8 +454,8 @@ class Slip_vish_model extends CI_Model {
                 ) AS late_punchin,
                 COUNT(
                     CASE 
-                        WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:59:30') AND ADDTIME(s.shift_start_time, '03:30:00') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-02:00:30')) THEN 1
-                        WHEN DAYOFWEEK(p.punch_date) != 7 AND day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:59:30') AND ADDTIME(s.shift_start_time, '03:29:50') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-01:00:30')) THEN 1
+                        WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:30:00') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-02:00:30')) THEN 1
+                        WHEN DAYOFWEEK(p.punch_date) != 7 AND day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:29:50') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-01:00:30')) THEN 1
                     END
                 ) AS late_punchin_halfdays,
 
@@ -489,7 +489,7 @@ class Slip_vish_model extends CI_Model {
                 COUNT(
                         CASE 
                             WHEN (TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' 
-                                                            AND TIMEDIFF(p.punchout_time, p.punchin_time) < IF(DAYOFWEEK(p.punch_date) = 7, '07:00:00', '08:00:00')
+                                                            AND TIMEDIFF(p.punchout_time, p.punchin_time) < IF(DAYOFWEEK(p.punch_date) = 7, '07:30:00', '08:00:00')
 
                                                             AND p.punchin_time < '11:00:00'
 
@@ -513,7 +513,7 @@ class Slip_vish_model extends CI_Model {
 
             FROM tbl_punching p 
             JOIN tbl_userinfo u ON u.user_id = p.user_id
-            JOIN tbl_shift s ON s.shift_id = u.emp_shift_id
+            JOIN tbl_shift s ON s.shift_id = p.emp_shift_id
             LEFT JOIN (SELECT el.user_id, eld.leave_from_day FROM tbl_emp_leave el JOIN tbl_emp_leaveday eld ON el.leave_id = eld.leave_id AND el.status = 'Approved' AND leavetype_id =8 AND DATE_FORMAT(eld.leave_from_day, '%m-%Y') = ?) l 
                 ON l.user_id = p.user_id AND p.punch_date = l.leave_from_day
             WHERE 
