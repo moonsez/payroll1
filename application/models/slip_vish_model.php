@@ -440,7 +440,7 @@ class Slip_vish_model extends CI_Model {
          tec.var_per, memo.memo_cnt, memo.memo_amt, lp.late_punchin, lp.late_punchin_halfdays, lp.early_punchout,lp.no_punchout_cnt, lp.no_min_4hr_work_cnt, lp.no_min_8hr_work_cnt, lp.wfh_cnt, lp.wfh_dates
 
             FROM tbl_employee_creation AS tec
-            JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
+            LEFT JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
             JOIN tbl_userinfo AS tu ON tu.user_id = tec.user_id AND tec.display='Y'
             LEFT JOIN  (SELECT count(*) memo_cnt, SUM(penality) memo_amt, user_id  FROM tbl_memo_details WHERE DATE_FORMAT(ifrac_date, '%m-%Y') =? AND display='Y' GROUP BY user_id) AS memo ON  memo.user_id=tu.user_id  
             LEFT JOIN ( SELECT 
