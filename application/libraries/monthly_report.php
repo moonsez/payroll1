@@ -2061,7 +2061,7 @@ class Monthly_report extends PHPExcel {
 
 		$CI->excel->getActiveSheet()->setCellValue('BN3', 'No of Memo');
 		$CI->excel->getActiveSheet()->setCellValue('BO3', 'Memo Amount');
-		$CI->excel->getActiveSheet()->setCellValue('BP3', 'Late Punch In(After 11 am) Count - Half days');
+		$CI->excel->getActiveSheet()->setCellValue('BP3', 'Late Punch In(30 min after shift start) Count - Half days');
 		$CI->excel->getActiveSheet()->setCellValue('BQ3', 'Early Punch Out Count');
 		$CI->excel->getActiveSheet()->setCellValue('BR3', 'Half Days due to Early Punch Out (1 for 3)');
 
