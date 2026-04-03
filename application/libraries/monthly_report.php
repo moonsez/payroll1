@@ -1861,6 +1861,1234 @@ class Monthly_report extends PHPExcel {
 
     // }
 
+	// function salarySlipReportExcelFormat_new($emp_basic_data,$company_name,$num_days_of_month,$month,$year,$salMonth, $export, $showbonus =false)
+    // {
+
+    	
+    // 	$CI =& get_instance(); 
+    // 	/*date_default_timezone_set('Asia/kolkata');*/
+    // 	$current_date = date('d/m/Y');
+    // 	$CI->load->library('excel');
+
+	// 	$CI->excel->getProperties()->setCreator("Moonveda Infotech Pvt. Ltd")
+	// 						 	   ->setLastModifiedBy("Moonveda Infotech Pvt. Ltd")
+	// 						 	   ->setTitle("Pay Slip")
+	// 						 	   ->setSubject("Pay Slip Of An Employee")
+	// 						 	   ->setDescription("System Generated File.")
+	// 						 	   ->setKeywords("office 2007")
+	// 						 	   ->setCategory("Confidential");
+
+	// 	$allborders = array(
+	// 		'borders' => array(
+	// 			'allborders' => array(
+	// 				'style' => PHPExcel_Style_Border::BORDER_THIN,
+					
+	// 			),
+	// 		),
+	// 	);
+	// 	//activate worksheet number 1
+	// 	$CI->excel->setActiveSheetIndex(0);
+	// 	//name the worksheet
+	// 	$CI->excel->getActiveSheet()->setTitle('Salary Sheet - '.$month.' '.$year);
+	// 	//set cell A1 content with some text
+	// 	$CI->excel->getActiveSheet()->setCellValue('A1', $company_name); //$employee_basic_info->emp_comp_name
+	// 	//change the font name
+	// 	$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setName('Bookman Old Style');
+    //     //change the font size
+	// 	$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+	// 	//make the font become bold
+	// 	$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+	// 	//set row height
+	// 	$CI->excel->getActiveSheet()->getRowDimension('1')
+	// 								->setRowHeight(20);
+	// 	/*  set default border for all stylesheet */
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getTop()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getBottom()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getLeft()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getRight()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	/*  End set default border for all stylesheet */
+
+	// 	//merge cell A1 until D1
+	// 	$CI->excel->getActiveSheet()->mergeCells('A1:BZ1')
+	// 								->getStyle()
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+	// 	$CI->excel->getActiveSheet()->getStyle('A1:CB1')->applyFromArray($allborders);
+
+	// 	$CI->excel->getActiveSheet()->getStyle('A2:CB2')
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+
+	// 	//set aligment to center for that merged cell (A1 to V1)
+	// 	$CI->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+	// 	//set cell A1 content with some text
+	// 	$CI->excel->getActiveSheet()->setCellValue('A2', 'Salary Sheet for the Month of '.$month.' '.$year.''); //$employee_basic_info->emp_comp_name
+	// 	//change the font name
+	// 	$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setName('Bookman Old Style');
+    //     //change the font size
+	// 	$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(15);
+	// 	//make the font become bold
+	// 	$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
+	// 	//set row height
+	// 	$CI->excel->getActiveSheet()->getRowDimension('2')
+	// 								->setRowHeight(20);
+	// 	/*  set default border for all stylesheet */
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getTop()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getBottom()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getLeft()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	$CI->excel->getDefaultStyle()
+	// 	    ->getBorders()
+	// 	    ->getRight()
+	// 	    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	// 	/*  End set default border for all stylesheet */
+
+	// 	//merge cell A1 until D1
+	// 	$CI->excel->getActiveSheet()->mergeCells('A2:CB2')
+	// 								->getStyle()
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+
+
+	// 	$CI->excel->getActiveSheet()->getStyle('A2:CB2')
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+
+	// 	//set aligment to center for that merged cell (A1 to V1)
+	// 	$CI->excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);		
+
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('A3', 'Sr. No.');
+	// 	$CI->excel->getActiveSheet()->setCellValue('B3', 'Employee ID');
+	// 	$CI->excel->getActiveSheet()->setCellValue('C3', 'Name of the Employee');	
+	// 	$CI->excel->getActiveSheet()->setCellValue('D3', 'Location');		
+	// 	$CI->excel->getActiveSheet()->setCellValue('E3', 'Working Days');
+	// 	// paid leave
+	// 	$CI->excel->getActiveSheet()->setCellValue('F3', 'Sanction Paid Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('G3', 'Total Utilsed Paid Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('H3', 'Balance Paid Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('I3', 'Paid Leave Utilsed In Month');
+	// 	// sick leave
+	// 	$CI->excel->getActiveSheet()->setCellValue('J3', 'Sanction Sick Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('K3', 'Total Utilsed Sick Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('L3', 'Balance Sick Leave');
+	// 	$CI->excel->getActiveSheet()->setCellValue('M3', 'Sick Leave Utilsed In Month');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('N3', 'Actual Present Days');
+	// 	$CI->excel->getActiveSheet()->setCellValue('O3', 'Total Present Days');
+	// 	// Earning Allowance
+	// 	$CI->excel->getActiveSheet()->setCellValue('P3', 'Basic');
+	// 	$CI->excel->getActiveSheet()->setCellValue('Q3', 'DA Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('R3', 'HRA');
+	// 	$CI->excel->getActiveSheet()->setCellValue('S3', 'Conveyance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('T3', 'Mobile Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('U3', 'Medical Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('V3', 'Education Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('W3', 'City Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('X3', 'Entertianment Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('Y3', 'Performance Bonus');
+	// 	$CI->excel->getActiveSheet()->setCellValue('Z3', 'Other Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AA3', 'Bonus'); 
+	// 	$CI->excel->getActiveSheet()->setCellValue('AB3', 'Total Gross'); 
+	// 	// ctc
+	// 	$CI->excel->getActiveSheet()->setCellValue('AC3', 'PF (Employers Contribution)'); 
+	// 	$CI->excel->getActiveSheet()->setCellValue('AD3', 'ESIC (Employers Contribution)');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AE3', 'PF (Employees Contribution)');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AF3', 'ESIC (Employees Contribution)');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AG3', 'Employee Medical Insurance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AH3', 'CTC');
+	// 	// salary on number of days
+	// 	$CI->excel->getActiveSheet()->setCellValue('AI3', 'Earn Basic');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AJ3', 'Earn DA');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AK3', 'Earn HRA');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AL3', 'Earn Conveyance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AM3', 'Earn Mobile Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AN3', 'Earn Medical Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AO3', 'Earn Education Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AP3', 'Earn City Allowance');  
+	// 	$CI->excel->getActiveSheet()->setCellValue('AQ3', 'Earn Entertianment Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AR3', 'Performance Bonus');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AS3', 'Earn Other Allowance');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AT3', 'Earn Bonus');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AU3', 'Total Earn Gross');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AV3', 'Earn Gross For ESIC');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AW3', 'Employees PF Deduction');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AX3', 'Employees ESIC  Deduction ');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AY3', 'Employee Medical Insurance ');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AZ3', 'Professional Tax');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BA3', 'TDS');
+	// 	// if Deducation
+	// 	$CI->excel->getActiveSheet()->setCellValue('BB3', 'Telephone (Co.)');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BC3', 'Others Deduction');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BD3', 'Advance Opening'); 
+	// 	$CI->excel->getActiveSheet()->setCellValue('BE3', 'Advance Addition'); 
+	// 	$CI->excel->getActiveSheet()->setCellValue('BF3', 'Advance Recovery'); 
+	// 	$CI->excel->getActiveSheet()->setCellValue('BG3', 'Advance Closing');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BH3', 'Total Deduction for the month');
+	// 	/*$CI->excel->getActiveSheet()->setCellValue('AU3', 'Bonus');
+	// 	$CI->excel->getActiveSheet()->setCellValue('AV3', 'Arrears');*/
+	// 	//Total Salary 
+	// 	$CI->excel->getActiveSheet()->setCellValue('BI3', 'Net Pay');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BJ3', 'WFH Days');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BK3', 'WFH Deduction %');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BL3', 'WFH Deduction Amount');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BM3', 'Net Pay After WFH');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BN3', 'No of Memo');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BO3', 'Memo Amount');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BP3', 'Late Punch In(30 min after shift start) Count - Half days');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BQ3', 'Early Punch Out Count');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BR3', 'Half Days due to Early Punch Out (1 for 3)');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BS3', 'Full Days due to no minimum 4 hours');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BT3', 'Half Days due to no minimum 8hrs (7:30hrs on Saturday)	');
+
+		
+	// 	$CI->excel->getActiveSheet()->setCellValue('BU3', 'Total full days');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BV3', 'Total Deduction Amount');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BW3', 'Net Pay After Deduction');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BX3', 'No Punch Out Count');
+	
+	// 	$CI->excel->getActiveSheet()->setCellValue('BY3', 'Total Deduction Amount');
+
+	// 	$CI->excel->getActiveSheet()->setCellValue('BZ3', 'Net Pay After Deduction');
+
+	// 	if($showbonus){
+	// 	$CI->excel->getActiveSheet()->setCellValue('CA3', 'Variable %');
+	// 	$CI->excel->getActiveSheet()->setCellValue('CB3', 'Variable Bonus Amount');
+	// 	}
+	// 	//Star rate
+	// 	// $CI->excel->getActiveSheet()->setCellValue('AX3', 'Red Star');
+	// 	// $CI->excel->getActiveSheet()->setCellValue('AY3', 'Gold Star');
+	// 	// $CI->excel->getActiveSheet()->setCellValue('AZ3', 'Balance Red Star');
+	// 	// $CI->excel->getActiveSheet()->setCellValue('BA3', 'Balance Gold Star');
+	// 	// $CI->excel->getActiveSheet()->setCellValue('BB3', 'Star deducation');
+	// 	/*$CI->excel->getActiveSheet()->setCellValue('BC3', 'Black Star');
+	// 	$CI->excel->getActiveSheet()->setCellValue('BD3', 'Balance Black Star');*/
+	// 	//$CI->excel->getActiveSheet()->setCellValue('BC3', 'Balance Gold Star');
+	// 	/*$CI->excel->getActiveSheet()->setCellValue('BD3', 'Black Star deducation');*/
+	// 	//$CI->excel->getActiveSheet()->setCellValue('BD3', 'Salary after star deducation');
+
+
+	// 	$CI->excel->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
+	// 	$CI->excel->getActiveSheet()->getRowDimension('2')->setRowHeight(40);
+	// 	$CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(0)->setWidth(5);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(1)->setWidth(0);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(2)->setWidth(25);	
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(3)->setWidth(40);							
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(4)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(5)->setWidth(10);		
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(6)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(7)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(8)->setWidth(10);	
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(9)->setWidth(10);		
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(10)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(11)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(12)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(13)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(14)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(15)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(16)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(17)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(18)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(19)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(20)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(21)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(22)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(23)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(24)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(25)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(26)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(27)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(28)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(29)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(30)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(31)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(32)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(33)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(34)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(35)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(36)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(37)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(38)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(39)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(40)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(41)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(42)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(43)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(44)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(45)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(46)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(47)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(48)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(49)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(50)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(51)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(52)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(53)->setWidth(10);
+
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(54)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(55)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(56)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(57)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(58)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(59)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(60)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(61)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(62)->setWidth(10);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(63)->setWidth(12);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(64)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(65)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(66)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(67)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(68)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(69)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(70)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(71)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(72)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(73)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(74)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(75)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(76)->setWidth(15);
+	// 	$CI->excel->getActiveSheet()->getColumnDimensionByColumn(77)->setWidth(15);
+
+	// 	/************ Wrap A2 V3 content */  
+
+	// 	//change the font name
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')->getFont()->setName('Bookman Old Style');
+    //     //change the font size
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')->getFont()->setSize(10);
+	// 	//make the font become bold
+	// 	$CI->excel->getActiveSheet()->getStyle('A2:CB3')->getFont()->setBold(true);															
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')->getFont()->getColor()->setRGB('FFFFFFFF');														
+										
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FF428bca');
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')->applyFromArray($allborders);
+	// 	$CI->excel->getActiveSheet()->getStyle('A3:CB3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+	// 																->setWrapText(true);
+	// 	/* start dynamic code from here *********/
+	// 	$lastRowNum=4;
+ 	// 	if (isset($emp_basic_data) && !empty($emp_basic_data))
+ 	// 	{
+	//  		$j=4;
+	//  		$lastRowNum= $lastRowNum + count($emp_basic_data);
+	//  		// define total vcariable for per coloumn 
+	//  		$net_basic_total=0;
+	//  		$net_basic_totalE=0;
+	//  		$salBefoPt_total=0;
+	//  		$pt_total=0;
+	//  		$net_with_pt_total=0;
+	//  		$total_deduction=0;
+	//  		$Conveyance_total=0;
+	//  		$mobile_total=0;
+	//  		$HRA_total = 0;
+	//  		$DA_total = 0;
+	//  		$otherAllow_total=0;
+	//  		$Arrears_total=0;
+	//  		$allowance_total_emp = 0;
+	//  		$allowance_ded_total_emp = 0;
+	// 		$mobile_ded_total = 0;
+	// 		$ArrOther_ded_total = 0;
+	// 		$Bonus_total = 0;
+	// 		$Advance_total = 0;
+	// 		$per_emp_advance=0;
+	// 		$deduct_adv_total=0;
+	// 		$Advance_deduction=0;
+	// 		$medical_total=0;
+	// 		$city_total=0;
+	// 		$education_total=0;
+	// 		$adv_opening = 0;
+	// 		$adv_Addition = 0;
+	// 		$adv_recovery = 0;
+	// 		$adv_closing_amt = 0;
+
+	// 		$mobile_total_all=0;
+	// 		$otherAllow_total_all=0;
+	// 		$recy_ttl = 0;
+	// 		$entertainment_total = 0;
+	// 		$p_bonus_total = 0;
+	// 		$pf_earn = 0;
+	// 		$ESIC_earn = 0;
+	// 		$pf_deduct = 0;
+	// 		$ESIC_deduct = 0;
+	// 		$insurance_deduct = 0;
+	// 		$tot_pf_deduct=0;
+	// 		$tot_ESIC_deduct=0;
+	// 		$pay_during_month = 0;
+	// 		$pay_beforePt=0;
+	// 		$final_net_pay=0;
+	// 		$basic_net=0;
+	// 		$total_ctc=0;
+	// 		$total_gross=0;
+	// 		$total_earn_gross=0;
+	// 		$total_earn_gross1=0;
+	// 		$total_net_salary=0;
+	// 		$total_deduct_mnth=0;
+	// 		$total_net_pay=0;
+	// 		$total_net_pay_wfh=0;
+	// 		$total_net_pay_deduction=0;
+	// 		//$Bonus_total=0;
+	// 		//emp info
+	// 		$emp_bac = 0;
+	// 		$emp_da = 0;
+	// 		$emp_hra = 0;
+	// 		$emp_earn_hra=0;
+	// 		$emp_convy = 0;
+	// 		$emp_mob = 0;
+	// 		$emp_med = 0;
+	// 		$emp_edu = 0;
+	// 		$emp_city = 0;
+	// 		$emp_enter = 0;
+	// 		$emp_gross = 0;
+	// 		$emp_p_bonus = 0;
+	// 		$emp_bonus = 0;
+	// 		$emp_tot_alw = 0;
+	//  		$sr=1;
+	//  		$total_star_deduct=0;
+	// 		$total_star_pay=0;
+	// 		$actual_present_day=0;
+	//  		foreach ($emp_basic_data as $key)
+	//  		{
+	//  			$netBasicTotK = 0;
+	//  			$emp_wise_ded=0;
+	//  			$boun_emp = 0;
+	//  			$emp_wise_add_deduction = 0;
+	//  		 	//echo $key->empl_id; echo '<br>';
+	// 			$emp_allData = $CI->Slip_vish_model->fetchAllowDataOfEmp_basic_allow($key->empl_id,$key->salary_month);
+	// 			// print_r($emp_allData); 
+	// 			// echo $CI->db->last_query();
+	// 			$emp_Ded_allData = $CI->Slip_vish_model->fetchDeductAllowDataOfEmpExpend($key->empl_id);	
+	// 			$earn_allowance = $CI->master_model->selectAllWhr('tbl_emp_earn_allowance','emp_id',$key->empl_id);
+	// 			$emp_basic = $CI->master_model->selectDetailsWhr('tbl_employee_creation','emp_id',$key->empl_id);
+	// 			$emp_leave_data = $CI->Slip_vish_model->fetch_emp_leave_data($key->user_id,$month,$year);
+    //            /* echo $CI->db->last_query();exit();	 */   
+	// 			$emp_paid_leave = $CI->Slip_vish_model->fetch_paid_leave($key->user_id,$month,$year);
+              
+
+	// 			$emp_creditleave_data = $CI->Slip_vish_model->fetch_emp_credit_leave_data($key->user_id,$year);
+				
+	// 			$emp_creditleave = (isset($emp_creditleave_data->no_leave_credit) && !empty($emp_creditleave_data->no_leave_credit))?$emp_creditleave_data->no_leave_credit:'0';
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('A'.$j,$sr++);
+	// 			$CI->excel->getActiveSheet()->setCellValue('B'.$j,$key->username);
+	// 			$CI->excel->getActiveSheet()->setCellValue('C'.$j,$key->emp_name);
+	// 			$CI->excel->getActiveSheet()->setCellValue('D'.$j,$key->dept);
+	// 			$CI->excel->getActiveSheet()->setCellValue('E'.$j,$num_days_of_month);
+
+	// 			$monthsdiff = $CI->Slip_vish_model->fetch_month_diff_of_emp_joining_date_and_currdate($key->user_id);
+	// 			$bal_leave_cnt=0;
+	// 			if($monthsdiff->months>=6)
+	// 			{
+	// 				$saction = $emp_creditleave;
+	// 			}else if(isset($emp_creditleave_data->no_leave_credit) && $emp_creditleave_data->no_leave_credit<0 && $monthsdiff->months<6){
+	// 				$bal_leave_cnt = $emp_creditleave_data->no_leave_credit;
+	// 				$saction=0;
+	// 			}else{
+	// 				$saction = 0;
+	// 			}
+	// 			//echo (isset($bal_leave_cnt)?$bal_leave_cnt:$saction); echo '<br>';
+	// 			$CI->excel->getActiveSheet()->setCellValue('F'.$j,$saction); //$emp_leave_data->total_leave
+	// 			/*if($emp_leave_data->bal_leave!=$emp_creditleave && !empty($emp_leave_data->bal_leave))
+	// 			{
+	// 				$earn_leave = $emp_creditleave-$emp_leave_data->bal_leave;
+	// 			}else{
+	// 				$earn_leave = 0;
+	// 			}*/
+	// 			/*$earn_leave=$emp_leave_data->earn_leave;*/
+	// 			$CI->excel->getActiveSheet()->setCellValue('G'.$j,(isset($emp_leave_data->earn_leave) && !empty($emp_leave_data->earn_leave))?$emp_leave_data->earn_leave:0); //$emp_leave_data->earn_leave=SUM(F4-G4)
+	// 			$CI->excel->getActiveSheet()->setCellValue('H'.$j,($saction-$emp_leave_data->earn_leave));
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('H'.$j,$emp_leave_data->bal_leave);*/
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('I'.$j,$emp_paid_leave->paid_leave);*/
+    //           	$CI->excel->getActiveSheet()->setCellValue('I'.$j,(isset($emp_leave_data->earn_leave1) && !empty($emp_leave_data->earn_leave1))?$emp_leave_data->earn_leave1:0); 
+              	
+    //           	// sick leave
+    //           	$emp_sick_leave_data = $CI->Slip_vish_model->fetch_emp_sick_leave_data($key->user_id,$year);
+				
+	// 			$emp_sick_leave = (isset($emp_sick_leave_data->sick_leave_creadit) && !empty($emp_sick_leave_data->sick_leave_creadit))?$emp_sick_leave_data->sick_leave_creadit:'0';
+
+	// 			$monthsdiff = $CI->Slip_vish_model->fetch_month_diff_of_emp_joining_date_and_currdate($key->user_id);
+	// 			$bal_leave_cnt=0;
+	// 			if($monthsdiff->months>=6)
+	// 			{
+	// 				$saction_sick = $emp_sick_leave;
+	// 			}else if(isset($emp_sick_leave_data->sick_leave_creadit) && $emp_sick_leave_data->sick_leave_creadit<0 && $monthsdiff->months<6){
+	// 				$bal_leave_cnt = $emp_sick_leave_data->sick_leave_creadit;
+	// 				$saction_sick=0;
+	// 			}else{
+	// 				$saction_sick=0;
+	// 			}
+
+    //           	$CI->excel->getActiveSheet()->setCellValue('J'.$j,$saction_sick);
+
+    //           	$emp_sick_leave_data = $CI->Slip_vish_model->fetch_emp_sick_leave_data1($key->user_id,$month,$year);
+              	
+    //           	$CI->excel->getActiveSheet()->setCellValue('K'.$j,(isset($emp_sick_leave_data->earn_leave) && !empty($emp_sick_leave_data->earn_leave))?$emp_sick_leave_data->earn_leave:0);
+    //           	$CI->excel->getActiveSheet()->setCellValue('L'.$j,(isset($emp_sick_leave_data->bal_leave) && !empty($emp_sick_leave_data->bal_leave) && $saction!=0)?$emp_sick_leave_data->bal_leave:$saction_sick-$emp_sick_leave_data->earn_leave);
+    //           	$CI->excel->getActiveSheet()->setCellValue('M'.$j,(isset($emp_sick_leave_data->earn_leave1) && !empty($emp_sick_leave_data->earn_leave1))?$emp_sick_leave_data->earn_leave1:0);
+
+    //           	// total leave
+    //           	$actual_present_day=($key->work_day)-($emp_leave_data->earn_leave1)-($emp_sick_leave_data->earn_leave1);
+    //           	$total_present_day=$actual_present_day+($emp_leave_data->earn_leave1)+($emp_sick_leave_data->earn_leave1);
+	// 			$CI->excel->getActiveSheet()->setCellValue('N'.$j,$actual_present_day);
+	// 			$CI->excel->getActiveSheet()->setCellValue('O'.$j,$total_present_day);
+				
+	// 			$basic = $key->basic_amt;//$emp_basic->emp_basic;
+	// 			$CI->excel->getActiveSheet()->setCellValue('P'.$j,round($key->basic_amt));
+	// 			$emp_bac = $emp_bac + $basic;
+
+	// 			$da = 0;
+	// 			$hra = 0;
+	// 			$conveyance = 0;
+	// 			$mobile = 0;
+	// 			$medical = 0;
+	// 			$education = 0;
+	// 			$city = 0;
+	// 			$entertainment = 0;
+	// 			$p_bonus = 0;
+	// 			$bonus = 0;
+	// 			$total_allowance=0;
+
+	// 			//EARNING ALLOWANCE				
+	// 			if(isset($earn_allowance) && !empty($earn_allowance))
+	// 			{
+	// 				foreach ($earn_allowance as $earn)
+	// 				{
+	// 					if($earn->earning_id == 18 )
+	// 					{
+	// 						//DA allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('Q'.$j,round($earn->earn_value));
+	// 						$emp_da = $emp_da + $earn->earn_value; 
+	// 						$da = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 7)
+	// 					{
+	// 						//HRA
+	// 						$CI->excel->getActiveSheet()->setCellValue('R'.$j,round($earn->earn_value));
+	// 						$emp_hra = $emp_hra + $earn->earn_value;
+	// 						$hra = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 3)
+	// 					{
+	// 						//Conveyance
+	// 						$CI->excel->getActiveSheet()->setCellValue('S'.$j,round($earn->earn_value));
+	// 						$emp_convy = $emp_convy + $earn->earn_value;
+	// 						$conveyance = $earn->earn_value;
+							
+	// 					}elseif ($earn->earning_id == 6 ) 
+	// 					{
+	// 						// mobile allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('T'.$j,round($earn->earn_value));
+	// 						$emp_mob = $emp_mob + $earn->earn_value;
+	// 						$mobile = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 13)
+	// 					{
+	// 						//medical allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('U'.$j,round($earn->earn_value));
+	// 						$emp_med = $emp_med + $earn->earn_value;
+	// 						$medical = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 20)
+	// 					{
+	// 						//education allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('V'.$j,round($earn->earn_value));
+	// 						$emp_edu = $emp_edu + $earn->earn_value;
+	// 						$education = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 14 )
+	// 					{				
+	// 						// City allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('W'.$j,round($earn->earn_value));
+	// 						$emp_city = $emp_city + $earn->earn_value;
+	// 						$city = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 22)
+	// 					{
+	// 						//entertainment allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('X'.$j,round($earn->earn_value));
+	// 						$emp_enter = $emp_enter + $earn->earn_value;
+	// 						$entertainment = $earn->earn_value;
+							
+	// 					}elseif($earn->earning_id == 25)
+	// 					{
+	// 						//entertainment allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('Y'.$j,round($earn->earn_value));
+	// 						$emp_p_bonus = $emp_p_bonus + $earn->earn_value;
+	// 						$p_bonus = $earn->earn_value;
+							
+	// 					}
+	// 					elseif($earn->earning_id == 9)
+	// 					{
+	// 						//entertainment allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('Z'.$j,round($earn->earn_value));
+	// 						$emp_tot_alw = $emp_tot_alw + $earn->earn_value;
+	// 						$total_allowance = $earn->earn_value;						
+							
+	// 					}
+	// 					elseif($earn->earning_id == 15)
+	// 					{
+	// 						//entertainment allowance
+	// 						$CI->excel->getActiveSheet()->setCellValue('AA'.$j,round($earn->earn_value));
+	// 						$emp_bonus = $emp_bonus + $earn->earn_value;
+	// 						$bonus = $earn->earn_value;						
+							
+	// 					}
+	// 				}
+	// 			}
+				
+	// 			$gross = $basic + ($da)*1 + ($hra)*1 + ($conveyance)*1 + ($mobile)*1 + ($medical)*1 + ($education)*1 + ($city)*1 + ($entertainment)*1 + ($bonus)*1 +($total_allowance)*1+($p_bonus)*1;
+
+	// 			$gross1 = $basic + ($da)*1 + ($conveyance)*1 + ($mobile)*1 + ($medical)*1 + ($education)*1 + ($city)*1 + ($entertainment)*1 +($total_allowance)*1+($p_bonus)*1;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AB'.$j,round((($gross+$key->pf_earn)-$bonus*1)));
+	// 			$emp_gross = $emp_gross + ($gross- $bonus);
+
+	// 			//CTC
+	// 			$CI->excel->getActiveSheet()->setCellValue('AC'.$j,round($key->pf_earn));
+	// 			$pf_earn = $pf_earn + $key->pf_earn;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AD'.$j,round($key->ESIC_earn));
+	// 			$ESIC_earn = $ESIC_earn + $key->ESIC_earn;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AE'.$j,round($key->pf_deduct));
+	// 			$pf_deduct=$pf_deduct+$key->pf_deduct;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AF'.$j,round($key->ESIC_deduct));
+	// 			$ESIC_deduct=$ESIC_deduct+$key->ESIC_deduct;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AG'.$j,round($key->insurance_deduct));
+	// 			$insurance_deduct=$insurance_deduct+$key->insurance_deduct;
+
+	// 			$ctc = $gross+$key->pf_earn+$key->ESIC_earn;//+$key->pf_deduct+$key->ESIC_deduct;
+	// 			$CI->excel->getActiveSheet()->setCellValue('AH'.$j,round($ctc));
+	// 			$total_ctc = $total_ctc + $ctc;
+				
+	// 			//EARNING ALLOWANCE/NO OF DAYS
+	// 			$bsNet = 0;
+	// 			if(isset($key->net_pay) && $key->net_pay>0)
+	// 			{ 
+	// 				$bsNet = $key->net_pay + $key->pt_amt;
+	// 				$netBasicTotK = $bsNet;
+	// 			}
+
+	// 			$basic = $key->basic_net/$num_days_of_month;					
+	// 			$emp_basic = $key->work_day*$basic; 
+	// 			$CI->excel->getActiveSheet()->setCellValue('AI'.$j,round($emp_basic));
+	// 			$basic_net = $basic_net + $emp_basic;
+
+	// 			$hra = $key->hra/$num_days_of_month;
+	// 			$emp_earn_hra = $key->work_day*$hra;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AK'.$j,round($emp_earn_hra));
+	// 			$HRA_total = $HRA_total + $emp_earn_hra;
+
+	// 			$convey = $key->convey/$num_days_of_month;
+	// 			$emp_convey = $key->work_day*$convey;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AL'.$j,round($emp_convey));
+	// 			$Conveyance_total = $Conveyance_total + $emp_convey;
+
+	// 			$total_mobile=0;
+	// 			$total_city=0;
+	// 			$total_medi=0;
+	// 			$total_edu=0;
+	// 			$total_entertainment=0;
+	// 			$otherAllow_total = 0;
+	// 			$total_bonus=0;
+	// 			$total_da=0;
+	// 			$total_p_bonus=0;
+							
+	// 			if(isset($emp_allData) && !empty($emp_allData))
+	// 			{
+
+	// 				foreach ($emp_allData as $row)
+	// 				{
+	// 					if($row->earning_id == 18 )
+	// 					{
+	// 						//DA allowance
+	// 						$da = $key->special_allowance/$num_days_of_month;
+	// 						$value = $key->work_day*$da;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AJ'.$j,round($value));
+	// 						$DA_total = $DA_total + $value;
+	// 						$total_da = $value;
+							
+	// 					}elseif ($row->earning_id == 6 ) 
+	// 					{
+	// 						// mobile allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AM'.$j,round($value));
+	// 						$mobile_total_all = $mobile_total_all + $value;
+	// 						$total_mobile = $value;
+							
+	// 					}elseif($row->earning_id == 13)
+	// 					{
+	// 						//medical allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AN'.$j,round($value));
+	// 						$medical_total = $medical_total + $value;
+	// 						$total_medi = $value;
+							
+	// 					}elseif($row->earning_id == 20)
+	// 					{
+	// 						//education allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AO'.$j,round($value));
+	// 						$education_total = $education_total + $value;
+	// 						$total_edu = $value;
+							
+	// 					}elseif($row->earning_id == 14 )
+	// 					{				
+	// 						// City allowance 
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AP'.$j,round($value));
+	// 						$city_total = $city_total + $value;
+	// 						$total_city = $value;
+							
+	// 					}elseif($row->earning_id == 22)
+	// 					{
+	// 						//entertainment allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AQ'.$j,round($value));
+	// 						$entertainment_total = $entertainment_total + $value;
+	// 						$total_entertainment = $value;
+							
+	// 					}elseif($row->earning_id == 25)
+	// 					{
+	// 						//entertainment allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AR'.$j,round($value));
+	// 						$p_bonus_total = $p_bonus_total + $value;
+	// 						$total_p_bonus = $value;
+							
+	// 					}
+	// 					elseif($row->earning_id == 9)
+	// 					{
+	// 						//entertainment allowance
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$CI->excel->getActiveSheet()->setCellValue('AS'.$j,round($value));
+	// 						$otherAllow_total_all = $otherAllow_total_all + $value;
+	// 						$otherAllow_total = $value;
+							
+	// 					}
+	// 					elseif($row->earning_id == 15)
+	// 					{
+	// 						//Bonus
+	// 						$last_val = $row->value/$num_days_of_month;
+	// 						$value = $key->work_day*$last_val;
+	// 						$bonus_type = $key->bonus_type;
+	// 						if($bonus_type =="yearly"){
+	// 							$value = 0;
+	// 						}
+	// 						if ($bonus_type =="yearly" && strpos($key->salary_month, "10-") !== false) {
+	// 							$value = $CI->Slip_vish_model->getYearyBonus($key->empl_id, $key->salary_month);
+	// 						}
+	// 						$CI->excel->getActiveSheet()->setCellValue('AT'.$j,round($value));
+	// 						$Bonus_total = $Bonus_total + $value;
+	// 						$total_bonus=$value;
+	// 					}elseif($row->earning_id == 16)
+	// 					{
+	// 						$Advance_total = $Advance_total + $row->value;
+	// 						$per_emp_advance = $row->value;
+	// 					}else{
+	// 						$allowance_total_emp=0;
+	// 					}
+	// 				}
+	// 			}
+
+	// 			$earn_gross = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($total_bonus)*1 + ($otherAllow_total)*1+($total_p_bonus)*1;
+	// 			$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+	// 			$CI->excel->getActiveSheet()->setCellValue('AU'.$j,round((($earn_gross+$pf_dedct)-$total_bonus*1)));
+	// 			$total_earn_gross = $total_earn_gross + ($earn_gross - $total_bonus); 
+				
+	// 			$earn_gross1 = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($otherAllow_total)*1 +($total_p_bonus)*1;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AV'.$j,round($earn_gross1));
+	// 			$total_earn_gross1 = $total_earn_gross1 + $earn_gross1; 
+
+	// 			$earn_gross_pf = ($emp_basic)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($otherAllow_total)*1+($total_p_bonus)*1;
+	// 			//DEDUCATION
+	// 			/*$pf_dedct1 = $key->pf_deduct;
+	// 			$pfd_val = $key->pf_deduct/$num_days_of_month;
+	// 			if(isset($key->pf_deduct) && !empty($key->pf_deduct)){
+
+	// 				//$pf_dedct =  $key->work_day*$pfd_val;
+	// 				if($pf_dedct1 >=1800)
+	// 				{
+	// 					$pf_dedct =  $key->work_day*$pfd_val;
+	// 				}else
+	// 				{
+	// 					$pf_dedct = round(($emp_basic + $emp_convey + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1)*0.12);
+	// 					//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+	// 				}
+	// 				//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12); //$key->work_day*$pfd_val;
+	// 				 //round(($emp_basic + ($total_da)*1)*0.12);
+	// 			}else{
+	// 				$pf_dedct = 0;
+	// 			}*/
+	// 			$pf_dedct1 = $key->pf_deduct;
+	// 			$pfd_val = $key->pf_deduct/$num_days_of_month;
+	// 			if(isset($key->pf_deduct) && !empty($key->pf_deduct)){
+
+	// 				//$pf_dedct =  $key->work_day*$pfd_val;
+	// 				// if($pf_dedct1 >=1500)
+	// 				// {
+	// 				// 	$pf_dedct =  $key->work_day*$pfd_val;
+	// 				// }else
+	// 				// {
+	// 				//$pf_dedct = $key->pf_deduct;
+	// 				$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+	// 				if ($pf_dedct > 1800) {
+	// 					$pf_dedct = 1800;
+	// 				}					
+						
+	// 				// }
+	// 				//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12); //$key->work_day*$pfd_val;
+	// 				 //round(($emp_basic + ($total_da)*1)*0.12);
+	// 			}else{
+	// 				$pf_dedct = 0;
+	// 			}
+	// 			$CI->excel->getActiveSheet()->setCellValue('AW'.$j,round($pf_dedct));
+	// 			$tot_pf_deduct=$tot_pf_deduct+$pf_dedct;
+
+	// 			$esicd_val = $key->ESIC_deduct/$num_days_of_month;
+	// 			// $esic_dedct = $key->work_day*$esicd_val;
+	// 			if (isset($key->ESIC_deduct) && !empty($key->ESIC_deduct)) {
+	// 				if ($gross1 <= 21000) {
+	// 					$esic_dedct = $earn_gross1*0.0075;
+	// 				} else {
+	// 					$esic_dedct = 0;
+	// 				}	
+	// 			} else {
+	// 				$esic_dedct = 0;
+	// 			}
+						
+	// 			$CI->excel->getActiveSheet()->setCellValue('AX'.$j,round($esic_dedct));
+	// 			$tot_ESIC_deduct=$tot_ESIC_deduct+$esic_dedct;
+	// 			$month_year_array1 = explode('-', $month);
+	// 			$nmonth1 = date('F',strtotime("01-".$month_year_array1[0]."-".date("Y")));
+	// 			if($key->pt_amt>0)
+	// 			{
+	// 				if($earn_gross<7500)
+	// 				{
+	// 					$pt = 0;
+	// 				}elseif($earn_gross<=10000 && $earn_gross>=7500)
+	// 				{
+	// 					if($key->gender=='Female')
+	// 					{
+	// 						$pt=0;
+	// 					}else{
+	// 						$pt = 175;
+	// 					}
+	// 				}elseif($earn_gross>10000)
+	// 				{
+	// 					if($nmonth1=='February')
+	// 					{
+	// 						$pt = 300;
+	// 					}else{
+	// 						$pt = 200;
+	// 					}
+	// 				}
+	// 			}else{
+	// 				$pt = 0;
+	// 			}
+
+				
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AY'.$j,(isset($key->insurance_deduct) && !empty($key->insurance_deduct))?$key->insurance_deduct:0);
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('AZ'.$j,(isset($pt) && !empty($pt))?$pt:0);
+	// 			$pt_total = $pt_total + $pt;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BA'.$j,(isset($key->tds_deduct) && !empty($key->tds_deduct))?$key->tds_deduct:0);
+
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BB'.$j,round($key->mobile_deduction));
+	// 			$mobile_ded_total = $mobile_ded_total + $key->mobile_deduction;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BC'.$j,round($key->other_deduct));
+	// 			$emp_wise_ded = $emp_wise_ded+$key->other_deduct;
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BD'.$j, round($key->advance_opening));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BE'.$j, round($key->advance_Addition));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BF'.$j, round($key->advance_recovery));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BG'.$j, round($key->advance_closing_amt));
+
+	// 			if(isset($emp_Ded_allData) && !empty($emp_Ded_allData))
+	// 			{
+	// 				$recy_total=0;
+	// 				$Advance_deduction=0;
+	// 				foreach ($emp_Ded_allData as $rec)
+	// 				{
+	// 					if ($rec->deduction_id == 6)
+	// 					{
+	// 						$CI->excel->getActiveSheet()->setCellValue('BB'.$j,round($rec->deduct_value));
+	// 						$recy_total = $rec->deduct_value;
+							
+	// 						$Advance_deduction = $Advance_deduction + $rec->deduct_value;
+	// 						$emp_wise_add_deduction = $emp_wise_add_deduction+$rec->deduct_value;
+	// 						$per_emp_advance = $per_emp_advance-$rec->deduct_value;
+	// 						$deduct_adv_total = $deduct_adv_total+$per_emp_advance;
+							
+	// 						if($per_emp_advance>0)
+	// 						{ }
+	// 						else
+	// 						{
+	// 							$per_emp_advance=0;
+	// 						}
+	// 						$CI->excel->getActiveSheet()->setCellValue('BC'.$j,$per_emp_advance);
+	// 					}
+	// 					elseif(($rec->deduction_id == 'Arrears/ others') || ($rec->deduction_id == 'Deduction Arrears'))
+	// 					{
+	// 						$emp_wise_add_deduction = $emp_wise_add_deduction+$rec->deduct_value;
+	// 					}else{
+						
+	// 					}				
+	// 				}
+	// 			}
+				
+	// 			$adv_opening = $adv_opening + $key->advance_opening;
+	// 			$adv_Addition = $adv_Addition + $key->advance_Addition;
+	// 			$adv_recovery = $adv_recovery + $key->advance_recovery;
+	// 			$adv_closing_amt = $adv_closing_amt + $key->advance_closing_amt;
+
+	// 			$total_deduction = $pf_dedct + $esic_dedct + $pt + $key->mobile_deduction + $key->other_deduct + $key->advance_recovery + $key->tds_deduct + $key->insurance_deduct;
+	// 			$CI->excel->getActiveSheet()->setCellValue('BH'.$j,round($total_deduction));
+	// 			$total_deduct_mnth = $total_deduct_mnth + $total_deduction;
+
+	// 			/*//earning arrers
+	// 			$CI->excel->getActiveSheet()->setCellValue('AV'.$j,round($key->earn_arrears));
+	// 			$Arrears_total = $Arrears_total + $key->earn_arrears;
+	// 			*/
+	// 			//NET PAY
+	// 			$net_pay = ($earn_gross - $total_deduction) + $key->earn_arrears;
+	// 			$CI->excel->getActiveSheet()->setCellValue('BI'.$j,round($net_pay));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BJ'.$j,round($key->wfh_day));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BK'.$j,round($key->wfh_deduct_per));
+				
+	// 			$wfo_days = $total_present_day - $key->wfh_day;
+	// 			$per_day_amt = $net_pay/$total_present_day;
+	// 			$wfo_amt = $per_day_amt*$wfo_days;
+	// 			$wfh_amt = $per_day_amt*$key->wfh_day;
+	// 			$wfh_deduct_amt = $wfh_amt*$key->wfh_deduct_per/100;
+				
+	// 			$CI->excel->getActiveSheet()->setCellValue('BL'.$j,round($wfh_deduct_amt));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BM'.$j,round($net_pay) - round($wfh_deduct_amt));
+
+				
+	// 			$CI->excel->getActiveSheet()->setCellValue('BN'.$j,round($key->memo_cnt));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BO'.$j,round($key->memo_amt));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BP'.$j,round($key->late_punchin));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BQ'.$j,round($key->early_punchout));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BR'.$j,round($key->half_days_due_to_early_punch_out));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BS'.$j,round($key->no_min_4hr_work_cnt));
+	// 			$CI->excel->getActiveSheet()->setCellValue('BT'.$j,round($key->no_min_8hr_work_cnt));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BU'.$j, ($key->total_full_days) - round(($key->no_punchout_cnt)*1));
+
+
+	// 			$net_pay_after_wfh = round($net_pay) - round($wfh_deduct_amt);
+	// 			$per_day_amt = $net_pay_after_wfh / $total_present_day;
+	// 			$net_pay_after_deduction = ($net_pay_after_wfh -( $key->memo_amt)) - (($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2);
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BV'.$j,round(($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BW'.$j,round($net_pay_after_deduction));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BX'.$j, round($key->no_punchout_cnt));
+	// 			$net_pay_after_deduction = $net_pay_after_deduction - round(($key->no_punchout_cnt*$per_day_amt));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BY'.$j,round(($key->no_punchout_cnt*$per_day_amt)));
+
+	// 			$CI->excel->getActiveSheet()->setCellValue('BZ'.$j,round($net_pay_after_deduction));
+
+				
+
+				
+				
+
+
+				
+
+
+	// 			if($showbonus){
+	// 				$CI->excel->getActiveSheet()->setCellValue('CA'.$j,round($key->var_per));
+	// 				$CI->excel->getActiveSheet()->setCellValue('CB'.$j,round($key->var_amount));
+	// 			}
+	// 			$total_net_pay = $total_net_pay + round($net_pay);
+	// 			$total_net_pay_wfh = $total_net_pay_wfh + $net_pay_after_wfh;
+	// 			$total_net_pay_deduction = $total_net_pay_deduction + $net_pay_after_deduction;
+	// 			/*$emp_star = $CI->Slip_vish_model->fetch_emp_star_rate($key->user_id,$key->salary_month);
+	// 			$CI->excel->getActiveSheet()->setCellValue('AX'.$j,(isset($emp_star->red_star) && !empty($emp_star->red_star))?$emp_star->red_star:'0');
+	// 			$CI->excel->getActiveSheet()->setCellValue('AY'.$j,(isset($emp_star->gold_star) && !empty($emp_star->gold_star))?$emp_star->gold_star:'0');
+	// 			if(isset($emp_star->red_star) && $emp_star->red_star>='10')
+	// 			{
+	// 				$red = ($emp_star->red_star > $emp_star->gold_star)?($emp_star->red_star-$emp_star->gold_star):'0';
+	// 				$gold = ($emp_star->red_star < $emp_star->gold_star)?($emp_star->gold_star-$emp_star->red_star):'0';
+	// 			}else{
+	// 				$red = (isset($emp_star->red_star) && !empty($emp_star->red_star))?$emp_star->red_star:'0';
+	// 				$gold = (isset($emp_star->gold_star) && !empty($emp_star->gold_star))?$emp_star->gold_star:'0';
+	// 			}
+	// 			$CI->excel->getActiveSheet()->setCellValue('AZ'.$j,$red);
+	// 			$CI->excel->getActiveSheet()->setCellValue('BA'.$j,$gold);
+	// 			if($monthsdiff->months>=6)
+	// 			{
+	// 				if($red>='10')
+	// 				{
+	// 					$per_day = $gross/$num_days_of_month;
+	// 					$perval = 1*$per_day;
+	// 					$total_salary = round($perval);
+	// 				}else{
+	// 					$total_salary = 0;
+	// 				}
+	// 			}else{
+	// 				$total_salary = 0;
+	// 			}
+	// 			$CI->excel->getActiveSheet()->setCellValue('BB'.$j,$total_salary);
+	// 			$total_star_deduct = $total_star_deduct+$total_salary;*/
+
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('BC'.$j,(isset($emp_star->black_star) && !empty($emp_star->black_star))?$emp_star->black_star:'0');
+	// 			if(isset($emp_star->black_star) && $emp_star->black_star>='10')
+	// 			{
+	// 				$blackstar = ($gold > $emp_star->black_star)?($gold-$emp_star->black_star):'0';
+	// 				$blackstar = ($emp_star->black_star > $gold)?($emp_star->black_star-$gold):'0';
+	// 				$bal_gold = ($gold > $emp_star->black_star)?($gold-$emp_star->black_star):'0';
+	// 				$bal_black = ($emp_star->black_star > $gold)?($emp_star->black_star-$gold):'0';
+	// 			}else{
+	// 				$blackstar = 0;
+	// 				$bal_gold = $gold;
+	// 				$bal_black = (isset($emp_star->black_star) && !empty($emp_star->black_star))?$emp_star->black_star:'0';
+	// 			}
+				
+	// 			if($blackstar>='20')
+	// 			{
+	// 				$per_day = $gross/$num_days_of_month;
+	// 				$perval = 1*$per_day;
+	// 				$total_salary1 = round($perval);
+	// 			}else{
+	// 				$total_salary1 = 0;
+	// 			}
+	// 			$CI->excel->getActiveSheet()->setCellValue('BD'.$j,$bal_black);*/
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('BC'.$j,$gold);*/
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('BD'.$j,$total_salary1);*/
+
+	// 			/*$CI->excel->getActiveSheet()->setCellValue('BD'.$j,round($net_pay-$total_salary));
+	// 			$total_star_pay = $total_star_pay+round($net_pay-$total_salary);*/
+
+	// 			$CI->excel->getActiveSheet()->getStyle('E'.$j.':BX'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+	// 																->setWrapText(true);
+
+	// 			$CI->excel->getActiveSheet()->getStyle('A'.$j.':B'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+	// 																->setWrapText(true);
+
+	// 			$CI->excel->getActiveSheet()->getStyle('AB'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+
+	// 			$CI->excel->getActiveSheet()->getStyle('AH'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+
+	// 			$CI->excel->getActiveSheet()->getStyle('AU'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+
+	// 			$CI->excel->getActiveSheet()->getStyle('BI'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+
+	// 			$CI->excel->getActiveSheet()->getStyle('BJ'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');
+	// 			// $CI->excel->getActiveSheet()->getStyle('BP'.$j)
+	// 			// 					->getFill()
+	// 			// 					->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 			// 					->getStartColor()->setARGB('FFD8D8D8');					
+
+	// 			/*$CI->excel->getActiveSheet()->getStyle('AV'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');*/
+
+	// 			/*$CI->excel->getActiveSheet()->getStyle('BD'.$j)
+	// 								->getFill()
+	// 								->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 								->getStartColor()->setARGB('FFD8D8D8');*/
+
+	// 			$CI->excel->getActiveSheet()->getStyle('BI'.$j)->getFont()->setBold(true);
+	// 			$CI->excel->getActiveSheet()->getStyle('BJ'.$j)->getFont()->setBold(true);
+	// 			$CI->excel->getActiveSheet()->getStyle('BT'.$j)->getFont()->setBold(true);
+
+
+	// 			//$CI->excel->getActiveSheet()->getStyle('BD'.$j)->getFont()->setBold(true);
+	// 			$j++;
+				
+	// 		}//exit();
+
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':BI'.$lastRowNum)->getFont()->setBold(true);
+
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':BJ'.$lastRowNum)->getFont()->setBold(true);
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':BT'.$lastRowNum)->getFont()->setBold(true);
+
+	// 		$CI->excel->getActiveSheet()->mergeCells('A'.$lastRowNum.':O'.$lastRowNum)
+	// 									->setCellValue('A'.$lastRowNum, 'Total');
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('P'.$lastRowNum, round($emp_bac));
+	// 		$CI->excel->getActiveSheet()->setCellValue('Q'.$lastRowNum, round($emp_da));
+	// 		$CI->excel->getActiveSheet()->setCellValue('R'.$lastRowNum, round($emp_hra));
+	// 		$CI->excel->getActiveSheet()->setCellValue('S'.$lastRowNum, round($emp_convy));
+	// 		$CI->excel->getActiveSheet()->setCellValue('T'.$lastRowNum, round($emp_mob));
+	// 		$CI->excel->getActiveSheet()->setCellValue('U'.$lastRowNum, round($emp_med));
+	// 		$CI->excel->getActiveSheet()->setCellValue('V'.$lastRowNum, round($emp_edu));
+	// 		$CI->excel->getActiveSheet()->setCellValue('W'.$lastRowNum, round($emp_city));
+	// 		$CI->excel->getActiveSheet()->setCellValue('X'.$lastRowNum, round($emp_enter));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('Y'.$lastRowNum, round($emp_p_bonus));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('Z'.$lastRowNum, round($emp_tot_alw));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('AA'.$lastRowNum, round($emp_bonus));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AB'.$lastRowNum, round($emp_gross));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('AC'.$lastRowNum, round($pf_earn));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AD'.$lastRowNum, round($ESIC_earn));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AE'.$lastRowNum, round($pf_deduct));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AF'.$lastRowNum, round($ESIC_deduct));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AH'.$lastRowNum, round($total_ctc));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('AI'.$lastRowNum, round($basic_net));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AJ'.$lastRowNum, round($DA_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AK'.$lastRowNum, round($HRA_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AL'.$lastRowNum, round($Conveyance_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AM'.$lastRowNum, round($mobile_total_all));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AN'.$lastRowNum, round($medical_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AO'.$lastRowNum, round($education_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AP'.$lastRowNum, round($city_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AQ'.$lastRowNum, round($entertainment_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AR'.$lastRowNum, round($p_bonus_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AS'.$lastRowNum, round($otherAllow_total_all));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AT'.$lastRowNum, round($Bonus_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AU'.$lastRowNum, round($total_earn_gross));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AV'.$lastRowNum, round($total_earn_gross1));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AW'.$lastRowNum, round($tot_pf_deduct));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AX'.$lastRowNum, round($tot_ESIC_deduct));
+	// 		$CI->excel->getActiveSheet()->setCellValue('AZ'.$lastRowNum, round($pt_total));
+			
+			
+	// 		$CI->excel->getActiveSheet()->setCellValue('BB'.$lastRowNum, round($mobile_ded_total));
+	// 		$CI->excel->getActiveSheet()->setCellValue('BC'.$lastRowNum, round($emp_wise_ded));
+	// 		// $CI->excel->getActiveSheet()->setCellValue('AA'.$lastRowNum, round($adv_opening));
+	// 		// $CI->excel->getActiveSheet()->setCellValue('BC'.$lastRowNum, round($adv_Addition));
+	// 		// $CI->excel->getActiveSheet()->setCellValue('BD'.$lastRowNum, round($adv_recovery));
+	// 		// $CI->excel->getActiveSheet()->setCellValue('BE'.$lastRowNum, round($adv_closing_amt));
+	// 		$CI->excel->getActiveSheet()->setCellValue('BH'.$lastRowNum, round($total_deduct_mnth));
+			
+	// 		/*$CI->excel->getActiveSheet()->setCellValue('AU'.$lastRowNum, round($Bonus_total));			
+	// 		$CI->excel->getActiveSheet()->setCellValue('AV'.$lastRowNum, round($Arrears_total));*/
+	// 		$CI->excel->getActiveSheet()->setCellValue('BI'.$lastRowNum, round($total_net_pay));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('BM'.$lastRowNum, round($total_net_pay_wfh));
+
+	// 		$CI->excel->getActiveSheet()->setCellValue('BZ'.$lastRowNum, round($total_net_pay_deduction));
+
+			
+	// 		// $CI->excel->getActiveSheet()->setCellValue('BB'.$lastRowNum, round($total_star_deduct));
+	// 		// $CI->excel->getActiveSheet()->setCellValue('BD'.$lastRowNum, round($total_star_pay));
+
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':CB'.$lastRowNum)
+	// 									->getFill()
+	// 									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+	// 									->getStartColor()->setARGB('EED8D8D8');
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':CB'.$lastRowNum)->applyFromArray($allborders);
+	// 		$CI->excel->getActiveSheet()->getStyle('A'.$lastRowNum.':CB'.$lastRowNum)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+	// 																			->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+	// 																			->setWrapText(true);
+
+	// 	}
+	// 	/* end dynamic code here **************/
+
+		
+
+	// 	header('Content-Type: application/vnd.ms-excel'); //mime type
+	// 	header('Content-Disposition: attachment;filename="'.$company_name.'-'.$salMonth.'.xls"'); //tell browser what's the file name
+	// 	header('Cache-Control: max-age=0'); //no cache
+
+	// 	// If you're serving to IE 9, then the following may be needed
+	// 	header('Cache-Control: max-age=1');
+
+	// 	// If you're serving to IE over SSL, then the following may be needed
+	// 	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	// 	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+	// 	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	// 	header ('Pragma: public'); // HTTP/1.0
+		             
+	// 	//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+	// 	//if you want to save it as .XLSX Excel 2007 format
+	// 	$objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');  
+	// 	//force user to download the Excel file without writing it to server's HD
+	// 	if($export == true) {
+	// 	$objWriter->save('php://output'); 
+	// 	}else{
+	// 		$objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');  
+	// 		$filename = './excelfiles/'.str_replace(" ", "-", $company_name).'-'.$salMonth.'.xls';
+	// 		$objWriter->save($filename);
+	// 		return 'excelfiles/'.str_replace(" ", "-", $company_name).'-'.$salMonth.'.xls';
+	// 	}
+		
+
+
+    // }
+
 	function salarySlipReportExcelFormat_new($emp_basic_data,$company_name,$num_days_of_month,$month,$year,$salMonth, $export, $showbonus =false)
     {
 
@@ -2061,7 +3289,7 @@ class Monthly_report extends PHPExcel {
 
 		$CI->excel->getActiveSheet()->setCellValue('BN3', 'No of Memo');
 		$CI->excel->getActiveSheet()->setCellValue('BO3', 'Memo Amount');
-		$CI->excel->getActiveSheet()->setCellValue('BP3', 'Late Punch In(30 min after shift start) Count - Half days');
+		$CI->excel->getActiveSheet()->setCellValue('BP3', 'Late Punch In(After 11 am) Count - Half days');
 		$CI->excel->getActiveSheet()->setCellValue('BQ3', 'Early Punch Out Count');
 		$CI->excel->getActiveSheet()->setCellValue('BR3', 'Half Days due to Early Punch Out (1 for 3)');
 
@@ -2330,7 +3558,8 @@ class Monthly_report extends PHPExcel {
 				}*/
 				/*$earn_leave=$emp_leave_data->earn_leave;*/
 				$CI->excel->getActiveSheet()->setCellValue('G'.$j,(isset($emp_leave_data->earn_leave) && !empty($emp_leave_data->earn_leave))?$emp_leave_data->earn_leave:0); //$emp_leave_data->earn_leave
-				$CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
+				// $CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
+				$CI->excel->getActiveSheet()->setCellValue('H'.$j,"=SUM(F$j-G$j)");
 				/*$CI->excel->getActiveSheet()->setCellValue('H'.$j,$emp_leave_data->bal_leave);*/
 				/*$CI->excel->getActiveSheet()->setCellValue('I'.$j,$emp_paid_leave->paid_leave);*/
               	$CI->excel->getActiveSheet()->setCellValue('I'.$j,(isset($emp_leave_data->earn_leave1) && !empty($emp_leave_data->earn_leave1))?$emp_leave_data->earn_leave1:0); 
@@ -2381,6 +3610,7 @@ class Monthly_report extends PHPExcel {
 				$p_bonus = 0;
 				$bonus = 0;
 				$total_allowance=0;
+				$pf_dedct=0;
 
 				//EARNING ALLOWANCE				
 				if(isset($earn_allowance) && !empty($earn_allowance))
@@ -2637,8 +3867,18 @@ class Monthly_report extends PHPExcel {
 				}
 
 				$earn_gross = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($total_bonus)*1 + ($otherAllow_total)*1+($total_p_bonus)*1;
-				$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+				// echo '<pre>';print_r($earn_gross);
+				// echo '<pre>';print_r($pf_dedct);
+				// echo '<pre>';print_r($total_bonus);
+				
+				// echo "<br>";
+				// echo "<br>";
+				// echo "TOT:-".round((($earn_gross+$pf_dedct)-$total_bonus*1));
+				// echo "----";
+				
+				// echo $pf_dedct;
 				$CI->excel->getActiveSheet()->setCellValue('AU'.$j,round((($earn_gross+$pf_dedct)-$total_bonus*1)));
+				$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
 				$total_earn_gross = $total_earn_gross + ($earn_gross - $total_bonus); 
 				
 				$earn_gross1 = ($emp_basic)*1 + ($emp_earn_hra)*1 + ($emp_convey)*1 + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1 + ($otherAllow_total)*1 +($total_p_bonus)*1;
@@ -3088,6 +4328,7 @@ class Monthly_report extends PHPExcel {
 
 
     }
+
 
     function generate_compy_wise_report($emp_basic_data,$company_name,$num_days_of_month,$month,$year)
     {
