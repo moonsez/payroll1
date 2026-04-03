@@ -423,6 +423,118 @@ class Slip_vish_model extends CI_Model {
         }
     } 
     
+    // public function getBasicSalary($company_id, $slipMonth)
+    // {
+    //     $query = $this->db->query("SELECT tec.emp_id,tec.user_id,tec.emp_name,tu.username employee_id,tec.emp_basic as basic_amt,teda.deduct_value, cast(tec.emp_basic-teda.deduct_value as signed) As totalSal, (SELECT SUM(earn_value) FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id!=6 AND earning_id!=16 AND earning_id!=18 AND earning_id!=19 AND earning_id!=21) As allowances,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=3) as convey,
+    //     (SELECT convey_allowance_type FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=3) as convey_allowance_type,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=7) as hra,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=18) as special_allowance,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=19) as pf_earn,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=21) as ESIC_earn,
+    //     (SELECT earn_value FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id=15) as bouns_earn,
+    //     (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=7) as pf_deduct,
+    //     (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=8) as ESIC_deduct, 
+    //     (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=10) as tds_deduct,
+    //     (SELECT deduct_value FROM `tbl_emp_deduct_allowance` WHERE emp_id=tec.emp_id AND deduction_id=11) as insurance_deduct,
+    //      tec.var_per, memo.memo_cnt, memo.memo_amt, lp.late_punchin, lp.late_punchin_halfdays, lp.early_punchout,lp.no_punchout_cnt, lp.no_min_4hr_work_cnt, lp.no_min_8hr_work_cnt, lp.wfh_cnt, lp.wfh_dates
+
+    //         FROM tbl_employee_creation AS tec
+    //         LEFT JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
+    //         JOIN tbl_userinfo AS tu ON tu.user_id = tec.user_id AND tec.display='Y'
+    //         LEFT JOIN  (SELECT count(*) memo_cnt, SUM(penality) memo_amt, user_id  FROM tbl_memo_details WHERE DATE_FORMAT(ifrac_date, '%m-%Y') =? AND display='Y' GROUP BY user_id) AS memo ON  memo.user_id=tu.user_id  
+    //         LEFT JOIN ( SELECT 
+    //             p.user_id,
+    //             s.shift_start_time,
+    //             s.shift_end_time,
+    //             COUNT(
+    //                 CASE 
+    //                     WHEN p.day_status!='LD' AND l.user_id IS NULL AND TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' AND p.punchin_time > '11:00:00' AND p.punchin_time < '14:00:00' THEN 1
+    //                 END
+    //             ) AS late_punchin,
+    //             COUNT(
+    //                 CASE 
+    //                     WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:30:00') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-02:00:30')) THEN 1
+    //                     WHEN DAYOFWEEK(p.punch_date) != 7 AND day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:29:50') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-01:00:30')) THEN 1
+    //                 END
+    //             ) AS late_punchin_halfdays,
+
+    //             COUNT(
+    //                 CASE 
+    //                     WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL
+    //                          AND p.punchout_time BETWEEN SUBTIME(ADDTIME(p.punchin_time, '08:00:00'), '02:00:00')AND SUBTIME(ADDTIME(p.punchin_time, '08:00:00'), '01:01:30') THEN 1
+    //                     WHEN DAYOFWEEK(p.punch_date) != 7 AND p.day_status!='LD' AND l.user_id IS NULL
+    //                          AND p.punchout_time BETWEEN SUBTIME(ADDTIME(p.punchin_time, '09:00:00'), '01:00:00') AND SUBTIME(ADDTIME(p.punchin_time, '09:00:00'), '00:01:30') THEN 1
+    //                 END
+    //             ) AS early_punchout,
+    //             COUNT(
+    //                 CASE
+    //                     WHEN  p.punchin_time IS NOT NULL AND p.punchin_time!='00:00:00' AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchout_time IS NULL OR p.punchout_time ='00:00:00') THEN 1
+    //                 END
+    //             ) AS no_punchout_cnt,
+
+    //             COUNT(
+    //                     CASE 
+    //                         WHEN
+    //                             p.punchin_time IS NOT NULL AND p.punchin_time!='00:00:00' AND
+    //                             p.punchout_time IS NOT NULL AND p.punchout_time!='00:00:00' AND
+    //                             TIMEDIFF(p.punchout_time, p.punchin_time) < '04:00:00' 
+    //                             AND p.day_status!='LD'
+    //                             AND l.user_id IS NULL
+    //                             AND p.punchout_time IS NOT NULL 
+    //                             AND p.punchin_time IS NOT NULL THEN 1
+    //                     END
+    //                 ) AS no_min_4hr_work_cnt,
+
+    //             COUNT(
+    //                     CASE 
+    //                         WHEN (TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' 
+    //                                                         AND TIMEDIFF(p.punchout_time, p.punchin_time) < IF(DAYOFWEEK(p.punch_date) = 7, '07:30:00', '08:00:00')
+
+    //                                                         AND p.punchin_time < '11:00:00'
+
+    //                                                         AND p.day_status!='LD'
+    //                                                         AND l.user_id IS NULL
+    //                                                         AND p.punchout_time IS NOT NULL 
+    //                                                         AND p.punchin_time IS NOT NULL) OR l.user_id IS NOT NULL THEN 1
+    //                     END
+    //                 ) AS no_min_8hr_work_cnt,
+    //             COUNT(
+    //                 CASE 
+    //                     WHEN p.punch_from ='WFH' THEN 1
+    //                 END
+    //             ) AS wfh_cnt,
+    //             GROUP_CONCAT(
+    //                 CASE 
+    //                     WHEN p.punch_from = 'WFH' THEN p.punch_date
+    //                 END
+    //                 ORDER BY p.punch_date ASC
+    //             ) AS wfh_dates
+
+    //         FROM tbl_punching p 
+    //         JOIN tbl_userinfo u ON u.user_id = p.user_id
+    //         JOIN tbl_shift s ON s.shift_id = p.emp_shift_id
+    //         LEFT JOIN (SELECT el.user_id, eld.leave_from_day FROM tbl_emp_leave el JOIN tbl_emp_leaveday eld ON el.leave_id = eld.leave_id AND el.status = 'Approved' AND leavetype_id =8 AND DATE_FORMAT(eld.leave_from_day, '%m-%Y') = ?) l 
+    //             ON l.user_id = p.user_id AND p.punch_date = l.leave_from_day
+    //         WHERE 
+    //             DATE_FORMAT(p.punch_date, '%m-%Y') = ? 
+    //         GROUP BY 
+    //             p.user_id) lp ON lp.user_id = tu.user_id
+
+    //         WHERE tec.company_id=? AND tec.status='Approve' AND tu.account_status='activate' ORDER BY tec.emp_name ASC", array($slipMonth, $slipMonth, $slipMonth, $company_id));
+
+    //         echo $this->db->last_query();die;
+
+    //     if ($query->num_rows() > 0) {
+    //         foreach ($query->result() as $row) {
+    //             $tbl_data[] = $row;
+    //         }
+    //         return $tbl_data;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
     public function getBasicSalary($company_id, $slipMonth)
     {
         $query = $this->db->query("SELECT tec.emp_id,tec.user_id,tec.emp_name,tu.username employee_id,tec.emp_basic as basic_amt,teda.deduct_value, cast(tec.emp_basic-teda.deduct_value as signed) As totalSal, (SELECT SUM(earn_value) FROM `tbl_emp_earn_allowance` WHERE emp_id=tec.emp_id AND earning_id!=6 AND earning_id!=16 AND earning_id!=18 AND earning_id!=19 AND earning_id!=21) As allowances,
@@ -440,7 +552,7 @@ class Slip_vish_model extends CI_Model {
          tec.var_per, memo.memo_cnt, memo.memo_amt, lp.late_punchin, lp.late_punchin_halfdays, lp.early_punchout,lp.no_punchout_cnt, lp.no_min_4hr_work_cnt, lp.no_min_8hr_work_cnt, lp.wfh_cnt, lp.wfh_dates
 
             FROM tbl_employee_creation AS tec
-            LEFT JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
+            JOIN  tbl_emp_deduct_allowance AS teda ON  tec.emp_id=teda.emp_id AND teda.deduction_id='4'
             JOIN tbl_userinfo AS tu ON tu.user_id = tec.user_id AND tec.display='Y'
             LEFT JOIN  (SELECT count(*) memo_cnt, SUM(penality) memo_amt, user_id  FROM tbl_memo_details WHERE DATE_FORMAT(ifrac_date, '%m-%Y') =? AND display='Y' GROUP BY user_id) AS memo ON  memo.user_id=tu.user_id  
             LEFT JOIN ( SELECT 
@@ -454,8 +566,8 @@ class Slip_vish_model extends CI_Model {
                 ) AS late_punchin,
                 COUNT(
                     CASE 
-                        WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:30:00') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-02:00:30')) THEN 1
-                        WHEN DAYOFWEEK(p.punch_date) != 7 AND day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:29:30') AND ADDTIME(s.shift_start_time, '03:29:50') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-01:00:30')) THEN 1
+                        WHEN DAYOFWEEK(p.punch_date) = 7 AND p.day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:59:30') AND ADDTIME(s.shift_start_time, '03:30:00') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-02:00:30')) THEN 1
+                        WHEN DAYOFWEEK(p.punch_date) != 7 AND day_status!='LD' AND l.user_id IS NULL AND (p.punchin_time BETWEEN ADDTIME(s.shift_start_time, '00:59:30') AND ADDTIME(s.shift_start_time, '03:29:50') OR p.punchout_time BETWEEN ADDTIME(s.shift_end_time, '-06:30:00') AND ADDTIME(s.shift_end_time, '-01:00:30')) THEN 1
                     END
                 ) AS late_punchin_halfdays,
 
@@ -489,7 +601,7 @@ class Slip_vish_model extends CI_Model {
                 COUNT(
                         CASE 
                             WHEN (TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' 
-                                                            AND TIMEDIFF(p.punchout_time, p.punchin_time) < IF(DAYOFWEEK(p.punch_date) = 7, '07:30:00', '08:00:00')
+                                                            AND TIMEDIFF(p.punchout_time, p.punchin_time) < IF(DAYOFWEEK(p.punch_date) = 7, '07:00:00', '08:00:00')
 
                                                             AND p.punchin_time < '11:00:00'
 
@@ -513,7 +625,7 @@ class Slip_vish_model extends CI_Model {
 
             FROM tbl_punching p 
             JOIN tbl_userinfo u ON u.user_id = p.user_id
-            JOIN tbl_shift s ON s.shift_id = p.emp_shift_id
+            JOIN tbl_shift s ON s.shift_id = u.emp_shift_id
             LEFT JOIN (SELECT el.user_id, eld.leave_from_day FROM tbl_emp_leave el JOIN tbl_emp_leaveday eld ON el.leave_id = eld.leave_id AND el.status = 'Approved' AND leavetype_id =8 AND DATE_FORMAT(eld.leave_from_day, '%m-%Y') = ?) l 
                 ON l.user_id = p.user_id AND p.punch_date = l.leave_from_day
             WHERE 
@@ -522,6 +634,8 @@ class Slip_vish_model extends CI_Model {
                 p.user_id) lp ON lp.user_id = tu.user_id
 
             WHERE tec.company_id=? AND tec.status='Approve' AND tu.account_status='activate' ORDER BY tec.emp_name ASC", array($slipMonth, $slipMonth, $slipMonth, $company_id));
+// echo $this->db->last_query();
+// exit;
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -532,7 +646,6 @@ class Slip_vish_model extends CI_Model {
             return false;
         }
     }
-
     public function fetch_joining_date($emp_id)
     {
         $query = $this->db->query('SELECT date_of_joining FROM tbl_employee_creation WHERE display="Y" AND emp_id=?',array($emp_id));
