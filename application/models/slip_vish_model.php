@@ -561,7 +561,7 @@ class Slip_vish_model extends CI_Model {
                 s.shift_end_time,
                 COUNT(
                     CASE 
-                        WHEN p.day_status!='LD' AND l.user_id IS NULL AND TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' AND p.punchin_time > '11:00:00' AND p.punchin_time < '14:00:00' THEN 1
+                        WHEN p.day_status!='LD' AND l.user_id IS NULL AND TIMEDIFF(p.punchout_time, p.punchin_time) > '04:00:00' AND p.punchin_time > '10:30:00' AND p.punchin_time < '14:00:00' THEN 1
                     END
                 ) AS late_punchin,
                 COUNT(
