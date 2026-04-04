@@ -147,6 +147,7 @@ class basic_controller extends CI_Controller {
 
 	public function saveBasicPt()
 	{
+		error_reporting(0);
 		$basic_id = $this->input->post('basic_id'); 
 		$slip_month = $this->input->post('month');
 		$month_year_array = explode('-', $slip_month);
