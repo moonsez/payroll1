@@ -217,8 +217,8 @@ class basic_controller extends CI_Controller {
 		$total_full_days = $this->input->post('total_full_days');
 
 
-		$earn_count = count($earn_allow_emp_id);
-		$deduct_count = count($deduct_allow_emp_id);
+		$earn_count = !empty($earn_allow_emp_id) ? count($earn_allow_emp_id) : 0;
+		$deduct_count = !empty($deduct_allow_emp_id) ? count($deduct_allow_emp_id) : 0;
 		$earnig_data = array();
 		$deduct_data = array();
 		
