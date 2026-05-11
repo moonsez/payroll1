@@ -3515,6 +3515,14 @@ class Monthly_report extends PHPExcel {
 	 			$emp_wise_ded=0;
 	 			$boun_emp = 0;
 	 			$emp_wise_add_deduction = 0;
+				$saction1 = 0;
+				$earn_leave1 = 0;
+				$balance1 = 0;
+				$earn_leave2 = 0;
+				$saction_sick1 = 0;
+				$earn_leave3 = 0;
+				$earn_leave4 = 0;
+				$earn_leave5 = 0;
 	 		 	//echo $key->empl_id; echo '<br>';
 				$emp_allData = $CI->Slip_vish_model->fetchAllowDataOfEmp_basic_allow($key->empl_id,$key->salary_month);
 				// print_r($emp_allData); 
@@ -3550,6 +3558,7 @@ class Monthly_report extends PHPExcel {
 				}
 				//echo (isset($bal_leave_cnt)?$bal_leave_cnt:$saction); echo '<br>';
 				$CI->excel->getActiveSheet()->setCellValue('F'.$j,$saction); //$emp_leave_data->total_leave
+				$saction1 = $saction;
 				/*if($emp_leave_data->bal_leave!=$emp_creditleave && !empty($emp_leave_data->bal_leave))
 				{
 					$earn_leave = $emp_creditleave-$emp_leave_data->bal_leave;
@@ -3558,11 +3567,14 @@ class Monthly_report extends PHPExcel {
 				}*/
 				/*$earn_leave=$emp_leave_data->earn_leave;*/
 				$CI->excel->getActiveSheet()->setCellValue('G'.$j,(isset($emp_leave_data->earn_leave) && !empty($emp_leave_data->earn_leave))?$emp_leave_data->earn_leave:0); //$emp_leave_data->earn_leave
+				$earn_leave1 = $emp_leave_data->earn_leave;
 				// $CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
 				$CI->excel->getActiveSheet()->setCellValue('H'.$j,"=SUM(F$j-G$j)");
+				$balance1 = $saction+$earn_leave1;
 				/*$CI->excel->getActiveSheet()->setCellValue('H'.$j,$emp_leave_data->bal_leave);*/
 				/*$CI->excel->getActiveSheet()->setCellValue('I'.$j,$emp_paid_leave->paid_leave);*/
               	$CI->excel->getActiveSheet()->setCellValue('I'.$j,(isset($emp_leave_data->earn_leave1) && !empty($emp_leave_data->earn_leave1))?$emp_leave_data->earn_leave1:0); 
+				$earn_leave2 = $emp_leave_data->earn_leave1;
               	
               	// sick leave
               	$emp_sick_leave_data = $CI->Slip_vish_model->fetch_emp_sick_leave_data($key->user_id,$year);
@@ -3582,12 +3594,19 @@ class Monthly_report extends PHPExcel {
 				}
 
               	$CI->excel->getActiveSheet()->setCellValue('J'.$j,$saction_sick);
+				$saction_sick1 = $saction_sick;
 
               	$emp_sick_leave_data = $CI->Slip_vish_model->fetch_emp_sick_leave_data1($key->user_id,$month,$year);
               	
               	$CI->excel->getActiveSheet()->setCellValue('K'.$j,(isset($emp_sick_leave_data->earn_leave) && !empty($emp_sick_leave_data->earn_leave))?$emp_sick_leave_data->earn_leave:0);
+				$earn_leave3 = $emp_sick_leave_data->earn_leave;
               	$CI->excel->getActiveSheet()->setCellValue('L'.$j,(isset($emp_sick_leave_data->bal_leave) && !empty($emp_sick_leave_data->bal_leave) && $saction!=0)?$emp_sick_leave_data->bal_leave:$saction_sick-$emp_sick_leave_data->earn_leave);
+				
+				$earn_leave4 = isset($emp_sick_leave_data->bal_leave) && !empty($emp_sick_leave_data->bal_leave) && $saction!=0 ? $emp_sick_leave_data->bal_leave : $saction_sick-$emp_sick_leave_data->earn_leave;
+
               	$CI->excel->getActiveSheet()->setCellValue('M'.$j,(isset($emp_sick_leave_data->earn_leave1) && !empty($emp_sick_leave_data->earn_leave1))?$emp_sick_leave_data->earn_leave1:0);
+
+				$earn_leave5 = isset($emp_sick_leave_data->earn_leave1) && !empty($emp_sick_leave_data->earn_leave1) ?$emp_sick_leave_data->earn_leave1 : 0;
 
               	// total leave
               	$actual_present_day=($key->work_day)-($emp_leave_data->earn_leave1)-($emp_sick_leave_data->earn_leave1);
@@ -4074,16 +4093,38 @@ class Monthly_report extends PHPExcel {
 				$per_day_amt = $net_pay_after_wfh / $total_present_day;
 				$net_pay_after_deduction = ($net_pay_after_wfh -( $key->memo_amt)) - (($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2);
 
+				$total_ded1 = ($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2;
 				$CI->excel->getActiveSheet()->setCellValue('BV'.$j,round(($key->total_full_days*2 - $key->no_punchout_cnt*2)*$per_day_amt/2));
 
 				$CI->excel->getActiveSheet()->setCellValue('BW'.$j,round($net_pay_after_deduction));
+				$net_pay_after_ded1 = $net_pay_after_deduction;
 
 				$CI->excel->getActiveSheet()->setCellValue('BX'.$j, round($key->no_punchout_cnt));
+				$no_punch_out_count1 = $key->no_punchout_cnt;
+
 				$net_pay_after_deduction = $net_pay_after_deduction - round(($key->no_punchout_cnt*$per_day_amt));
 
 				$CI->excel->getActiveSheet()->setCellValue('BY'.$j,round(($key->no_punchout_cnt*$per_day_amt)));
+				$total_ded2 = $key->no_punchout_cnt*$per_day_amt;
 
 				$CI->excel->getActiveSheet()->setCellValue('BZ'.$j,round($net_pay_after_deduction));
+				$net_pay_after_deduction = round($net_pay_after_deduction);
+				$data = [
+					'total_ded1'              => round($total_ded1),
+					'net_pay_after_ded1'      => round($net_pay_after_ded1),
+					'no_punch_out_count1'     => round($no_punch_out_count1),
+					'total_ded2'              => round($total_ded2),
+					'net_pay_after_deduction' => round($net_pay_after_deduction),
+					'saction1' => round($saction1),
+					'earn_leave1' => round($earn_leave1),
+					'balance1' => round($balance1),
+					'earn_leave2' => round($earn_leave2),
+					'saction_sick1' => round($saction_sick1),
+					'earn_leave3' => round($earn_leave3),
+					'earn_leave4' => round($earn_leave4),
+					'earn_leave5' => round($earn_leave5)
+				];
+				$saved_totals = $CI->Slip_vish_model->save_latest_totals($key->salary_month,$key->username, $data);
 
 				
 
@@ -11415,6 +11456,1304 @@ class Monthly_report extends PHPExcel {
 		
       
 
+    }
+
+
+    function YearWiseSalarySlipReportExcel($emp_basic_data,$company_name, $year, $export, $showbonus =false)
+    {
+		ini_set('max_execution_time', 300);
+		ini_set('memory_limit', '1024M');
+		
+    	$CI =& get_instance(); 
+    	/*date_default_timezone_set('Asia/kolkata');*/
+    	$current_date = date('d/m/Y');
+    	$CI->load->library('excel');
+
+		$CI->excel->getProperties()->setCreator("Moonveda Infotech Pvt. Ltd")
+							 	   ->setLastModifiedBy("Moonveda Infotech Pvt. Ltd")
+							 	   ->setTitle("Pay Slip")
+							 	   ->setSubject("Pay Slip Of An Employee")
+							 	   ->setDescription("System Generated File.")
+							 	   ->setKeywords("office 2007")
+							 	   ->setCategory("Confidential");
+
+		$allborders = array(
+			'borders' => array(
+				'allborders' => array(
+					'style' => PHPExcel_Style_Border::BORDER_THIN,
+					
+				),
+			),
+		);
+		//activate worksheet number 1
+		$CI->excel->setActiveSheetIndex(0);
+		//name the worksheet
+		$CI->excel->getActiveSheet()->setTitle('Year Wise Company Report');
+		//set cell A1 content with some text
+		$CI->excel->getActiveSheet()->setCellValue('A1', isset($company_name) ? $company_name : ''); //$employee_basic_info->emp_comp_name
+		//change the font name
+		$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setName('Bookman Old Style');
+        //change the font size
+		$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+		//make the font become bold
+		$CI->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+		//set row height
+		$CI->excel->getActiveSheet()->getRowDimension('1')
+									->setRowHeight(20);
+		/*  set default border for all stylesheet */
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getTop()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getBottom()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getLeft()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getRight()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		/*  End set default border for all stylesheet */
+
+		//merge cell A1 until D1
+		$CI->excel->getActiveSheet()->mergeCells('A1:CC1')
+									->getStyle()
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+		$CI->excel->getActiveSheet()->getStyle('A1:CC1')->applyFromArray($allborders);
+
+		$CI->excel->getActiveSheet()->getStyle('A2:CC2')
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+
+		//set aligment to center for that merged cell (A1 to V1)
+		$CI->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																	->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+		//set cell A1 content with some text
+		$CI->excel->getActiveSheet()->setCellValue('A2', 'Salary Sheet for the Year of '.(isset($year) ? $year : '').''); //$employee_basic_info->emp_comp_name
+		//change the font name
+		$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setName('Bookman Old Style');
+        //change the font size
+		$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(15);
+		//make the font become bold
+		$CI->excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
+		//set row height
+		$CI->excel->getActiveSheet()->getRowDimension('2')
+									->setRowHeight(20);
+		/*  set default border for all stylesheet */
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getTop()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getBottom()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getLeft()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$CI->excel->getDefaultStyle()
+		    ->getBorders()
+		    ->getRight()
+		    ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		/*  End set default border for all stylesheet */
+
+		//merge cell A1 until D1
+		$CI->excel->getActiveSheet()->mergeCells('A2:CB2')
+									->getStyle()
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+
+
+		$CI->excel->getActiveSheet()->getStyle('A2:CB2')
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+
+		//set aligment to center for that merged cell (A1 to V1)
+		$CI->excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																	->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);		
+
+
+		$CI->excel->getActiveSheet()->setCellValue('A3', 'Sr. No.');
+		$CI->excel->getActiveSheet()->setCellValue('B3', 'Employee ID');
+		$CI->excel->getActiveSheet()->setCellValue('C3', 'Name of the Employee');	
+		$CI->excel->getActiveSheet()->setCellValue('D3', 'Location');		
+		$CI->excel->getActiveSheet()->setCellValue('E3', 'Months & Year');
+		$CI->excel->getActiveSheet()->setCellValue('F3', 'Working Days');
+		// paid leave
+		$CI->excel->getActiveSheet()->setCellValue('G3', 'Sanction Paid Leave');
+		$CI->excel->getActiveSheet()->setCellValue('H3', 'Total Utilsed Paid Leave');
+		$CI->excel->getActiveSheet()->setCellValue('I3', 'Balance Paid Leave');
+		$CI->excel->getActiveSheet()->setCellValue('J3', 'Paid Leave Utilsed In Month');
+		// sick leave
+		$CI->excel->getActiveSheet()->setCellValue('K3', 'Sanction Sick Leave');
+		$CI->excel->getActiveSheet()->setCellValue('L3', 'Total Utilsed Sick Leave');
+		$CI->excel->getActiveSheet()->setCellValue('M3', 'Balance Sick Leave');
+		$CI->excel->getActiveSheet()->setCellValue('N3', 'Sick Leave Utilsed In Month');
+
+		$CI->excel->getActiveSheet()->setCellValue('O3', 'Actual Present Days');
+		$CI->excel->getActiveSheet()->setCellValue('P3', 'Total Present Days');
+		// Earning Allowance
+		$CI->excel->getActiveSheet()->setCellValue('Q3', 'Basic');
+		$CI->excel->getActiveSheet()->setCellValue('R3', 'DA Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('S3', 'HRA');
+		$CI->excel->getActiveSheet()->setCellValue('T3', 'Conveyance');
+		$CI->excel->getActiveSheet()->setCellValue('U3', 'Mobile Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('V3', 'Medical Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('W3', 'Education Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('X3', 'City Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('Y3', 'Entertianment Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('Z3', 'Performance Bonus');
+		$CI->excel->getActiveSheet()->setCellValue('AA3', 'Other Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AB3', 'Bonus'); 
+		$CI->excel->getActiveSheet()->setCellValue('AC3', 'Total Gross'); 
+		// ctc
+		$CI->excel->getActiveSheet()->setCellValue('AD3', 'PF (Employers Contribution)'); 
+		$CI->excel->getActiveSheet()->setCellValue('AE3', 'ESIC (Employers Contribution)');
+		$CI->excel->getActiveSheet()->setCellValue('AF3', 'PF (Employees Contribution)');
+		$CI->excel->getActiveSheet()->setCellValue('AG3', 'ESIC (Employees Contribution)');
+		$CI->excel->getActiveSheet()->setCellValue('AH3', 'Employee Medical Insurance');
+		$CI->excel->getActiveSheet()->setCellValue('AI3', 'CTC');
+		// salary on number of days
+		$CI->excel->getActiveSheet()->setCellValue('AJ3', 'Earn Basic');
+		$CI->excel->getActiveSheet()->setCellValue('AK3', 'Earn DA');
+		$CI->excel->getActiveSheet()->setCellValue('AL3', 'Earn HRA');
+		$CI->excel->getActiveSheet()->setCellValue('AM3', 'Earn Conveyance');
+		$CI->excel->getActiveSheet()->setCellValue('AN3', 'Earn Mobile Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AO3', 'Earn Medical Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AP3', 'Earn Education Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AQ3', 'Earn City Allowance');  
+		$CI->excel->getActiveSheet()->setCellValue('AR3', 'Earn Entertianment Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AS3', 'Performance Bonus');
+		$CI->excel->getActiveSheet()->setCellValue('AT3', 'Earn Other Allowance');
+		$CI->excel->getActiveSheet()->setCellValue('AU3', 'Earn Bonus');
+		$CI->excel->getActiveSheet()->setCellValue('AV3', 'Total Earn Gross');
+		$CI->excel->getActiveSheet()->setCellValue('AW3', 'Earn Gross For ESIC');
+		$CI->excel->getActiveSheet()->setCellValue('AX3', 'Employees PF Deduction');
+		$CI->excel->getActiveSheet()->setCellValue('AY3', 'Employees ESIC  Deduction ');
+		$CI->excel->getActiveSheet()->setCellValue('AZ3', 'Employee Medical Insurance ');
+		$CI->excel->getActiveSheet()->setCellValue('BA3', 'Professional Tax');
+		$CI->excel->getActiveSheet()->setCellValue('BB3', 'TDS');
+		// if Deducation
+		$CI->excel->getActiveSheet()->setCellValue('BC3', 'Telephone (Co.)');
+		$CI->excel->getActiveSheet()->setCellValue('BD3', 'Others Deduction');
+		$CI->excel->getActiveSheet()->setCellValue('BE3', 'Advance Opening'); 
+		$CI->excel->getActiveSheet()->setCellValue('BF3', 'Advance Addition'); 
+		$CI->excel->getActiveSheet()->setCellValue('BG3', 'Advance Recovery'); 
+		$CI->excel->getActiveSheet()->setCellValue('BH3', 'Advance Closing');
+		$CI->excel->getActiveSheet()->setCellValue('BI3', 'Total Deduction for the month');
+		/*$CI->excel->getActiveSheet()->setCellValue('AU3', 'Bonus');
+		$CI->excel->getActiveSheet()->setCellValue('AV3', 'Arrears');*/
+		//Total Salary 
+		$CI->excel->getActiveSheet()->setCellValue('BJ3', 'Net Pay');
+		$CI->excel->getActiveSheet()->setCellValue('BK3', 'WFH Days');
+		$CI->excel->getActiveSheet()->setCellValue('BL3', 'WFH Deduction %');
+		$CI->excel->getActiveSheet()->setCellValue('BM3', 'WFH Deduction Amount');
+		$CI->excel->getActiveSheet()->setCellValue('BN3', 'Net Pay After WFH');
+
+		$CI->excel->getActiveSheet()->setCellValue('BO3', 'No of Memo');
+		$CI->excel->getActiveSheet()->setCellValue('BP3', 'Memo Amount');
+		$CI->excel->getActiveSheet()->setCellValue('BQ3', 'Late Punch In(30 min after shift start) Count - Half days');
+		$CI->excel->getActiveSheet()->setCellValue('BR3', 'Early Punch Out Count');
+		$CI->excel->getActiveSheet()->setCellValue('BS3', 'Half Days due to Early Punch Out (1 for 3)');
+
+		$CI->excel->getActiveSheet()->setCellValue('BT3', 'Full Days due to no minimum 4 hours');
+
+		$CI->excel->getActiveSheet()->setCellValue('BU3', 'Half Days due to no minimum 8hrs (7:30hrs on Saturday)');
+
+		
+		$CI->excel->getActiveSheet()->setCellValue('BV3', 'Total full days');
+
+		$CI->excel->getActiveSheet()->setCellValue('BW3', 'Total Deduction Amount');
+
+		$CI->excel->getActiveSheet()->setCellValue('BX3', 'Net Pay After Deduction');
+
+		$CI->excel->getActiveSheet()->setCellValue('BY3', 'No Punch Out Count');
+	
+		$CI->excel->getActiveSheet()->setCellValue('BZ3', 'Total Deduction Amount');
+
+		$CI->excel->getActiveSheet()->setCellValue('CA3', 'Net Pay After Deduction');
+
+		// if(isset($showbonus) && $showbonus){
+		$CI->excel->getActiveSheet()->setCellValue('CB3', 'Variable %');
+		$CI->excel->getActiveSheet()->setCellValue('CC3', 'Variable Bonus Amount');
+		// }
+		//Star rate
+		// $CI->excel->getActiveSheet()->setCellValue('AX3', 'Red Star');
+		// $CI->excel->getActiveSheet()->setCellValue('AY3', 'Gold Star');
+		// $CI->excel->getActiveSheet()->setCellValue('AZ3', 'Balance Red Star');
+		// $CI->excel->getActiveSheet()->setCellValue('BA3', 'Balance Gold Star');
+		// $CI->excel->getActiveSheet()->setCellValue('BB3', 'Star deducation');
+		/*$CI->excel->getActiveSheet()->setCellValue('BC3', 'Black Star');
+		$CI->excel->getActiveSheet()->setCellValue('BD3', 'Balance Black Star');*/
+		//$CI->excel->getActiveSheet()->setCellValue('BC3', 'Balance Gold Star');
+		/*$CI->excel->getActiveSheet()->setCellValue('BD3', 'Black Star deducation');*/
+		//$CI->excel->getActiveSheet()->setCellValue('BD3', 'Salary after star deducation');
+
+
+		$CI->excel->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
+		$CI->excel->getActiveSheet()->getRowDimension('2')->setRowHeight(40);
+		$CI->excel->getActiveSheet()->getRowDimension('3')->setRowHeight(50);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(0)->setWidth(5);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(1)->setWidth(0);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(2)->setWidth(25);	
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(3)->setWidth(40);							
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(4)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(5)->setWidth(10);		
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(6)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(7)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(8)->setWidth(10);	
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(9)->setWidth(10);		
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(10)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(11)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(12)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(13)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(14)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(15)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(16)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(17)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(18)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(19)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(20)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(21)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(22)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(23)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(24)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(25)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(26)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(27)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(28)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(29)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(30)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(31)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(32)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(33)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(34)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(35)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(36)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(37)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(38)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(39)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(40)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(41)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(42)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(43)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(44)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(45)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(46)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(47)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(48)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(49)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(50)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(51)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(52)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(53)->setWidth(10);
+
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(54)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(55)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(56)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(57)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(58)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(59)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(60)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(61)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(62)->setWidth(10);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(63)->setWidth(12);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(64)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(65)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(66)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(67)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(68)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(69)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(70)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(71)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(72)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(73)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(74)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(75)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(76)->setWidth(15);
+		$CI->excel->getActiveSheet()->getColumnDimensionByColumn(77)->setWidth(15);
+
+		/************ Wrap A2 V3 content */  
+
+		//change the font name
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')->getFont()->setName('Bookman Old Style');
+        //change the font size
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')->getFont()->setSize(10);
+		//make the font become bold
+		$CI->excel->getActiveSheet()->getStyle('A2:CC3')->getFont()->setBold(true);															
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')->getFont()->getColor()->setRGB('FFFFFFFF');														
+										
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FF428bca');
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')->applyFromArray($allborders);
+		$CI->excel->getActiveSheet()->getStyle('A3:CC3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																	->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+																	->setWrapText(true);
+		/* start dynamic code from here *********/
+		$lastRowNum=4;
+ 		if (isset($emp_basic_data) && !empty($emp_basic_data))
+ 		{
+	 		$j=4;
+	 		$lastRowNum= $lastRowNum + count($emp_basic_data);
+	 		// define total vcariable for per coloumn 
+	 		$net_basic_total=0;
+	 		$net_basic_totalE=0;
+	 		$salBefoPt_total=0;
+	 		$pt_total=0;
+	 		$net_with_pt_total=0;
+	 		$total_deduction=0;
+	 		$Conveyance_total=0;
+	 		$mobile_total=0;
+	 		$HRA_total = 0;
+	 		$DA_total = 0;
+	 		$otherAllow_total=0;
+	 		$Arrears_total=0;
+	 		$allowance_total_emp = 0;
+	 		$allowance_ded_total_emp = 0;
+			$mobile_ded_total = 0;
+			$ArrOther_ded_total = 0;
+			$Bonus_total = 0;
+			$Advance_total = 0;
+			$per_emp_advance=0;
+			$deduct_adv_total=0;
+			$Advance_deduction=0;
+			$medical_total=0;
+			$city_total=0;
+			$education_total=0;
+			$adv_opening = 0;
+			$adv_Addition = 0;
+			$adv_recovery = 0;
+			$adv_closing_amt = 0;
+
+			$mobile_total_all=0;
+			$otherAllow_total_all=0;
+			$recy_ttl = 0;
+			$entertainment_total = 0;
+			$p_bonus_total = 0;
+			$pf_earn = 0;
+			$ESIC_earn = 0;
+			$pf_deduct = 0;
+			$ESIC_deduct = 0;
+			$insurance_deduct = 0;
+			$tot_pf_deduct=0;
+			$tot_ESIC_deduct=0;
+			$pay_during_month = 0;
+			$pay_beforePt=0;
+			$final_net_pay=0;
+			$basic_net=0;
+			$total_ctc=0;
+			$total_gross=0;
+			$total_earn_gross=0;
+			$total_earn_gross1=0;
+			$total_net_salary=0;
+			$total_deduct_mnth=0;
+			$total_net_pay=0;
+			$total_net_pay_wfh=0;
+			$total_net_pay_deduction=0;
+			//$Bonus_total=0;
+			//emp info
+			$emp_bac = 0;
+			$emp_da = 0;
+			$emp_hra = 0;
+			$emp_earn_hra=0;
+			$emp_convy = 0;
+			$emp_mob = 0;
+			$emp_med = 0;
+			$emp_edu = 0;
+			$emp_city = 0;
+			$emp_enter = 0;
+			$emp_gross = 0;
+			$emp_p_bonus = 0;
+			$emp_bonus = 0;
+			$emp_tot_alw = 0;
+	 		$sr=1;
+	 		$total_star_deduct=0;
+			$total_star_pay=0;
+			$actual_present_day=0;
+			$prev_emp_name = '';
+			$merge_start_row = 0;
+			$total_of_total_d_after_d = 0;
+			$totalNetP = 0;
+	 		foreach ($emp_basic_data as $key)
+	 		{
+	 			$netBasicTotK = 0;
+	 			$emp_wise_ded=0;
+	 			$boun_emp = 0;
+	 			$emp_wise_add_deduction = 0;
+	 		 	//echo $key->user_id; echo '<br>';
+				$emp_allData = isset($CI) && isset($key) && isset($key->user_id) && isset($key->salary_month) ? $CI->Slip_vish_model->fetchAllowDataOfEmp_basic_allow(isset($key->user_id) ? $key->user_id : 0, isset($key->salary_month) ? $key->salary_month : '') : array();
+				// print_r($emp_allData); 
+				// echo $CI->db->last_query();
+				$emp_Ded_allData = isset($CI) && isset($key) && isset($key->user_id) ? $CI->Slip_vish_model->fetchDeductAllowDataOfEmpExpend(isset($key->user_id) ? $key->user_id : 0) : array();	
+				$earn_allowance = isset($CI) && isset($key) && isset($key->user_id) ? $CI->master_model->selectAllWhr('tbl_emp_earn_allowance','emp_id', isset($key->user_id) ? $key->user_id : 0) : array();
+				// $emp_basic = isset($CI) && isset($key) && isset($key->user_id) ? $CI->master_model->selectDetailsWhr('tbl_employee_creation','emp_id', isset($key->user_id) ? $key->user_id : 0) : null;
+				$emp_leave_data = isset($CI) && isset($key) && isset($key->user_id) && isset($key->report_month) && isset($key->report_year) ? $CI->Slip_vish_model->fetch_emp_leave_data(isset($key->user_id) ? $key->user_id : 0, isset($key->report_month) ? $key->report_month : '', isset($key->report_year) ? $key->report_year : '') : null;
+               /* echo $CI->db->last_query();exit();	 */   
+				// $emp_paid_leave = isset($CI) && isset($key) && isset($key->user_id) && isset($key->report_month) && isset($key->report_year) ? $CI->Slip_vish_model->fetch_paid_leave(isset($key->user_id) ? $key->user_id : 0, isset($key->report_month) ? $key->report_month : '', isset($key->report_year) ? $key->report_year : '') : null;
+              
+
+				$emp_creditleave_data = isset($CI) && isset($key) && isset($key->user_id) && isset($key->report_year) ? $CI->Slip_vish_model->fetch_emp_credit_leave_data(isset($key->user_id) ? $key->user_id : 0, isset($key->report_year) ? $key->report_year : '') : null;
+				
+				$emp_creditleave = (isset($emp_creditleave_data) && isset($emp_creditleave_data->no_leave_credit) && !empty($emp_creditleave_data->no_leave_credit)) ? $emp_creditleave_data->no_leave_credit : '0';
+				$num_days_of_month = isset($key) && isset($key->report_month) && isset($key->report_year) ? cal_days_in_month(CAL_GREGORIAN, isset($key->report_month) ? $key->report_month : 1, isset($key->report_year) ? $key->report_year : date('Y')) : 0;
+
+				$current_emp_name = isset($key) && isset($key->emp_name) ? trim($key->emp_name) : '';
+
+				if ($prev_emp_name == '') {
+				    $prev_emp_name = $current_emp_name;
+				    $merge_start_row = $j;
+				} elseif ($prev_emp_name != $current_emp_name) {
+
+				    // Previous employee name merge
+				    if ($merge_start_row < ($j - 1)) {
+				        $CI->excel->getActiveSheet()->mergeCells('C' . $merge_start_row . ':C' . ($j - 1));
+				        $CI->excel->getActiveSheet()->getStyle('C' . $merge_start_row . ':C' . ($j - 1))
+				            ->getAlignment()
+				            ->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+				            ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+				            ->setWrapText(true);
+				    }
+
+				    $prev_emp_name = $current_emp_name;
+				    $merge_start_row = $j;
+				}
+
+				$CI->excel->getActiveSheet()->setCellValue('A'.$j,$sr++);
+				$CI->excel->getActiveSheet()->setCellValue('B'.$j, isset($key) && isset($key->username) ? $key->username : '');
+				$CI->excel->getActiveSheet()->setCellValue('C'.$j, isset($key) && isset($key->emp_name) ? $key->emp_name : '');
+				$CI->excel->getActiveSheet()->setCellValue('D'.$j, isset($key) && isset($key->department_name) ? $key->department_name : '');
+				$CI->excel->getActiveSheet()->setCellValue('E'.$j, (isset($key) && isset($key->report_month) ? $key->report_month : '') . '-' . (isset($key) && isset($key->report_year) ? $key->report_year : ''));
+				$CI->excel->getActiveSheet()->setCellValue('F'.$j, isset($key) && isset($key->working_days) ? $key->working_days : '');
+
+				// $monthsdiff = isset($CI) && isset($key) && isset($key->user_id) ? $CI->Slip_vish_model->fetch_month_diff_of_emp_joining_date_and_currdate(isset($key->user_id) ? $key->user_id : 0) : null;
+				$bal_leave_cnt=0;
+				if(isset($monthsdiff) && isset($monthsdiff->months) && $monthsdiff->months>=6)
+				{
+					$saction = isset($emp_creditleave) ? $emp_creditleave : 0;
+				}else if(isset($emp_creditleave_data) && isset($emp_creditleave_data->no_leave_credit) && $emp_creditleave_data->no_leave_credit<0 && isset($monthsdiff) && isset($monthsdiff->months) && $monthsdiff->months<6){
+					$bal_leave_cnt = isset($emp_creditleave_data->no_leave_credit) ? $emp_creditleave_data->no_leave_credit : 0;
+					$saction=0;
+				}else{
+					$saction = 0;
+				}
+				//echo (isset($bal_leave_cnt)?$bal_leave_cnt:$saction); echo '<br>';
+				$CI->excel->getActiveSheet()->setCellValue('G'.$j, isset($key->saction1) ? $key->saction1 : 0); //$emp_leave_data->total_leave
+				/*if($emp_leave_data->bal_leave!=$emp_creditleave && !empty($emp_leave_data->bal_leave))
+				{
+					$earn_leave = $emp_creditleave-$emp_leave_data->bal_leave;
+				}else{
+					$earn_leave = 0;
+				}*/
+				/*$earn_leave=$emp_leave_data->earn_leave;*/
+				$CI->excel->getActiveSheet()->setCellValue('H'.$j, (isset($key->earn_leave1) && !empty($key->earn_leave1)) ? $key->earn_leave1 : 0); //$emp_leave_data->earn_leave
+				// $CI->excel->getActiveSheet()->setCellValue('H'.$j,(isset($emp_leave_data->bal_leave) && !empty($emp_leave_data->bal_leave) && $saction!=0)?$emp_leave_data->bal_leave:$saction);
+				$CI->excel->getActiveSheet()->setCellValue('I'.$j,"=SUM(G$j-H$j)");
+				/*$CI->excel->getActiveSheet()->setCellValue('H'.$j,$emp_leave_data->bal_leave);*/
+				/*$CI->excel->getActiveSheet()->setCellValue('I'.$j,$emp_paid_leave->paid_leave);*/
+              	$CI->excel->getActiveSheet()->setCellValue('J'.$j, (isset($key->earn_leave2) && !empty($key->earn_leave2)) ? $key->earn_leave2 : 0);              	
+              	// sick leave
+              	$emp_sick_leave_data = isset($CI) && isset($key) && isset($key->user_id) && isset($key->report_year) ? $CI->Slip_vish_model->fetch_emp_sick_leave_data(isset($key->user_id) ? $key->user_id : 0, isset($key->report_year) ? $key->report_year : '') : null;
+				
+				$emp_sick_leave = (isset($emp_sick_leave_data) && isset($emp_sick_leave_data->sick_leave_creadit) && !empty($emp_sick_leave_data->sick_leave_creadit)) ? $emp_sick_leave_data->sick_leave_creadit : '0';
+
+				// $monthsdiff = isset($CI) && isset($key) && isset($key->user_id) ? $CI->Slip_vish_model->fetch_month_diff_of_emp_joining_date_and_currdate(isset($key->user_id) ? $key->user_id : 0) : null;
+				$bal_leave_cnt=0;
+				if(isset($monthsdiff) && isset($monthsdiff->months) && $monthsdiff->months>=6)
+				{
+					$saction_sick = isset($emp_sick_leave) ? $emp_sick_leave : 0;
+				}else if(isset($emp_sick_leave_data) && isset($emp_sick_leave_data->sick_leave_creadit) && $emp_sick_leave_data->sick_leave_creadit<0 && isset($monthsdiff) && isset($monthsdiff->months) && $monthsdiff->months<6){
+					$bal_leave_cnt = isset($emp_sick_leave_data->sick_leave_creadit) ? $emp_sick_leave_data->sick_leave_creadit : 0;
+					$saction_sick=0;
+				}else{
+					$saction_sick=0;
+				}
+
+              	$CI->excel->getActiveSheet()->setCellValue('K'.$j, isset($key->saction_sick1) ? $key->saction_sick1 : 0);
+
+              	$emp_sick_leave_data = isset($CI) && isset($key) && isset($key->user_id) && isset($key->report_month) && isset($key->report_year) ? $CI->Slip_vish_model->fetch_emp_sick_leave_data1(isset($key->user_id) ? $key->user_id : 0, isset($key->report_month) ? $key->report_month : '', isset($key->report_year) ? $key->report_year : '') : null;				
+              	
+              	$CI->excel->getActiveSheet()->setCellValue('L'.$j, (isset($key->earn_leave3) && !empty($key->earn_leave3)) ? $key->earn_leave3 : 0);
+              	$CI->excel->getActiveSheet()->setCellValue('M'.$j, (isset($key->earn_leave4) ? $key->earn_leave4 : 0));
+              	$CI->excel->getActiveSheet()->setCellValue('N'.$j, (isset($key->earn_leave5) && !empty($key->earn_leave5)) ? $key->earn_leave5 : 0);
+
+              	// total leave
+              	$actual_present_day = (isset($key) && isset($key->work_day) ? $key->work_day : 0) - (isset($emp_leave_data) && isset($emp_leave_data->earn_leave1) ? $emp_leave_data->earn_leave1 : 0) - (isset($emp_sick_leave_data) && isset($emp_sick_leave_data->earn_leave1) ? $emp_sick_leave_data->earn_leave1 : 0);
+              	$total_present_day = $actual_present_day + (isset($emp_leave_data) && isset($emp_leave_data->earn_leave1) ? $emp_leave_data->earn_leave1 : 0) + (isset($emp_sick_leave_data) && isset($emp_sick_leave_data->earn_leave1) ? $emp_sick_leave_data->earn_leave1 : 0);
+				$CI->excel->getActiveSheet()->setCellValue('O'.$j, isset($key) && isset($key->actual_present_days) ? $key->actual_present_days : 0);
+				$CI->excel->getActiveSheet()->setCellValue('P'.$j, isset($key) && isset($key->total_present_days) ? $key->total_present_days : 0);
+				
+				$basic = isset($key) && isset($key->basic_amt) ? $key->basic_amt : 0;//$emp_basic->emp_basic;
+				$CI->excel->getActiveSheet()->setCellValue('Q'.$j, round(isset($key) && isset($key->basic) ? $key->basic : 0));
+				$emp_bac = (isset($emp_bac) ? $emp_bac : 0) + (isset($key->basic) ? $key->basic : 0);
+
+				$da = 0;
+				$hra = 0;
+				$conveyance = 0;
+				$mobile = 0;
+				$medical = 0;
+				$education = 0;
+				$city = 0;
+				$entertainment = 0;
+				$p_bonus = 0;
+				$bonus = 0;
+				$total_allowance=0;
+				$pf_dedct=0;
+
+				//EARNING ALLOWANCE				
+				if(isset($earn_allowance) && !empty($earn_allowance))
+				{
+					foreach ($earn_allowance as $earn)
+					{
+						if(isset($key) && isset($key->da_allowance))
+						{
+							//DA allowance
+							$CI->excel->getActiveSheet()->setCellValue('R'.$j, round(isset($key) && isset($key->da_allowance) ? $key->da_allowance : 0));
+							$emp_da = (isset($emp_da) ? $emp_da : 0) + (isset($key) && isset($key->da_allowance) ? $key->da_allowance : 0); 
+							$da = isset($key) && isset($key->da_allowance) ? $key->da_allowance : 0;
+							
+						} 
+						if(isset($key) && isset($key->hra))
+						{
+							//HRA
+							$CI->excel->getActiveSheet()->setCellValue('S'.$j, round(isset($key) && isset($key->hra) ? $key->hra : 0));
+							$emp_hra = (isset($emp_hra) ? $emp_hra : 0) + (isset($key) && isset($key->hra) ? $key->hra : 0);
+							$hra = isset($key) && isset($key->hra) ? $key->hra : 0;
+							
+						} 
+						if(isset($key) && isset($key->conveyance))
+						{
+							//Conveyance
+							$CI->excel->getActiveSheet()->setCellValue('T'.$j, round(isset($key) && isset($key->conveyance) ? $key->conveyance : 0));
+							$emp_convy = (isset($emp_convy) ? $emp_convy : 0) + (isset($key) && isset($key->conveyance) ? $key->conveyance : 0);
+							$conveyance = isset($key) && isset($key->conveyance) ? $key->conveyance : 0;
+							
+						} 
+						if(isset($key) && isset($key->mobile_allowance)) 
+						{
+							// mobile allowance
+							$CI->excel->getActiveSheet()->setCellValue('U'.$j, round(isset($key) && isset($key->mobile_allowance) ? $key->mobile_allowance : 0));
+							$emp_mob = (isset($emp_mob) ? $emp_mob : 0) + (isset($key) && isset($key->mobile_allowance) ? $key->mobile_allowance : 0);
+							$mobile = isset($key) && isset($key->mobile_allowance) ? $key->mobile_allowance : 0;
+							
+						} 
+						if(isset($key) && isset($key->medical_allowance))
+						{
+							//medical allowance
+							$CI->excel->getActiveSheet()->setCellValue('V'.$j, round(isset($key) && isset($key->medical_allowance) ? $key->medical_allowance : 0));
+							$emp_med = (isset($emp_med) ? $emp_med : 0) + (isset($key) && isset($key->medical_allowance) ? $key->medical_allowance : 0);
+							$medical = isset($key) && isset($key->medical_allowance) ? $key->medical_allowance : 0;
+							
+						} 
+						if(isset($key) && isset($key->education_allowance))
+						{
+							//education allowance
+							$CI->excel->getActiveSheet()->setCellValue('W'.$j, round(isset($key) && isset($key->education_allowance) ? $key->education_allowance : 0));
+							$emp_edu = (isset($emp_edu) ? $emp_edu : 0) + (isset($key) && isset($key->education_allowance) ? $key->education_allowance : 0);
+							$education = isset($key) && isset($key->education_allowance) ? $key->education_allowance : 0;
+							
+						} 
+						if(isset($key) && isset($key->city_allowance))
+						{				
+							// City allowance
+							$CI->excel->getActiveSheet()->setCellValue('X'.$j, round(isset($key) && isset($key->city_allowance) ? $key->city_allowance : 0));
+							$emp_city = (isset($emp_city) ? $emp_city : 0) + (isset($key) && isset($key->city_allowance) ? $key->city_allowance : 0);
+							$city = isset($key) && isset($key->city_allowance) ? $key->city_allowance : 0;
+							
+						} 
+						if(isset($key) && isset($key->earn_entertianmenta_allowance))
+						{
+							//entertainment allowance
+							$CI->excel->getActiveSheet()->setCellValue('Y'.$j, round(isset($key) && isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0));
+							$emp_enter = (isset($emp_enter) ? $emp_enter : 0) + (isset($key) && isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0);
+							$entertainment = isset($key) && isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0;
+							
+						}
+						if(isset($earn) && isset($earn->earning_id) && $earn->earning_id == 25)
+						{
+							//entertainment allowance
+							$CI->excel->getActiveSheet()->setCellValue('Z'.$j, round(isset($earn) && isset($earn->earn_value) ? $earn->earn_value : 0));
+							$emp_p_bonus = (isset($emp_p_bonus) ? $emp_p_bonus : 0) + (isset($earn) && isset($earn->earn_value) ? $earn->earn_value : 0);
+							$p_bonus = isset($earn) && isset($earn->earn_value) ? $earn->earn_value : 0;
+							
+						}
+						if(isset($key) && isset($key->professional_tax))
+						{
+							//entertainment allowance
+							$CI->excel->getActiveSheet()->setCellValue('AA'.$j, round(isset($key) && isset($key->professional_tax) ? $key->professional_tax : 0));
+							$emp_tot_alw = (isset($emp_tot_alw) ? $emp_tot_alw : 0) + (isset($key) && isset($key->professional_tax) ? $key->professional_tax : 0);
+							$total_allowance = isset($key) && isset($key->professional_tax) ? $key->professional_tax : 0;						
+							
+						}
+						if(isset($key) && isset($key->bonus))
+						{
+							//entertainment allowance
+							$CI->excel->getActiveSheet()->setCellValue('AB'.$j, round(isset($key) && isset($key->bonus) ? $key->bonus : 0));
+							$emp_bonus = (isset($emp_bonus) ? $emp_bonus : 0) + (isset($key) && isset($key->bonus) ? $key->bonus : 0);
+							$bonus = isset($key) && isset($key->bonus) ? $key->bonus : 0;
+							
+						}
+					}
+				}
+				
+				$gross = (isset($basic) ? $basic : 0) + (isset($da) ? $da : 0)*1 + (isset($hra) ? $hra : 0)*1 + (isset($conveyance) ? $conveyance : 0)*1 + (isset($mobile) ? $mobile : 0)*1 + (isset($medical) ? $medical : 0)*1 + (isset($education) ? $education : 0)*1 + (isset($city) ? $city : 0)*1 + (isset($entertainment) ? $entertainment : 0)*1 + (isset($bonus) ? $bonus : 0)*1 + (isset($total_allowance) ? $total_allowance : 0)*1 + (isset($p_bonus) ? $p_bonus : 0)*1;
+
+				$gross1 = (isset($basic) ? $basic : 0) + (isset($da) ? $da : 0)*1 + (isset($conveyance) ? $conveyance : 0)*1 + (isset($mobile) ? $mobile : 0)*1 + (isset($medical) ? $medical : 0)*1 + (isset($education) ? $education : 0)*1 + (isset($city) ? $city : 0)*1 + (isset($entertainment) ? $entertainment : 0)*1 + (isset($total_allowance) ? $total_allowance : 0)*1 + (isset($p_bonus) ? $p_bonus : 0)*1;
+
+				$CI->excel->getActiveSheet()->setCellValue('AC'.$j, round(isset($key) && isset($key->total_gross) ? $key->total_gross : 0));
+				$emp_gross = (isset($emp_gross) ? $emp_gross : 0) + (isset($key->total_gross) ? $key->total_gross : 0);
+
+				//CTC
+				$CI->excel->getActiveSheet()->setCellValue('AD'.$j, round(isset($key) && isset($key->pf_earn) ? $key->pf_earn : 0));
+				$pf_earn = (isset($pf_earn) ? $pf_earn : 0) + (isset($key) && isset($key->pf_earn) ? $key->pf_earn : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AE'.$j, round(isset($key) && isset($key->ESIC_earn) ? $key->ESIC_earn : 0));
+				$ESIC_earn = (isset($ESIC_earn) ? $ESIC_earn : 0) + (isset($key) && isset($key->ESIC_earn) ? $key->ESIC_earn : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AF'.$j, round(isset($key) && isset($key->pf_deduct) ? $key->pf_deduct : 0));
+				$pf_deduct = (isset($pf_deduct) ? $pf_deduct : 0) + (isset($key) && isset($key->pf_deduct) ? $key->pf_deduct : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AG'.$j, round(isset($key) && isset($key->ESIC_deduct) ? $key->ESIC_deduct : 0));
+				$ESIC_deduct = (isset($ESIC_deduct) ? $ESIC_deduct : 0) + (isset($key) && isset($key->ESIC_deduct) ? $key->ESIC_deduct : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AH'.$j, round(isset($key) && isset($key->medical_insurance) ? $key->medical_insurance : 0));
+				$medical_insurance = (isset($medical_insurance) ? $medical_insurance : 0) + (isset($key) && isset($key->medical_insurance) ? $key->medical_insurance : 0);
+
+				$ctc = (isset($gross) ? $gross : 0) + (isset($key) && isset($key->pf_earn) ? $key->pf_earn : 0) + (isset($key) && isset($key->ESIC_earn) ? $key->ESIC_earn : 0);
+				//+$key->pf_deduct+(isset($key->ESIC_deduct) ? $key->ESIC_deduct : 0);
+				$CI->excel->getActiveSheet()->setCellValue('AI'.$j, round(isset($key) && isset($key->ctc) ? $key->ctc : 0));
+				$total_ctc = (isset($total_ctc) ? $total_ctc : 0) + (isset($ctc) ? $ctc : 0);
+				
+				//EARNING ALLOWANCE/NO OF DAYS
+				$bsNet = 0;
+				if(isset($key) && isset($key->net_pay) && $key->net_pay>0)
+				{ 
+					$bsNet = (isset($key->net_pay) ? $key->net_pay : 0) + (isset($key) && isset($key->pt_amt) ? $key->pt_amt : 0);
+					$netBasicTotK = isset($bsNet) ? $bsNet : 0;
+				}
+
+				$basic = (isset($key) && isset($key->basic_net) ? $key->basic_net : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);					
+				$emp_basic = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($basic) ? $basic : 0); 
+				$CI->excel->getActiveSheet()->setCellValue('AJ'.$j, round(isset($key) && isset($key->earn_basic) ? $key->earn_basic : 0));
+				$basic_net = (isset($basic_net) ? $basic_net : 0) + (isset($key->earn_basic) ? $key->earn_basic : 0);
+
+				$hra = (isset($key) && isset($key->hra) ? $key->hra : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+				$emp_earn_hra = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($hra) ? $hra : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AL'.$j, round(isset($key) && isset($key->earn_hra) ? $key->earn_hra : 0));
+				$HRA_total = (isset($HRA_total) ? $HRA_total : 0) + (isset($key->earn_hra) ? $key->earn_hra : 0);
+
+				$convey = (isset($key) && isset($key->convey) ? $key->convey : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+				$emp_convey = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($convey) ? $convey : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('AM'.$j, round(isset($key) && isset($key->earn_conveyance) ? $key->earn_conveyance : 0));
+				$Conveyance_total = (isset($Conveyance_total) ? $Conveyance_total : 0) + (isset($key->earn_conveyance) ? $key->earn_conveyance : 0);
+
+				$total_mobile=0;
+				$total_city=0;
+				$total_medi=0;
+				$total_edu=0;
+				$total_entertainment=0;
+				$otherAllow_total = 0;
+				$total_bonus=0;
+				$total_da=0;
+				$total_p_bonus=0;
+							
+				if(isset($emp_allData) && !empty($emp_allData))
+				{
+
+					foreach ($emp_allData as $row)
+					{
+						if(isset($row) && isset($row->earning_id) && $row->earning_id == 18)
+						{
+							//DA allowance
+							$da = (isset($key) && isset($key->special_allowance) ? $key->special_allowance : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($da) ? $da : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AK'.$j, round(isset($key) && isset($key->earn_da) ? $key->earn_da : 0));
+							$DA_total = (isset($DA_total) ? $DA_total : 0) + (isset($key->earn_da) ? $key->earn_da : 0);
+							$total_da = isset($key->earn_da) ? $key->earn_da : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 6) 
+						{
+							// mobile allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AN'.$j, round(isset($key) && isset($key->earn_mobile_allowance) ? $key->earn_mobile_allowance : 0));
+							$mobile_total_all = (isset($mobile_total_all) ? $mobile_total_all : 0) + (isset($key->earn_mobile_allowance) ? $key->earn_mobile_allowance : 0);
+							$total_mobile = isset($key->earn_mobile_allowance) ? $key->earn_mobile_allowance : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 13)
+						{
+							//medical allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AO'.$j, round(isset($key) && isset($key->earn_medical_allowance) ? $key->earn_medical_allowance : 0));
+							$medical_total = (isset($medical_total) ? $medical_total : 0) + (isset($key->earn_medical_allowance) ? $key->earn_medical_allowance : 0);
+							$total_medi = isset($key->earn_medical_allowance) ? $key->earn_medical_allowance : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 20)
+						{
+							//education allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AP'.$j, round(isset($key) && isset($key->earn_education_allowance) ? $key->earn_education_allowance : 0));
+							$education_total = (isset($education_total) ? $education_total : 0) + (isset($key->earn_education_allowance) ? $key->earn_education_allowance : 0);
+							$total_edu = isset($key->earn_education_allowance) ? $key->earn_education_allowance : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 14)
+						{				
+							// City allowance 
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AQ'.$j, round(isset($key) && isset($key->earn_city_allowance) ? $key->earn_city_allowance : 0));
+							$city_total = (isset($city_total) ? $city_total : 0) + (isset($key->earn_city_allowance) ? $key->earn_city_allowance : 0);
+							$total_city = isset($key->earn_city_allowance) ? $key->earn_city_allowance : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 22)
+						{
+							//entertainment allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AR'.$j, round(isset($key) && isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0));
+							$entertainment_total = (isset($entertainment_total) ? $entertainment_total : 0) + (isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0);
+							$total_entertainment = isset($key->earn_entertianmenta_allowance) ? $key->earn_entertianmenta_allowance : 0;
+							
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 25)
+						{
+							//entertainment allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($key->working_days) ? $key->working_days : 1);
+							$value = (isset($key) && isset($key->actual_present_days) ? $key->actual_present_days : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AS'.$j, round(isset($value) ? $value : 0));
+							$p_bonus_total = (isset($p_bonus_total) ? $p_bonus_total : 0) + (isset($value) ? $value : 0);
+							$total_p_bonus = isset($value) ? $value : 0;
+							
+						}
+						elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 9)
+						{
+							//entertainment allowance
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$CI->excel->getActiveSheet()->setCellValue('AT'.$j, round(isset($key) && isset($key->earn_other_allowance) ? $key->earn_other_allowance : 0));
+							$otherAllow_total_all = (isset($otherAllow_total_all) ? $otherAllow_total_all : 0) + (isset($key->earn_other_allowance) ? $key->earn_other_allowance : 0);
+							$otherAllow_total = isset($key->earn_other_allowance) ? $key->earn_other_allowance : 0;
+							
+						}
+						elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 15)
+						{
+							//Bonus
+							$last_val = (isset($row) && isset($row->value) ? $row->value : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+							$value = (isset($key) && isset($key->work_day) ? $key->work_day : 0) * (isset($last_val) ? $last_val : 0);
+							$bonus_type = isset($key) && isset($key->bonus_type) ? $key->bonus_type : '';
+							if(isset($bonus_type) && $bonus_type == "yearly"){
+								$value = 0;
+							}
+							if(isset($bonus_type) && $bonus_type == "yearly" && isset($key) && isset($key->salary_month) && strpos($key->salary_month, "10-") !== false) {
+								$value = isset($CI) && isset($key) && isset($key->user_id) && isset($key->salary_month) ? $CI->Slip_vish_model->getYearyBonus(isset($key->user_id) ? $key->user_id : 0, isset($key->salary_month) ? $key->salary_month : '') : 0;
+							}
+							$CI->excel->getActiveSheet()->setCellValue('AU'.$j, round(isset($key) && isset($key->earn_bonus) ? $key->earn_bonus : 0));
+							$Bonus_total = (isset($Bonus_total) ? $Bonus_total : 0) + (isset($key->earn_bonus) ? $key->earn_bonus : 0);
+							$total_bonus = isset($key->earn_bonus) ? $key->earn_bonus : 0;
+						}elseif(isset($row) && isset($row->earning_id) && $row->earning_id == 16)
+						{
+							$Advance_total = (isset($Advance_total) ? $Advance_total : 0) + (isset($row) && isset($row->value) ? $row->value : 0);
+							$per_emp_advance = isset($row) && isset($row->value) ? $row->value : 0;
+						}else{
+							$allowance_total_emp=0;
+						}
+					}
+				}
+
+				$earn_gross = (isset($emp_basic) ? $emp_basic : 0)*1 + (isset($emp_earn_hra) ? $emp_earn_hra : 0)*1 + (isset($emp_convey) ? $emp_convey : 0)*1 + (isset($total_da) ? $total_da : 0)*1 + (isset($total_mobile) ? $total_mobile : 0)*1 + (isset($total_medi) ? $total_medi : 0)*1 + (isset($total_edu) ? $total_edu : 0)*1 + (isset($total_city) ? $total_city : 0)*1 + (isset($total_entertainment) ? $total_entertainment : 0)*1 + (isset($total_bonus) ? $total_bonus : 0)*1 + (isset($otherAllow_total) ? $otherAllow_total : 0)*1 + (isset($total_p_bonus) ? $total_p_bonus : 0)*1;
+				// echo '<pre>';print_r($earn_gross);
+				// echo '<pre>';print_r($pf_dedct);
+				// echo '<pre>';print_r($total_bonus);
+				
+				// echo "<br>";
+				// echo "<br>";
+				// echo "TOT:-".round((($earn_gross+$pf_dedct)-$total_bonus*1));
+				// echo "----";
+				
+				// echo $pf_dedct;
+				$CI->excel->getActiveSheet()->setCellValue('AV'.$j, round(isset($key) && isset($key->total_earn_gross) ? $key->total_earn_gross : 0));
+				$pf_dedct = round(((isset($emp_basic) ? $emp_basic : 0) + (isset($total_da) ? $total_da : 0)*1)*0.12);
+				$total_earn_gross = (isset($total_earn_gross) ? $total_earn_gross : 0) + ((isset($key->total_earn_gross) ? $key->total_earn_gross : 0) - (isset($total_bonus) ? $total_bonus : 0)); 
+				
+				$earn_gross1 = (isset($emp_basic) ? $emp_basic : 0)*1 + (isset($emp_earn_hra) ? $emp_earn_hra : 0)*1 + (isset($emp_convey) ? $emp_convey : 0)*1 + (isset($total_da) ? $total_da : 0)*1 + (isset($total_mobile) ? $total_mobile : 0)*1 + (isset($total_medi) ? $total_medi : 0)*1 + (isset($total_edu) ? $total_edu : 0)*1 + (isset($total_city) ? $total_city : 0)*1 + (isset($total_entertainment) ? $total_entertainment : 0)*1 + (isset($otherAllow_total) ? $otherAllow_total : 0)*1 + (isset($total_p_bonus) ? $total_p_bonus : 0)*1;
+
+				$CI->excel->getActiveSheet()->setCellValue('AW'.$j, round(isset($key) && isset($key->earn_gross_for_esic) ? $key->earn_gross_for_esic : 0));
+				$total_earn_gross1 = (isset($total_earn_gross1) ? $total_earn_gross1 : 0) + (isset($key->earn_gross_for_esic) ? $key->earn_gross_for_esic : 0); 
+
+				$earn_gross_pf = (isset($emp_basic) ? $emp_basic : 0)*1 + (isset($emp_convey) ? $emp_convey : 0)*1 + (isset($total_da) ? $total_da : 0)*1 + (isset($total_mobile) ? $total_mobile : 0)*1 + (isset($total_medi) ? $total_medi : 0)*1 + (isset($total_edu) ? $total_edu : 0)*1 + (isset($total_city) ? $total_city : 0)*1 + (isset($total_entertainment) ? $total_entertainment : 0)*1 + (isset($otherAllow_total) ? $otherAllow_total : 0)*1 + (isset($total_p_bonus) ? $total_p_bonus : 0)*1;
+				//DEDUCATION
+				/*$pf_dedct1 = $key->pf_deduct;
+				$pfd_val = $key->pf_deduct/$num_days_of_month;
+				if(isset($key->pf_deduct) && !empty($key->pf_deduct)){
+
+					//$pf_dedct =  (isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					if($pf_dedct1 >=1800)
+					{
+						$pf_dedct =  (isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					}else
+					{
+						$pf_dedct = round(($emp_basic + $emp_convey + ($total_da)*1 + ($total_mobile)*1 + ($total_medi)*1 + ($total_edu)*1 + ($total_city)*1 + ($total_entertainment)*1)*0.12);
+						//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12);
+					}
+					//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12); //(isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					 //round(($emp_basic + ($total_da)*1)*0.12);
+				}else{
+					$pf_dedct = 0;
+				}*/
+				$pf_dedct1 = isset($key) && isset($key->pf_deduct) ? $key->pf_deduct : 0;
+				$pfd_val = (isset($key) && isset($key->pf_deduct) ? $key->pf_deduct : 0) / (isset($key->working_days) ? $key->working_days : 1);
+				if(isset($key) && isset($key->pf_deduct) && !empty($key->pf_deduct)){
+
+					//$pf_dedct =  (isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					// if($pf_dedct1 >=1500)
+					// {
+					// 	$pf_dedct =  (isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					// }else
+					// {
+					//$pf_dedct = $key->pf_deduct;
+					$pf_dedct = round(((isset($emp_basic) ? $emp_basic : 0) + (isset($total_da) ? $total_da : 0)*1)*0.12);
+					if(isset($pf_dedct) && $pf_dedct > 1800) {
+						$pf_dedct = 1800;
+					}					
+						
+					// }
+					//$pf_dedct = round(($emp_basic + ($total_da)*1)*0.12); //(isset($key->work_day) ? $key->work_day:0)*$pfd_val;
+					 //round(($emp_basic + ($total_da)*1)*0.12);
+				}else{
+					$pf_dedct = 0;
+				}
+				$CI->excel->getActiveSheet()->setCellValue('AX'.$j, round(isset($key) && isset($key->employees_pf_deduction) ? $key->employees_pf_deduction : 0));
+				$tot_pf_deduct = (isset($tot_pf_deduct) ? $tot_pf_deduct : 0) + (isset($key->employees_pf_deduction) ? $key->employees_pf_deduction : 0);
+
+				$esicd_val = (isset($key) && isset($key->ESIC_deduct) ? $key->ESIC_deduct : 0) / (isset($num_days_of_month) ? $num_days_of_month : 1);
+				// $esic_dedct = (isset($key->work_day) ? $key->work_day:0)*$esicd_val;
+				if(isset($key) && isset($key->ESIC_deduct) && !empty($key->ESIC_deduct)) {
+					if(isset($gross1) && $gross1 <= 21000) {
+						$esic_dedct = (isset($earn_gross1) ? $earn_gross1 : 0)*0.0075;
+					} else {
+						$esic_dedct = 0;
+					}	
+				} else {
+					$esic_dedct = 0;
+				}
+						
+				$CI->excel->getActiveSheet()->setCellValue('AY'.$j, round(isset($key) && isset($key->employees_esic_deduction) ? $key->employees_esic_deduction : 0));
+				$tot_ESIC_deduct = (isset($tot_ESIC_deduct) ? $tot_ESIC_deduct : 0) + (isset($key->employees_esic_deduction) ? $key->employees_esic_deduction : 0);
+				$month_year_array1 = isset($key) && isset($key->report_month) ? explode('-', $key->report_month) : array('');
+				$nmonth1 = isset($month_year_array1[0]) ? date('F', strtotime("01-".$month_year_array1[0]."-".date("Y"))) : '';
+				if(isset($key) && isset($key->pt_amt) && $key->pt_amt > 0)
+				{
+					if(isset($earn_gross) && $earn_gross<7500)
+					{
+						$pt = 0;
+					}elseif(isset($earn_gross) && $earn_gross<=10000 && $earn_gross>=7500)
+					{
+						if(isset($key) && isset($key->gender) && $key->gender=='Female')
+						{
+							$pt=0;
+						}else{
+							$pt = 175;
+						}
+					}elseif(isset($earn_gross) && $earn_gross>10000)
+					{
+						if(isset($nmonth1) && $nmonth1=='February')
+						{
+							$pt = 300;
+						}else{
+							$pt = 200;
+						}
+					}
+				}else{
+					$pt = 0;
+				}
+
+				
+
+				$CI->excel->getActiveSheet()->setCellValue('AZ'.$j, (isset($key) && isset($key->medical_insurance) && !empty($key->medical_insurance)) ? $key->medical_insurance : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('BA'.$j, (isset($pt) && !empty($pt)) ? $pt : 0);
+				$pt_total = (isset($pt_total) ? $pt_total : 0) + (isset($pt) ? $pt : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('BB'.$j, (isset($key) && isset($key->tds_deduct) && !empty($key->tds_deduct)) ? $key->tds_deduct : 0);
+
+
+				$CI->excel->getActiveSheet()->setCellValue('BC'.$j, round(isset($key) && isset($key->telephone_co) ? $key->telephone_co : 0));
+				$mobile_ded_total = (isset($mobile_ded_total) ? $mobile_ded_total : 0) + (isset($key) && isset($key->telephone_co) ? $key->telephone_co : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('BD'.$j, round(isset($key) && isset($key->others_deduction) ? $key->others_deduction : 0));
+				$emp_wise_ded = (isset($emp_wise_ded) ? $emp_wise_ded : 0) + (isset($key) && isset($key->others_deduction) ? $key->others_deduction : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('BE'.$j, round(isset($key) && isset($key->advance_opening) ? $key->advance_opening : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BF'.$j, round(isset($key) && isset($key->advance_Addition) ? $key->advance_Addition : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BG'.$j, round(isset($key) && isset($key->advance_recovery) ? $key->advance_recovery : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BH'.$j, round(isset($key) && isset($key->advance_closing_amt) ? $key->advance_closing_amt : 0));
+
+				if(isset($emp_Ded_allData) && !empty($emp_Ded_allData))
+				{
+					$recy_total=0;
+					$Advance_deduction=0;
+					foreach ($emp_Ded_allData as $rec)
+					{
+						if(isset($rec) && isset($rec->deduction_id) && $rec->deduction_id == 6)
+						{
+							// $CI->excel->getActiveSheet()->setCellValue('BC'.$j, round(isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0));
+							$recy_total = isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0;
+							
+							$Advance_deduction = (isset($Advance_deduction) ? $Advance_deduction : 0) + (isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0);
+							$emp_wise_add_deduction = (isset($emp_wise_add_deduction) ? $emp_wise_add_deduction : 0) + (isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0);
+							$per_emp_advance = (isset($per_emp_advance) ? $per_emp_advance : 0) - (isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0);
+							$deduct_adv_total = (isset($deduct_adv_total) ? $deduct_adv_total : 0) + (isset($per_emp_advance) ? $per_emp_advance : 0);
+							
+							if(isset($per_emp_advance) && $per_emp_advance>0)
+							{ }
+							else
+							{
+								$per_emp_advance=0;
+							}
+							// $CI->excel->getActiveSheet()->setCellValue('BD'.$j, isset($per_emp_advance) ? $per_emp_advance : 0);
+						}
+						elseif(isset($rec) && isset($rec->deduction_id) && (($rec->deduction_id == 'Arrears/ others') || ($rec->deduction_id == 'Deduction Arrears')))
+						{
+							$emp_wise_add_deduction = (isset($emp_wise_add_deduction) ? $emp_wise_add_deduction : 0) + (isset($rec) && isset($rec->deduct_value) ? $rec->deduct_value : 0);
+						}else{
+						
+						}				
+					}
+				}
+				
+				$adv_opening = (isset($adv_opening) ? $adv_opening : 0) + (isset($key) && isset($key->advance_opening) ? $key->advance_opening : 0);
+				$adv_Addition = (isset($adv_Addition) ? $adv_Addition : 0) + (isset($key) && isset($key->advance_Addition) ? $key->advance_Addition : 0);
+				$adv_recovery = (isset($adv_recovery) ? $adv_recovery : 0) + (isset($key) && isset($key->advance_recovery) ? $key->advance_recovery : 0);
+				$adv_closing_amt = (isset($adv_closing_amt) ? $adv_closing_amt : 0) + (isset($key) && isset($key->advance_closing) ? $key->advance_closing : 0);
+
+				$total_deduction = (isset($pf_dedct) ? $pf_dedct : 0) + (isset($esic_dedct) ? $esic_dedct : 0) + (isset($pt) ? $pt : 0) + (isset($key) && isset($key->mobile_deduction) ? $key->mobile_deduction : 0) + (isset($key) && isset($key->other_deduct) ? $key->other_deduct : 0) + (isset($key) && isset($key->advance_recovery) ? $key->advance_recovery : 0) + (isset($key) && isset($key->tds_deduct) ? $key->tds_deduct : 0) + (isset($key) && isset($key->insurance_deduct) ? $key->insurance_deduct : 0);
+				$CI->excel->getActiveSheet()->setCellValue('BI'.$j, round(isset($key) && isset($key->total_deduction_for_the_month) ? $key->total_deduction_for_the_month : 0));
+				$total_deduct_mnth = (isset($total_deduct_mnth) ? $total_deduct_mnth : 0) + (isset($key->total_deduction_for_the_month) ? $key->total_deduction_for_the_month : 0);
+
+				/*//earning arrers
+				$CI->excel->getActiveSheet()->setCellValue('AV'.$j,round($key->earn_arrears));
+				$Arrears_total = $Arrears_total + $key->earn_arrears;
+				*/
+				//NET PAY
+				$net_pay = ((isset($earn_gross) ? $earn_gross : 0) - (isset($total_deduction) ? $total_deduction : 0)) + (isset($key) && isset($key->earn_arrears) ? $key->earn_arrears : 0);
+				$CI->excel->getActiveSheet()->setCellValue('BJ'.$j, round(isset($key) && isset($key->net_pay) ? $key->net_pay : 0));
+
+				$CI->excel->getActiveSheet()->setCellValue('BK'.$j, round(isset($key) && isset($key->wfh_days) ? $key->wfh_days : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BL'.$j, round(isset($key) && isset($key->wfh_deduct_per) ? $key->wfh_deduct_per : 0));
+				
+				$wfo_days = (isset($key->total_present_days) ? $key->total_present_days : 0) - (isset($key) && isset($key->wfh_days) ? $key->wfh_days : 0);
+				$per_day_amt = (isset($net_pay) ? $net_pay : 0) / (isset($key->total_present_days) && $key->total_present_days > 0 ? $key->total_present_days : 1);
+				$wfo_amt = (isset($per_day_amt) ? $per_day_amt : 0) * (isset($wfo_days) ? $wfo_days : 0);
+				$wfh_amt = (isset($per_day_amt) ? $per_day_amt : 0) * (isset($key) && isset($key->wfh_days) ? $key->wfh_days : 0);
+				$wfh_deduct_amt = (isset($wfh_amt) ? $wfh_amt : 0) * (isset($key) && isset($key->wfh_deduct_per) ? $key->wfh_deduct_per : 0) / 100;
+				
+				$CI->excel->getActiveSheet()->setCellValue('BM'.$j, round(isset($key) && isset($key->wfh_deduction_amount) ? $key->wfh_deduction_amount : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BN'.$j, round(isset($key) && isset($key->net_pay_after_wfh) ? $key->net_pay_after_wfh : 0));
+
+				
+				$CI->excel->getActiveSheet()->setCellValue('BO'.$j, round(isset($key) && isset($key->memo_cnt) ? $key->memo_cnt : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BP'.$j, round(isset($key) && isset($key->memo_amt) ? $key->memo_amt : 0));
+
+				$CI->excel->getActiveSheet()->setCellValue('BQ'.$j, round(isset($key) && isset($key->late_punchin) ? $key->late_punchin : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BR'.$j, round(isset($key) && isset($key->early_punchout) ? $key->early_punchout : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BS'.$j, round(isset($key) && isset($key->half_days_due_to_early_punch_out) ? $key->half_days_due_to_early_punch_out : 0));
+
+				$CI->excel->getActiveSheet()->setCellValue('BT'.$j, round(isset($key) && isset($key->no_min_4hr_work_cnt) ? $key->no_min_4hr_work_cnt : 0));
+				$CI->excel->getActiveSheet()->setCellValue('BU'.$j, round(isset($key) && isset($key->no_min_8hr_work_cnt) ? $key->no_min_8hr_work_cnt : 0));
+
+				$CI->excel->getActiveSheet()->setCellValue('BV'.$j, round(isset($key) && isset($key->total_full_days) ? $key->total_full_days : 0));
+
+
+				$net_pay_after_wfh = round(isset($key->net_pay) ? $key->net_pay : 0) - round(isset($key->wfh_deduction_amount) ? $key->wfh_deduction_amount : 0);
+				$per_day_amt = (isset($net_pay_after_wfh) ? $net_pay_after_wfh : 0) / (isset($key->working_days) && $key->working_days > 0 ? $key->working_days : 1);
+				$net_pay_after_deduction = ((isset($net_pay_after_wfh) ? $net_pay_after_wfh : 0) - (isset($key) && isset($key->memo_amt) ? $key->memo_amt : 0)) - (((isset($key) && isset($key->total_full_days) ? $key->total_full_days : 0)*2 - (isset($key) && isset($key->no_punchout_cnt) ? $key->no_punchout_cnt : 0)*2) * (isset($per_day_amt) ? $per_day_amt : 0) / 2);
+
+				// $CI->excel->getActiveSheet()->setCellValue('BW'.$j, round((isset($key) && isset($key->total_full_days) ? $key->total_full_days : 0)*(isset($per_day_amt) ? $per_day_amt : 0)));				
+				$total_d = (isset($key) && isset($key->total_full_days) ? $key->total_full_days : 0) * (isset($per_day_amt) ? $per_day_amt : 0);
+				$CI->excel->getActiveSheet()->setCellValue('BW'.$j, round(isset($key->total_ded1) ? $key->total_ded1 :0));
+
+				$net_p_after_d = (isset($key) && isset($key->basic) ? $key->basic : 0) - $total_d;
+	
+				$CI->excel->getActiveSheet()->setCellValue('BX'.$j, round(isset($key->net_pay_after_ded1) ? $key->net_pay_after_ded1 : 0));
+				
+
+				$CI->excel->getActiveSheet()->setCellValue('BY'.$j, round(isset($key) && isset($key->no_punch_out_count1) ? $key->no_punch_out_count1 : 0));
+				
+				$net_pay_after_deduction = (isset($net_pay_after_deduction) ? $net_pay_after_deduction : 0) - round((isset($key) && isset($key->no_punchout_cnt) ? $key->no_punchout_cnt : 0) * (isset($per_day_amt) ? $per_day_amt : 0));
+
+				$total_d_amount = (isset($key) && isset($key->no_punchout_cnt) ? $key->no_punchout_cnt : 0) * (isset($per_day_amt) ? $per_day_amt : 0);
+
+				$CI->excel->getActiveSheet()->setCellValue('BZ'.$j, round(isset($key->total_ded2) ? $key->total_ded2 : 0));
+
+				$total_d_after_d = $net_p_after_d - $total_d_amount;
+
+				$total_of_total_d_after_d += $total_d_after_d;
+				$CI->excel->getActiveSheet()->setCellValue('CA'.$j, round(isset($key->net_pay_after_deduction) ? $key->net_pay_after_deduction : 0));
+				$totalNetP += isset($key->net_pay_after_deduction) ? $key->net_pay_after_deduction : 0;
+
+				
+
+				
+				
+
+
+				
+
+
+				// if(isset($showbonus) && $showbonus){
+					$CI->excel->getActiveSheet()->setCellValue('CB'.$j, round(isset($key) && isset($key->var_per) ? $key->var_per : 0));
+					$CI->excel->getActiveSheet()->setCellValue('CC'.$j, round(isset($key) && isset($key->var_amount) ? $key->var_amount : 0));
+				// }
+				$total_net_pay = (isset($total_net_pay) ? $total_net_pay : 0) + round(isset($key->net_pay) ? $key->net_pay : 0);
+				$total_net_pay_wfh = (isset($total_net_pay_wfh) ? $total_net_pay_wfh : 0) + (isset($key->net_pay_after_wfh) ? $key->net_pay_after_wfh : 0);
+				$total_net_pay_deduction = (isset($total_net_pay_deduction) ? $total_net_pay_deduction : 0) + (isset($net_pay_after_deduction) ? $net_pay_after_deduction : 0);
+				/*$emp_star = $CI->Slip_vish_model->fetch_emp_star_rate($key->user_id,$key->salary_month);
+				$CI->excel->getActiveSheet()->setCellValue('AX'.$j,(isset($emp_star->red_star) && !empty($emp_star->red_star))?$emp_star->red_star:'0');
+				$CI->excel->getActiveSheet()->setCellValue('AY'.$j,(isset($emp_star->gold_star) && !empty($emp_star->gold_star))?$emp_star->gold_star:'0');
+				if(isset($emp_star->red_star) && $emp_star->red_star>='10')
+				{
+					$red = ($emp_star->red_star > $emp_star->gold_star)?($emp_star->red_star-$emp_star->gold_star):'0';
+					$gold = ($emp_star->red_star < $emp_star->gold_star)?($emp_star->gold_star-$emp_star->red_star):'0';
+				}else{
+					$red = (isset($emp_star->red_star) && !empty($emp_star->red_star))?$emp_star->red_star:'0';
+					$gold = (isset($emp_star->gold_star) && !empty($emp_star->gold_star))?$emp_star->gold_star:'0';
+				}
+				$CI->excel->getActiveSheet()->setCellValue('AZ'.$j,$red);
+				$CI->excel->getActiveSheet()->setCellValue('BA'.$j,$gold);
+				if($monthsdiff->months>=6)
+				{
+					if($red>='10')
+					{
+						$per_day = $gross/$num_days_of_month;
+						$perval = 1*$per_day;
+						$total_salary = round($perval);
+					}else{
+						$total_salary = 0;
+					}
+				}else{
+					$total_salary = 0;
+				}
+				$CI->excel->getActiveSheet()->setCellValue('BB'.$j,$total_salary);
+				$total_star_deduct = $total_star_deduct+$total_salary;*/
+
+				/*$CI->excel->getActiveSheet()->setCellValue('BC'.$j,(isset($emp_star->black_star) && !empty($emp_star->black_star))?$emp_star->black_star:'0');
+				if(isset($emp_star->black_star) && $emp_star->black_star>='10')
+				{
+					$blackstar = ($gold > $emp_star->black_star)?($gold-$emp_star->black_star):'0';
+					$blackstar = ($emp_star->black_star > $gold)?($emp_star->black_star-$gold):'0';
+					$bal_gold = ($gold > $emp_star->black_star)?($gold-$emp_star->black_star):'0';
+					$bal_black = ($emp_star->black_star > $gold)?($emp_star->black_star-$gold):'0';
+				}else{
+					$blackstar = 0;
+					$bal_gold = $gold;
+					$bal_black = (isset($emp_star->black_star) && !empty($emp_star->black_star))?$emp_star->black_star:'0';
+				}
+				
+				if($blackstar>='20')
+				{
+					$per_day = $gross/$num_days_of_month;
+					$perval = 1*$per_day;
+					$total_salary1 = round($perval);
+				}else{
+					$total_salary1 = 0;
+				}
+				$CI->excel->getActiveSheet()->setCellValue('BD'.$j,$bal_black);*/
+				/*$CI->excel->getActiveSheet()->setCellValue('BC'.$j,$gold);*/
+				/*$CI->excel->getActiveSheet()->setCellValue('BD'.$j,$total_salary1);*/
+
+				/*$CI->excel->getActiveSheet()->setCellValue('BD'.$j,round($net_pay-$total_salary));
+				$total_star_pay = $total_star_pay+round($net_pay-$total_salary);*/
+
+				$CI->excel->getActiveSheet()->getStyle('F'.$j.':BY'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																	->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+																	->setWrapText(true);
+
+				$CI->excel->getActiveSheet()->getStyle('B'.$j.':C'.$j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																	->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+																	->setWrapText(true);
+
+				$CI->excel->getActiveSheet()->getStyle('AC'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+
+				$CI->excel->getActiveSheet()->getStyle('AI'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+
+				$CI->excel->getActiveSheet()->getStyle('AV'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+
+				$CI->excel->getActiveSheet()->getStyle('BJ'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+
+				$CI->excel->getActiveSheet()->getStyle('BK'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');
+				// $CI->excel->getActiveSheet()->getStyle('BP'.$j)
+				// 					->getFill()
+				// 					->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+				// 					->getStartColor()->setARGB('FFD8D8D8');					
+
+				/*$CI->excel->getActiveSheet()->getStyle('AV'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');*/
+
+				/*$CI->excel->getActiveSheet()->getStyle('BD'.$j)
+									->getFill()
+									->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+									->getStartColor()->setARGB('FFD8D8D8');*/
+
+				$CI->excel->getActiveSheet()->getStyle('BJ'.$j)->getFont()->setBold(true);
+				$CI->excel->getActiveSheet()->getStyle('BK'.$j)->getFont()->setBold(true);
+				$CI->excel->getActiveSheet()->getStyle('BU'.$j)->getFont()->setBold(true);
+
+
+				//$CI->excel->getActiveSheet()->getStyle('BD'.$j)->getFont()->setBold(true);
+				$j++;
+				
+			}//exit();
+			// Merge last employee name block
+			if(isset($merge_start_row) && $merge_start_row > 0 && $merge_start_row < ($j - 1)) 
+			{
+			    $CI->excel->getActiveSheet()->mergeCells('C' . $merge_start_row . ':C' . ($j - 1));
+			    $CI->excel->getActiveSheet()->getStyle('C' . $merge_start_row . ':C' . ($j - 1))
+			        ->getAlignment()
+			        ->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+			        ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+			        ->setWrapText(true);
+			}
+
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':BJ'.$lastRowNum)->getFont()->setBold(true);
+
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':BK'.$lastRowNum)->getFont()->setBold(true);
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':BU'.$lastRowNum)->getFont()->setBold(true);
+
+			$CI->excel->getActiveSheet()->mergeCells('B'.$lastRowNum.':P'.$lastRowNum)
+										->setCellValue('B'.$lastRowNum, 'Total');
+
+			$CI->excel->getActiveSheet()->setCellValue('Q'.$lastRowNum, round(isset($emp_bac) ? $emp_bac : 0));
+			$CI->excel->getActiveSheet()->setCellValue('R'.$lastRowNum, round(isset($emp_da) ? $emp_da : 0));
+			$CI->excel->getActiveSheet()->setCellValue('S'.$lastRowNum, round(isset($emp_hra) ? $emp_hra : 0));
+			$CI->excel->getActiveSheet()->setCellValue('T'.$lastRowNum, round(isset($emp_convy) ? $emp_convy : 0));
+			$CI->excel->getActiveSheet()->setCellValue('U'.$lastRowNum, round(isset($emp_mob) ? $emp_mob : 0));
+			$CI->excel->getActiveSheet()->setCellValue('V'.$lastRowNum, round(isset($emp_med) ? $emp_med : 0));
+			$CI->excel->getActiveSheet()->setCellValue('W'.$lastRowNum, round(isset($emp_edu) ? $emp_edu : 0));
+			$CI->excel->getActiveSheet()->setCellValue('X'.$lastRowNum, round(isset($emp_city) ? $emp_city : 0));
+			$CI->excel->getActiveSheet()->setCellValue('Y'.$lastRowNum, round(isset($emp_enter) ? $emp_enter : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('Z'.$lastRowNum, round(isset($emp_p_bonus) ? $emp_p_bonus : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('AA'.$lastRowNum, round(isset($emp_tot_alw) ? $emp_tot_alw : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('AB'.$lastRowNum, round(isset($emp_bonus) ? $emp_bonus : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AC'.$lastRowNum, round(isset($emp_gross) ? $emp_gross : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('AD'.$lastRowNum, round(isset($pf_earn) ? $pf_earn : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AE'.$lastRowNum, round(isset($ESIC_earn) ? $ESIC_earn : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AF'.$lastRowNum, round(isset($pf_deduct) ? $pf_deduct : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AG'.$lastRowNum, round(isset($ESIC_deduct) ? $ESIC_deduct : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AI'.$lastRowNum, round(isset($total_ctc) ? $total_ctc : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('AJ'.$lastRowNum, round(isset($basic_net) ? $basic_net : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AK'.$lastRowNum, round(isset($DA_total) ? $DA_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AL'.$lastRowNum, round(isset($HRA_total) ? $HRA_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AM'.$lastRowNum, round(isset($Conveyance_total) ? $Conveyance_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AN'.$lastRowNum, round(isset($mobile_total_all) ? $mobile_total_all : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AO'.$lastRowNum, round(isset($medical_total) ? $medical_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AP'.$lastRowNum, round(isset($education_total) ? $education_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AQ'.$lastRowNum, round(isset($city_total) ? $city_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AR'.$lastRowNum, round(isset($entertainment_total) ? $entertainment_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AS'.$lastRowNum, round(isset($p_bonus_total) ? $p_bonus_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AT'.$lastRowNum, round(isset($otherAllow_total_all) ? $otherAllow_total_all : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AU'.$lastRowNum, round(isset($Bonus_total) ? $Bonus_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AV'.$lastRowNum, round(isset($total_earn_gross) ? $total_earn_gross : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AW'.$lastRowNum, round(isset($total_earn_gross1) ? $total_earn_gross1 : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AX'.$lastRowNum, round(isset($tot_pf_deduct) ? $tot_pf_deduct : 0));
+			$CI->excel->getActiveSheet()->setCellValue('AY'.$lastRowNum, round(isset($tot_ESIC_deduct) ? $tot_ESIC_deduct : 0));
+			$CI->excel->getActiveSheet()->setCellValue('BA'.$lastRowNum, round(isset($pt_total) ? $pt_total : 0));
+			
+			
+			$CI->excel->getActiveSheet()->setCellValue('BC'.$lastRowNum, round(isset($mobile_ded_total) ? $mobile_ded_total : 0));
+			$CI->excel->getActiveSheet()->setCellValue('BD'.$lastRowNum, round(isset($emp_wise_ded) ? $emp_wise_ded : 0));
+			// $CI->excel->getActiveSheet()->setCellValue('AA'.$lastRowNum, round($adv_opening));
+			// $CI->excel->getActiveSheet()->setCellValue('BC'.$lastRowNum, round($adv_Addition));
+			// $CI->excel->getActiveSheet()->setCellValue('BD'.$lastRowNum, round($adv_recovery));
+			// $CI->excel->getActiveSheet()->setCellValue('BE'.$lastRowNum, round($adv_closing_amt));
+			$CI->excel->getActiveSheet()->setCellValue('BI'.$lastRowNum, round(isset($total_deduct_mnth) ? $total_deduct_mnth : 0));
+			
+			/*$CI->excel->getActiveSheet()->setCellValue('AU'.$lastRowNum, round($Bonus_total));			
+			$CI->excel->getActiveSheet()->setCellValue('AV'.$lastRowNum, round($Arrears_total));*/
+			$CI->excel->getActiveSheet()->setCellValue('BJ'.$lastRowNum, round(isset($total_net_pay) ? $total_net_pay : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('BN'.$lastRowNum, round(isset($total_net_pay_wfh) ? $total_net_pay_wfh : 0));
+
+			$CI->excel->getActiveSheet()->setCellValue('CA'.$lastRowNum, round(isset($totalNetP) ? $totalNetP : 0));
+
+			
+			// $CI->excel->getActiveSheet()->setCellValue('BB'.$lastRowNum, round($total_star_deduct));
+			// $CI->excel->getActiveSheet()->setCellValue('BD'.$lastRowNum, round($total_star_pay));
+
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':CC'.$lastRowNum)
+										->getFill()
+										->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+										->getStartColor()->setARGB('EED8D8D8');
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':CC'.$lastRowNum)->applyFromArray($allborders);
+			$CI->excel->getActiveSheet()->getStyle('B'.$lastRowNum.':CC'.$lastRowNum)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
+																				->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)
+																				->setWrapText(true);
+
+		}
+		/* end dynamic code here **************/
+
+		
+
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.(isset($company_name) ? $company_name : 'Company').'-'.(isset($year) ? $year : date('Y')).'.xls"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+
+		// If you're serving to IE 9, then the following may be needed
+		header('Cache-Control: max-age=1');
+
+		// If you're serving to IE over SSL, then the following may be needed
+		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header ('Pragma: public'); // HTTP/1.0
+		             
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5');  
+		//force user to download the Excel file without writing it to server's HD
+		if(isset($export) && $export == true) {
+		$objWriter->save('php://output'); 
+		}else{
+			$objWriter = PHPExcel_IOFactory::createWriter($CI->excel, 'Excel5'); 
+			$year = isset($year) ? date('Y', strtotime($year)) : date('Y');
+			$filename = './excelfiles/'.str_replace(" ", "-", (isset($company_name) ? $company_name : 'Company')).'-'.$year.'.xls';
+			$objWriter->save($filename);
+			return 'excelfiles/'.str_replace(" ", "-", (isset($company_name) ? $company_name : 'Company')).'-'.$year.'.xls';
+		}
     }
 
 }
