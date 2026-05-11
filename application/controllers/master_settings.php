@@ -13,6 +13,7 @@ class Master_settings extends CI_Controller {
         $this->load->model('master_model');
         $this->load->model('slip_aks_model');
         $this->load->model('Slip_vish_model');
+        $this->load->model('new_model');
         date_default_timezone_set("Asia/kolkata");
     } 
    	//Settings
@@ -996,7 +997,7 @@ class Master_settings extends CI_Controller {
 		$num_days_of_month = cal_days_in_month(CAL_GREGORIAN, $month_year_array[0], $month_year_array[1]);
 		// echo $num_days_of_month; exit();
 		$emp_basic_data = $this->Slip_vish_model->fetchDataForReport($salMonth,$companyId);
-	   
+
 		/*print_r($emp_basic_data); exit();*/
 		$company_name = $this->Slip_vish_model->getCompDetails($companyId);// if ($emp_basic_data) {
 		$this->monthly_report->salarySlipReportExcelFormat_new($emp_basic_data,$company_name,$num_days_of_month,$month1,$year,$salMonth, true);	
@@ -2957,6 +2958,29 @@ class Master_settings extends CI_Controller {
 			}
 		
 	}
+
+	public function year_wise_Report()
+	{
+		$data['company_list'] = $this->new_model->fetch_company();		
+		$this->load->view('hr compliances/year_wise_report',$data);
+	}
+
+	public function get_year_wise_company_report() 
+	{
+		$this->load->library('monthly_report');
+        $company_id = $this->input->post('c_id');
+        $year = $this->input->post('year');
+        $start_month = '04-'.$year;
+        $year++;
+        $end_month = '03-'.$year;        
+        $company_name = $this->Slip_vish_model->getCompDetails($company_id);
+        $emp_basic_data = $this->new_model->get_year_wise_report($company_id, $end_month, $start_month);
+        // echo "<pre>";
+        // print_r($emp_basic_data);die;
+        $year--;
+		$this->monthly_report->YearWiseSalarySlipReportExcel($emp_basic_data,$company_name, $year, true);
+		exit;
+    }
 
 
 	

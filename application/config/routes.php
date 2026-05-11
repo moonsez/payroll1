@@ -245,3 +245,6 @@ $route['local_exp'] = 'master_settings/local_exp';
 $route['save_Exp'] = 'master_settings/save_Exp';
 $route['exp_view_tbl'] = 'master_settings/exp_view_tbl';
 /* Location: ./application/config/routes.php */
+
+$route['year_wise_Report'] = 'master_settings/year_wise_Report';
+$route['get_year_wise_company_report'] = 'master_settings/get_year_wise_company_report';

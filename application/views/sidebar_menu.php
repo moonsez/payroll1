@@ -296,6 +296,14 @@
 							</span>			
 						</a>
 					</li>
+					<li>
+						<a href="<?php echo base_url();?>year_wise_Report" class="load_page">
+							<span class="title">
+								Year Wise Company Report
+								<img src="<?php echo base_url();?>images/admin/ajax-loader.gif" style="float: right; display:none;" class="imgloader">
+							</span>			
+						</a>
+					</li>
 				</ul>
 			</li>
 		</ul>

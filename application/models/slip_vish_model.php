@@ -1605,5 +1605,23 @@ class Slip_vish_model extends CI_Model {
             return "monthly";
         }
     }
+
+    public function save_latest_totals($salary_month, $username, $data)
+    {
+        $user = $this->db->select('user_id')->where('username', $username)->limit(1)->get('tbl_userinfo')->row();
+
+        if (!$user) 
+        {
+            return false;
+        }
+
+        $this->db->where([
+            'user_id'      => $user->user_id,
+            'salary_month' => $salary_month,
+            'display'      => 'Y'
+        ]);
+
+        return $this->db->update('tbl_emp_salary_excel_genrated_data', $data);
+    }
     
 }// end of model
