@@ -10,6 +10,13 @@
 |
 */
 
+$hook['post_controller_constructor'] = array(
+    'class'    => 'Session_write_close',
+    'function' => 'close',
+    'filename' => 'session_write_close.php',
+    'filepath' => 'hooks'
+);
+
 $hook['post_controller'] = array(     // 'post_controller' indicated execution of hooks after controller is finished
     'class' => 'Db_log',             // Name of Class
     'function' => 'logQueries',     // Name of function to be executed in from Class

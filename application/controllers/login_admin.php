@@ -14,6 +14,7 @@ class login_admin extends CI_Controller {
 		{			
 			$msg = 'slip_generation_login';
 			$data['key_string'] = $this->encryption->encrypt($msg);
+			session_start(); // re-acquire session lock after post_controller_constructor hook released it
 			$this->session->set_userdata("secret_key", $data['key_string']);
 			$this->load->view('login',$data);
 		}
@@ -40,6 +41,7 @@ class login_admin extends CI_Controller {
 	{		
 		$msg = 'slip_generation_login';
 		$data['key_string'] = $this->encryption->encrypt($msg);
+		session_start(); // re-acquire session lock after post_controller_constructor hook released it
 		$this->session->set_userdata("secret_key", $data['key_string']);
 		$state=$this->authenctication->logged_in();
 		if($state==false)

@@ -46,6 +46,7 @@ class Authenctication
 		}
 		else     
 		{
+			session_start(); // re-acquire session lock after post_controller_constructor hook released it
 			$CI->session->set_userdata("userid",$query->row()->user_id);
 			$CI->session->set_userdata("emailid",$query->row()->email);	
 			$CI->session->set_userdata("firstname", $query->row()->firstname);
@@ -70,6 +71,7 @@ class Authenctication
 	function logout() 
 	{	     
 		$CI =& get_instance();
+		session_start(); // re-acquire session lock after post_controller_constructor hook released it
 		$CI->session->unset_userdata("comp_id");
 		$CI->session->unset_userdata("user_name");
 		$CI->session->unset_userdata("role_id");
